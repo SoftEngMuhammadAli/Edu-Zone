@@ -25,4 +25,5 @@ dist-ssr
 
 # Project Ignores
 .env
+dist/
 node_modules/
