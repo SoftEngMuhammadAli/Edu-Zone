@@ -62,6 +62,9 @@ const LoginPage = () => {
 
             <button
               type="submit"
+              onClick={() => {
+                navigate("/");
+              }}
               className="w-full py-3 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500 transition"
             >
               LOGIN

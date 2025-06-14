@@ -1,12 +1,30 @@
 import React from "react";
+import {
+  AboutUs,
+  EduZoneBenefits,
+  HeaderNav,
+  HomeBanner,
+  StatisticPartners,
+} from "../components";
 
 const Home = () => {
   return (
-    <div>
+    <React.Fragment>
       {/* Header */}
+      <HeaderNav />
 
-      {/*  */}
-    </div>
+      {/* Home Banner */}
+      <HomeBanner />
+
+      {/* Statisctics Partners */}
+      <StatisticPartners />
+
+      {/* Benefits of Joining EDUFREE E-Learning */}
+      <EduZoneBenefits />
+
+      {/* About Us */}
+      <AboutUs />
+    </React.Fragment>
   );
 };
 
