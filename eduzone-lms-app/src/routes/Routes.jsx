@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home, LoginPage, NotFound, SignUpPage } from "../pages";
 
-const RoutesComponents = () => {
+const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/home" element={<Home />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/signup" element={<SignUpPage />}></Route>
         {/* <Route path="/" element={<Home />}></Route> */}
@@ -16,4 +16,4 @@ const RoutesComponents = () => {
   );
 };
 
-export default RoutesComponents;
+export default AppRoutes;

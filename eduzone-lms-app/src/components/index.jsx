@@ -1,4 +1,7 @@
-import ComponentA from "./ComponentA";
-import ComponentB from "./ComponentB";
+import AboutUs from "./about/AboutUs";
+import EduZoneBenefits from "./home/EduZoneBenefits";
+import HeaderNav from "./home/HeaderNav";
+import HomeBanner from "./home/HomeBanner";
+import StatisticPartners from "./home/StatisticPartners";
 
-export { ComponentA, ComponentB };
+export { HeaderNav, HomeBanner, StatisticPartners, EduZoneBenefits, AboutUs };
