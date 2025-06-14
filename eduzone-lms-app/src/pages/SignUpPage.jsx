@@ -14,11 +14,11 @@ const SignUpPage = () => {
       >
         <div className="bg-black bg-opacity-60 p-6 md:p-8 rounded-lg max-w-xl text-center md:text-left">
           <h1 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
-            Selangkah Lebih Dekat Dengan Impianmu
+            One Step Closer To Your Dream
           </h1>
           <p className="text-base md:text-lg">
-            Sebuah layanan E-Learning gratis yang siap membantumu menjadi
-            seorang ahli.
+            A free E-Learning service that is ready to help you become an
+            expert.
           </p>
         </div>
       </div>
