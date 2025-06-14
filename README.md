@@ -1,7 +1,8 @@
 ```markdown
-# EduZone 📚
+# 🎓 EduZone – MERN Stack LMS
 
-EduZone is a full-stack Learning Management System (LMS) built with the **MERN stack** (MongoDB, Express, React, Node.js). This monorepo contains both the **client-side application** and the **backend API**.
+**EduZone** is a full-stack **Learning Management System (LMS)** developed using the **MERN stack** — MongoDB, Express.js, React.js, and Node.js.  
+This monorepo contains both the **client-side application** and the **backend API** for the LMS platform.
 
 ---
 
@@ -10,9 +11,9 @@ EduZone is a full-stack Learning Management System (LMS) built with the **MERN s
 ```
 
 EduZone/
-├── eduzone-lms-app/      # React.js Client - LMS Frontend
-├── eduzone-backend/      # Node.js + Express.js Backend API
-└── README.md             # Project Overview
+├── eduzone-lms-app/       # React.js Client – LMS Frontend
+├── eduzone-backend/       # Node.js + Express.js – Backend API
+└── README.md              # Project Overview & Setup Guide
 
 ````
 
@@ -20,17 +21,17 @@ EduZone/
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### ✅ Prerequisites
 
-- Node.js (v18+ recommended)
-- MongoDB (local or Atlas cloud DB)
+- Node.js (v18 or higher)
+- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
 - Git
 
 ---
 
 ## 🔧 Setup Instructions
 
-### 1. Clone the Repo
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/SoftEngMuhammadAli/EduZone.git
@@ -39,25 +40,25 @@ cd EduZone
 
 ---
 
-### 2. Run the Backend
+### 2. Setup & Run the Backend
 
 ```bash
 cd eduzone-backend
 npm install
-npm run dev  # or: nodemon index.js
+npm run dev
 ```
 
-Configure your `.env` file:
+📌 Create a `.env` file in `eduzone-backend/` with the following content:
 
-```
+```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+JWT_SECRET=your_jwt_secret_key
 ```
 
 ---
 
-### 3. Run the Frontend
+### 3. Setup & Run the Frontend
 
 ```bash
 cd ../eduzone-lms-app
@@ -65,45 +66,54 @@ npm install
 npm start
 ```
 
-This will start the React app at `http://localhost:3000`
+Frontend will run on: [http://localhost:3000](http://localhost:3000)
+Make sure the backend (`http://localhost:5000`) is running as well.
 
 ---
 
-## 📦 Tech Stack
+## 💻 Tech Stack
 
-* **Frontend:** React.js, React Router, Axios
-* **Backend:** Node.js, Express.js, JWT Auth, MongoDB
-* **Database:** MongoDB (with Mongoose)
-* **Tools:** Git, Postman, VS Code
+| Layer     | Technology                    |
+| --------- | ----------------------------- |
+| Frontend  | React.js, React Router, Axios |
+| Backend   | Node.js, Express.js, JWT      |
+| Database  | MongoDB, Mongoose             |
+| Dev Tools | Git, VS Code, Postman         |
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-* 🔐 User authentication & JWT-based authorization
-* 📚 Course & content management
+* 🔐 JWT-based authentication & authorization
+* 📚 Course, content, and user management
+* 🧑‍🏫 Admin dashboard with role-based access
 * 📝 Assignments, quizzes, and progress tracking
-* 👨‍🏫 Admin dashboard for managing users & content
-* 📊 Role-based dashboards (Student, Teacher, Admin)
+* 📊 Student, Teacher, and Admin dashboards
 
 ---
 
-## 🛠️ In Progress
+## 🚧 Project Status
 
-* ✅ Basic folder structure & setup complete
-* 🚧 Backend REST APIs under development
-* 🚧 LMS frontend in initial stages
+* ✅ Folder structure & basic setup complete
+* ⚙️ Backend REST APIs – in progress
+* 🧱 Frontend LMS interface – in progress
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+Contributions are welcome!
+
+1. Fork the repo
+2. Create your branch (`git checkout -b feature-name`)
+3. Commit your changes (`git commit -m "Add feature"`)
+4. Push to your branch (`git push origin feature-name`)
+5. Create a Pull Request
 
 ---
 
 ## 📄 License
 
-MIT License
+Licensed under the [MIT License](LICENSE).
 
 ---
