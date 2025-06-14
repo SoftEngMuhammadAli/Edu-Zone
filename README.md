@@ -1,4 +1,3 @@
-```markdown
 # 🎓 EduZone – MERN Stack LMS
 
 **EduZone** is a full-stack **Learning Management System (LMS)** developed using the **MERN stack** — MongoDB, Express.js, React.js, and Node.js.  
