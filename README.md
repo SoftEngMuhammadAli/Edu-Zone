@@ -7,12 +7,12 @@ This monorepo contains both the **client-side application** and the **backend AP
 
 ## 📁 Project Structure
 
+```
+
 EduZone/
 ├── eduzone-lms-app/       # React.js Client – LMS Frontend
 ├── eduzone-backend/       # Node.js + Express.js – Backend API
 └── README.md              # Project Overview & Setup Guide
-
-````
 
 ---
 
@@ -64,7 +64,7 @@ npm start
 ```
 
 Frontend will run on: [http://localhost:3000](http://localhost:3000)
-Make sure the backend (`http://localhost:5000`) is running as well.
+Make sure the backend is also running at [http://localhost:5000](http://localhost:5000).
 
 ---
 
@@ -102,10 +102,10 @@ Make sure the backend (`http://localhost:5000`) is running as well.
 Contributions are welcome!
 
 1. Fork the repo
-2. Create your branch (`git checkout -b feature-name`)
-3. Commit your changes (`git commit -m "Add feature"`)
-4. Push to your branch (`git push origin feature-name`)
-5. Create a Pull Request
+2. Create your branch: `git checkout -b feature-name`
+3. Commit your changes: `git commit -m "Add feature"`
+4. Push to your branch: `git push origin feature-name`
+5. Open a Pull Request
 
 ---
 
@@ -114,3 +114,6 @@ Contributions are welcome!
 Licensed under the [MIT License](LICENSE).
 
 ---
+
+```
+```
