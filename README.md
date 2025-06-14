@@ -8,8 +8,6 @@ This monorepo contains both the **client-side application** and the **backend AP
 
 ## 📁 Project Structure
 
-```
-
 EduZone/
 ├── eduzone-lms-app/       # React.js Client – LMS Frontend
 ├── eduzone-backend/       # Node.js + Express.js – Backend API
