@@ -1,18 +1,18 @@
 # 🎓 EduZone – MERN Stack LMS
 
-**EduZone** is a full-stack **Learning Management System (LMS)** developed using the **MERN stack** — MongoDB, Express.js, React.js, and Node.js.  
-This monorepo contains both the **client-side application** and the **backend API** for the LMS platform.
+**EduZone** is a modern, full-stack **Learning Management System (LMS)** built using the **MERN stack** — **MongoDB**, **Express.js**, **React.js**, and **Node.js**.
+This monorepo includes both the **frontend client** and the **backend API**, designed to support students, teachers, and administrators with a seamless learning experience.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-
 EduZone/
 ├── eduzone-lms-app/       # React.js Client – LMS Frontend
-├── eduzone-backend/       # Node.js + Express.js – Backend API
+├── eduzone-backend/       # Node.js + Express – Backend API
 └── README.md              # Project Overview & Setup Guide
+```
 
 ---
 
@@ -20,20 +20,22 @@ EduZone/
 
 ### ✅ Prerequisites
 
-- Node.js (v18 or higher)
-- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
-- Git
+Ensure the following tools are installed on your system:
+
+* [Node.js](https://nodejs.org/) (v18 or later)
+* [MongoDB](https://www.mongodb.com/cloud/atlas) (local or cloud)
+* [Git](https://git-scm.com/)
 
 ---
 
-## 🔧 Setup Instructions
+## 🔧 Installation & Setup
 
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/SoftEngMuhammadAli/EduZone.git
 cd EduZone
-````
+```
 
 ---
 
@@ -45,7 +47,7 @@ npm install
 npm run dev
 ```
 
-📌 Create a `.env` file in `eduzone-backend/` with the following content:
+🔐 Create a `.env` file in the `eduzone-backend/` directory with the following content:
 
 ```env
 PORT=5000
@@ -63,57 +65,70 @@ npm install
 npm start
 ```
 
-Frontend will run on: [http://localhost:3000](http://localhost:3000)
-Make sure the backend is also running at [http://localhost:5000](http://localhost:5000).
+* Frontend: [http://localhost:3000](http://localhost:3000)
+* Backend: [http://localhost:5000](http://localhost:5000)
+
+Ensure both frontend and backend servers are running simultaneously.
 
 ---
 
 ## 💻 Tech Stack
 
-| Layer     | Technology                    |
-| --------- | ----------------------------- |
-| Frontend  | React.js, React Router, Axios |
-| Backend   | Node.js, Express.js, JWT      |
-| Database  | MongoDB, Mongoose             |
-| Dev Tools | Git, VS Code, Postman         |
+| Layer     | Technologies                            |
+| --------- | --------------------------------------- |
+| Frontend  | React.js, React Router, Axios           |
+| Backend   | Node.js, Express.js, JWT Authentication |
+| Database  | MongoDB, Mongoose                       |
+| Dev Tools | Git, VS Code, Postman                   |
 
 ---
 
 ## ✨ Key Features
 
-* 🔐 JWT-based authentication & authorization
-* 📚 Course, content, and user management
-* 🧑‍🏫 Admin dashboard with role-based access
-* 📝 Assignments, quizzes, and progress tracking
-* 📊 Student, Teacher, and Admin dashboards
+* 🔐 **JWT-based Authentication & Authorization**
+* 📚 **Course Management** – Add, update, and remove courses
+* 🧑‍🏫 **Role-Based Dashboards** – Separate interfaces for Admin, Teacher, and Student
+* 📝 **Assignments & Quizzes** – Create and manage learning tasks
+* 📊 **Progress Tracking** – Visualize student performance
 
 ---
 
 ## 🚧 Project Status
 
-* ✅ Folder structure & basic setup complete
-* ⚙️ Backend REST APIs – in progress
-* 🧱 Frontend LMS interface – in progress
+| Module       | Status         |
+| ------------ | -------------- |
+| Folder Setup | ✅ Completed    |
+| Backend API  | ⚙️ In Progress |
+| Frontend UI  | ⚙️ In Progress |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome!
+We welcome contributions from the community!
 
-1. Fork the repo
-2. Create your branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m "Add feature"`
-4. Push to your branch: `git push origin feature-name`
-5. Open a Pull Request
+1. **Fork** the repository
+2. **Create** your feature branch:
+
+   ```bash
+   git checkout -b feature-name
+   ```
+3. **Commit** your changes:
+
+   ```bash
+   git commit -m "Add feature"
+   ```
+4. **Push** the branch:
+
+   ```bash
+   git push origin feature-name
+   ```
+5. **Open a Pull Request**
 
 ---
 
 ## 📄 License
 
-Licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-```
-```
