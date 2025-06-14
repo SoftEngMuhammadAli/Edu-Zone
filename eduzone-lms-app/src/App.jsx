@@ -3,6 +3,7 @@ import React from "react";
 function App() {
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-10">
+      <h1 className="text-6xl">EduZone LMS App</h1>
       <h2 className="text-2xl">Welcome to Our Learning Platform</h2>
       <p className="w-1/2 text-center">
         EduZone is a comprehensive Learning Management System (LMS) designed to
