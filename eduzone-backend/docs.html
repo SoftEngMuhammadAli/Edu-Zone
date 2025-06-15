@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduZone API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="w-full mx-auto bg-white p-6 md:p-8 mt-8 rounded-lg shadow-md">
+      <h1
+        class="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-6"
+      >
+        📘 EduZone API Documentation
+      </h1>
+      <ul class="space-y-4">
+        <!-- Template Item -->
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-blue-600">GET</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/all</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Get all users
+            </div>
+          </div>
+        </li>
+
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-blue-600">GET</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/role/:role</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Get users by role
+            </div>
+          </div>
+        </li>
+
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-blue-600">GET</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/:id</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Get user by ID
+            </div>
+          </div>
+        </li>
+
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-green-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-green-600">POST</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/create</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Create a new user
+            </div>
+          </div>
+        </li>
+
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-yellow-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-yellow-600">PUT</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/:id</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Update a user by
+              ID
+            </div>
+          </div>
+        </li>
+
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-red-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>
+              <span class="font-semibold">Method:</span>
+              <strong class="text-red-600">DELETE</strong>
+            </div>
+            <div>
+              <span class="font-semibold">Endpoint:</span>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/users/:id</code
+              >
+            </div>
+            <div>
+              <span class="font-semibold">Description:</span> Delete a user by
+              ID
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="text-center text-sm text-gray-500 mt-8">
+        📍 Base URL:
+        <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:5174</code>
+      </div>
+    </div>
+  </body>
+</html>

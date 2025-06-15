@@ -1,13 +1,25 @@
+require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const connectToDatabase = require("./config/server");
+const userRouter = require("./routes/users/user_router");
 
 app.use(express.json());
+app.set("json spaces", 2);
 
 app.get("/", (req, res) => {
-  res.send("Hellow World");
+  res.sendFile(path.join(__dirname, "docs.html"));
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Mount user routes
+app.use("/api/users", userRouter);
+
+connectToDatabase(
+  `mongodb://localhost:27017/${process.env.DEVELOPMENT_DATABASE_NAME}`
+);
+
+app.listen(PORT, () => {
+  console.log(`Server running on PORT ${PORT}`);
 });
