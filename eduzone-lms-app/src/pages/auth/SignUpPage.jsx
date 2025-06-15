@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import loginSideImage from "../assets/images/login-side-image.png";
+import registerSideImage from "../../assets/images/auth/signup-side-image.png";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -10,28 +10,27 @@ const LoginPage = () => {
       {/* Left Side - Image and Text */}
       <div
         className="w-full md:w-1/2 bg-cover bg-center flex items-center justify-center p-8 md:p-16 text-white"
-        style={{ backgroundImage: `url(${loginSideImage})` }}
+        style={{ backgroundImage: `url(${registerSideImage})` }}
       >
         <div className="bg-black bg-opacity-60 p-6 md:p-8 rounded-lg max-w-xl text-center md:text-left">
           <h1 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
-            Step Closer to Your Dream with EduZone
+            One Step Closer To Your Dream
           </h1>
           <p className="text-base md:text-lg">
-            EduZone is your free and trusted E-Learning platform — designed to
-            help you grow your skills, earn recognized certifications, and
-            succeed in today’s competitive world.
+            A free E-Learning service that is ready to help you become an
+            expert.
           </p>
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
+      {/* Right Side - Register Form */}
       <div className="w-full md:w-1/2 bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
-            Login
+            Register
           </h2>
           <p className="text-sm text-white mb-8">
-            Please log in to your account
+            Please Register to you Account!
           </p>
 
           <form
@@ -42,42 +41,41 @@ const LoginPage = () => {
             }}
           >
             <input
+              type="text"
+              placeholder="Enter Your Name"
+              className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
+              required
+            />
+
+            <input
               type="email"
-              placeholder="Enter Your Email"
+              placeholder="Enter your Email"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
               required
             />
 
             <input
               type="password"
-              placeholder="Enter Your Password"
+              placeholder="Enter your password"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
               required
             />
 
-            <div className="flex items-center text-white text-sm">
-              <input type="checkbox" id="remember" className="mr-2" />
-              <label htmlFor="remember">Remember my credientals</label>
-            </div>
-
             <button
               type="submit"
-              onClick={() => {
-                navigate("/");
-              }}
-              className="w-full py-3 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500 transition"
+              className="w-full py-3 bg-yellow-400 text-[#000000] font-semibold rounded hover:bg-yellow-500 transition"
             >
-              LOGIN
+              SIGN UP
             </button>
           </form>
 
           <p className="text-sm text-white mt-6 text-center">
-            Don't have account?{" "}
+            Already have Account?{" "}
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
               className="text-yellow-400 underline hover:text-yellow-300"
             >
-              Sign Up
+              Login
             </button>
           </p>
         </div>
@@ -86,4 +84,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

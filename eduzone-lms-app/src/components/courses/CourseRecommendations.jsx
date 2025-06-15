@@ -1,7 +1,8 @@
 import React from "react";
-import webProgrammingImg from "../../assets/images/courses_programming.png";
-import digitalMarketingImg from "../../assets/images/courses_marketing.png";
-import dataScienceImg from "../../assets/images/courses_data_science.png";
+import webProgrammingImg from "../../assets/images/courses/courses_programming.png";
+import digitalMarketingImg from "../../assets/images/courses/courses_marketing.png";
+import dataScienceImg from "../../assets/images/courses/courses_data_science.png";
+import { useNavigate } from "react-router-dom";
 
 const CourseRecommendations = () => {
   const courses = [
@@ -34,6 +35,8 @@ const CourseRecommendations = () => {
     },
   ];
 
+  const navigate = useNavigate();
+
   return (
     <section className="p-6 sm:p-10 max-w-7xl mx-auto">
       {/* Header Section */}
@@ -43,21 +46,21 @@ const CourseRecommendations = () => {
         </h2>
 
         <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-          <select className="py-2 px-5 border rounded-md  bg-white text-gray-700">
+          <select className="py-2 px-5 border rounded-md bg-white text-gray-700 w-full sm:w-auto">
             <option value="">All Categories</option>
-            {[...new Set(courses.map((course) => course.category))].map(
-              (category, i) => (
-                <option
-                  key={i}
-                  value={category.toLowerCase().replace(" ", "-")}
-                >
-                  {category}
-                </option>
-              )
-            )}
+            <option value="programming">Programming</option>
+            <option value="design">Design</option>
+            <option value="marketing">Marketing</option>
+            <option value="business">Business</option>
+            <option value="data-science">Data Science</option>
+            <option value="language">Languages</option>
+            <option value="photography">Photography</option>
           </select>
 
-          <button className="bg-[#FCD980] hover:bg-[#F4C44F] text-gray-800 font-medium py-2 px-6 rounded-md transition-colors whitespace-nowrap">
+          <button
+            onClick={() => navigate("/SeeAllCourses")}
+            className="bg-[#FCD980] hover:bg-[#F4C44F] text-gray-800 font-medium py-2 px-6 rounded-md transition-colors whitespace-nowrap"
+          >
             See All Courses
           </button>
         </div>

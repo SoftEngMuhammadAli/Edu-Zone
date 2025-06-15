@@ -11,14 +11,11 @@ import {
   HomeBanner,
   ReadAllBlogs,
   StatisticPartners,
-} from "../components";
+} from "../../components";
 
 const Home = () => {
   return (
     <React.Fragment>
-      {/* Header */}
-      <HeaderNav />
-
       {/* Home Banner */}
       <HomeBanner />
 

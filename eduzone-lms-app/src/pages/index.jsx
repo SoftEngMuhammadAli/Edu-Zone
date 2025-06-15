@@ -1,5 +1,17 @@
-import Home from "./Home";
-import LoginPage from "./LoginPage";
-import SignUpPage from "./SignUpPage";
+import SeeAllCoursesList from "./courses/AllCourses";
+import CourseDetails from "./courses/CourseDetails";
+import Home from "./home/Home";
+import LoginPage from "./auth/LoginPage";
+import SignUpPage from "./auth/SignUpPage";
+import Help from "./help/Help";
+import AllBlogs from "./blogs/AllBlogs";
 
-export { Home, LoginPage, SignUpPage };
+export {
+  Home,
+  LoginPage,
+  SignUpPage,
+  SeeAllCoursesList,
+  CourseDetails,
+  Help,
+  AllBlogs,
+};

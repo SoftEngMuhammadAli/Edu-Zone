@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const HeaderNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -6,10 +7,12 @@ const HeaderNav = () => {
   return (
     <header className="bg-[#1C1E53] text-white">
       <div className="flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <h1 className="text-2xl font-semibold underline">EduZone</h1>
+        {/* Logo/Name */}
+        <Link to="/" className="text-2xl font-semibold underline">
+          EduZone
+        </Link>
 
-        {/* Hamburger Icon - Visible on Mobile */}
+        {/* Hamburger Icon */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden focus:outline-none"
@@ -38,13 +41,13 @@ const HeaderNav = () => {
           </svg>
         </button>
 
-        {/* Navigation Menu - Desktop */}
+        {/* Desktop Menu */}
         <nav className="hidden md:flex gap-6 text-white text-base">
-          <a href="#">Home</a>
-          <a href="#">Courses</a>
-          <a href="#">Contact Us</a>
-          <a href="#">About Us</a>
-          <a href="#">Need Help?</a>
+          <Link to="/">Home</Link>
+          <Link to="/seeAllCourses">Courses</Link>
+          <Link to="/contact">Contact Us</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/help">Need Help?</Link>
         </nav>
       </div>
 
@@ -52,11 +55,21 @@ const HeaderNav = () => {
       {isMenuOpen && (
         <div className="md:hidden px-6 pb-4">
           <nav className="flex flex-col gap-4 text-white text-base">
-            <a href="#">Home</a>
-            <a href="#">Courses</a>
-            <a href="#">Contact Us</a>
-            <a href="#">About Us</a>
-            <a href="#">Need Help?</a>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              Home
+            </Link>
+            <Link to="/seeAllCourses" onClick={() => setIsMenuOpen(false)}>
+              Courses
+            </Link>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+              Contact Us
+            </Link>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+              About Us
+            </Link>
+            <Link to="/help" onClick={() => setIsMenuOpen(false)}>
+              Need Help?
+            </Link>
           </nav>
         </div>
       )}

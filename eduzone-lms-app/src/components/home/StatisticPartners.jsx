@@ -9,24 +9,27 @@ const StatisticPartners = () => {
   return (
     <section className="bg-[#EEF4FA] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        <p className="text-xl text-gray-500 w-full text-center mb-4">
+          Our Records
+        </p>
         {/* Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-10">
-          <div className="p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-4 text-center mb-10">
+          <div className="p-4 justify-center place-items-center ">
             <p className="text-4xl font-bold text-indigo-600">21,000+</p>
             <p className="mt-2 text-sm text-gray-500">Registered Students</p>
           </div>
-          <div className="p-4">
+          <div className="p-4 justify-center place-items-center">
             <p className="text-4xl font-bold text-indigo-600">100+</p>
             <p className="mt-2 text-sm text-gray-500">Instructors</p>
           </div>
-          <div className="p-4">
+          <div className="p-4 justify-center place-items-center">
             <p className="text-4xl font-bold text-indigo-600">150+</p>
             <p className="mt-2 text-sm text-gray-500">Free Courses</p>
           </div>
         </div>
 
         {/* Partners */}
-        <div className="flex flex-wrap justify-center items-center gap-4">
+        <div className="flex flex-wrap justify-center place-items-center gap-4">
           <p className="text-xl text-gray-500 w-full text-center mb-4">
             Our Trusted Partners
           </p>

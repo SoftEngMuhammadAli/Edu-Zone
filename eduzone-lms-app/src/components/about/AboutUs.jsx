@@ -1,10 +1,9 @@
 import React from "react";
-import aboutUsImage from "../../assets/images/about-us-image.png";
+import aboutUsImage from "../../assets/images/main/about-us-image.png";
 
 const AboutUs = () => {
   return (
     <section className="relative bg-white min-h-screen">
-      {/* Mobile: Image as Background */}
       <div className="md:hidden absolute inset-0 z-0">
         <img
           className="w-full h-full object-cover opacity-20"
@@ -18,7 +17,7 @@ const AboutUs = () => {
         {/* Left Text Section*/}
         <div className="flex flex-col place-items-center md:place-items-start gap-6 p-8 md:p-12 lg:p-16">
           <span className="text-[#232536] font-medium text-lg">About Us</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#000000] leading-tight">
             EDU-ZONE Free E-Learning Service to Help You Grow
           </h1>
           <p className="text-[#282938] text-lg md:text-xl leading-relaxed">
