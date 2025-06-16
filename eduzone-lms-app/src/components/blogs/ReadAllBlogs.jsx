@@ -32,12 +32,14 @@ const blogs = [
 
 const ReadAllBlogs = () => {
   return (
-    <section className="bg-white text-[#1C1E53] px-4 md:px-15 mt-10 mb-10 py-12">
-      <div className="flex justify-between items-center mb-10">
-        <h2 className="text-4xl font-bold">Blog, News and Events</h2>
+    <section className="bg-white text-[#000000] px-4 md:px-10 mt-10 mb-10 py-12">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Blog, News and Events
+        </h2>
         <a
           href="#"
-          className="text-[#1C1E53] font-medium flex items-center hover:underline"
+          className="text-[#1C1E53] font-medium flex sm:text-right   hover:underline"
         >
           See All <span className="ml-1">→</span>
         </a>

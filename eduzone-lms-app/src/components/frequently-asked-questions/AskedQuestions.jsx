@@ -9,10 +9,10 @@ const AskedQuestions = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded-xl  px-4 py-8 md:px-8 lg:px-16 gap-8 max-w-7xl mx-auto">
+    <div className="flex flex-col md:flex-row bg-white rounded-xl my-10  px-4 py-8 md:px-8 lg:px-16 gap-8 max-w-7xl mx-auto">
       {/* Left Side */}
       <div className="w-full md:w-1/3">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <h2 className="sm:text-3xl md:text-4xl font-bold mb-4">
           Frequently Asked Questions
         </h2>
         <p className="text-sm md:text-base text-gray-600 leading-relaxed">

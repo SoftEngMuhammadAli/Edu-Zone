@@ -2,12 +2,12 @@ import React from "react";
 import {
   AboutUs,
   AskedQuestions,
+  ContactUs,
   CourseRecommendations,
   CourseRegistration,
   CoursesFeedBack,
   EduZoneBenefits,
   Footer,
-  HeaderNav,
   HomeBanner,
   ReadAllBlogs,
   StatisticPartners,
@@ -42,6 +42,9 @@ const Home = () => {
 
       {/* Blogs */}
       <ReadAllBlogs />
+
+      {/* Contact Us */}
+      <ContactUs />
 
       {/* Footer */}
       <Footer />
