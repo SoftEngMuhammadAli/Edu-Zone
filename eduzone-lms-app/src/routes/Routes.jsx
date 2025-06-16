@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -11,9 +10,11 @@ import {
   Help,
   Home,
   LoginPage,
+  NotFound,
   SeeAllCoursesList,
   SignUpPage,
 } from "../pages";
+import React from "react";
 
 const AppRoutes = () => {
   return (
@@ -23,11 +24,15 @@ const AppRoutes = () => {
   );
 };
 
-// This component handles layout conditionally
 const MainLayout = () => {
   const location = useLocation();
 
-  const HIDE_NAVBAR_PATHS = ["/login", "/signup", "/coursesuccess"];
+  const HIDE_NAVBAR_PATHS = [
+    "/login",
+    "/signup",
+    "/coursesuccess",
+    "/notfound",
+  ];
 
   const hideNavbar = HIDE_NAVBAR_PATHS.includes(location.pathname);
 
@@ -44,6 +49,7 @@ const MainLayout = () => {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/notfound" element={<NotFound />} />
 
         {/* Courses Paths */}
         <Route path="/course/:id" element={<CourseDetails />} />

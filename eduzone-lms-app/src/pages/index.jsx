@@ -5,6 +5,7 @@ import LoginPage from "./auth/LoginPage";
 import SignUpPage from "./auth/SignUpPage";
 import Help from "./help/Help";
 import AllBlogs from "./blogs/AllBlogs";
+import NotFound from "./home/NotFound";
 
 export {
   Home,
@@ -14,4 +15,5 @@ export {
   CourseDetails,
   Help,
   AllBlogs,
+  NotFound,
 };

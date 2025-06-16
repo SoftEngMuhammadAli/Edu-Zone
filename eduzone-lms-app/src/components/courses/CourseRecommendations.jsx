@@ -38,15 +38,15 @@ const CourseRecommendations = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="p-6 sm:p-10 max-w-8xl mx-auto">
+    <section className="px-4 sm:px-8 md:px-16 py-10 max-w-screen-2xl mx-auto">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h2 className="sm:text-3xl md:text-4xl font-bold">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
           Recommended Courses For You
         </h2>
 
         <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-          <select className="py-2 px-5 border rounded-md bg-white text-gray-700 w-full sm:w-auto">
+          <select className="py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-[#FCD980] transition">
             <option value="">All Categories</option>
             <option value="programming">Programming</option>
             <option value="design">Design</option>
@@ -73,10 +73,10 @@ const CourseRecommendations = () => {
         {courses.map((course, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden"
+            className="flex flex-col h-full bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden"
           >
             {/* Course Image */}
-            <div className="h-48 overflow-hidden">
+            <div className="h-48 sm:h-56 md:h-64 overflow-hidden">
               <img
                 src={course.image}
                 alt={course.title}
@@ -85,11 +85,13 @@ const CourseRecommendations = () => {
             </div>
 
             {/* Course Content */}
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-grow">
               <span className="inline-block px-3 py-1 text-xs font-semibold text-[#2405F2] bg-[#2405F2]/10 rounded-full mb-2">
                 {course.category}
               </span>
-              <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">
+                {course.title}
+              </h3>
               <p className="text-gray-600 mb-4">{course.description}</p>
 
               <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
@@ -143,9 +145,11 @@ const CourseRecommendations = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-[#2405F2] hover:bg-[#1a04c4] text-white py-2 rounded-md transition-colors">
-                Enroll Now
-              </button>
+              <div className="mt-auto">
+                <button className="w-full bg-[#2405F2] hover:bg-[#1a04c4] text-white py-2 rounded-md transition-colors">
+                  Enroll Now
+                </button>
+              </div>
             </div>
           </div>
         ))}
