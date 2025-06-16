@@ -17,25 +17,22 @@ const AboutUs = () => {
         />
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 grid grid-cols-1 text-center md:text-left md:grid-cols-2 min-h-screen items-center">
-        {/* Left Text Section*/}
-        <div className="flex flex-col place-items-center md:place-items-start gap-6 p-8 md:p-12 lg:p-16">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 text-center md:text-left items-center min-h-screen max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-10">
+        <div className="flex flex-col gap-6 items-center md:items-start">
           <span className="text-[#232536] font-medium text-lg">About Us</span>
-          <h1 className="text-4xl md:text-5xl font-bold text-[#000000] leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             EDU-ZONE Free E-Learning Service to Help You Grow
           </h1>
-          <p className="text-[#282938] text-lg md:text-xl leading-relaxed">
+          <p className="text-[#282938] text-base md:text-lg leading-relaxed">
             EduZone is expected to be a useful service for the future in the
             field of education, providing accessible learning resources for
             everyone.
           </p>
-          <button className="bg-[#2405F2] text-white py-3 px-6 rounded-md w-fit hover:bg-[#1a04c4] transition-colors mt-4">
+          <button className="bg-[#2405F2] text-white py-3 px-6 rounded-md w-fit hover:bg-[#1a04c4] transition-colors mt-2 md:mt-4">
             Learn More
           </button>
         </div>
 
-        {/* Right Image Section */}
         <div className="hidden md:block h-full w-full">
           <img
             className="w-full h-full object-cover"

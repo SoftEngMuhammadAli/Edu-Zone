@@ -2,41 +2,48 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <>
-      <div className="text-left ml-4 md:ml-10 mt-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1C1E53]">
-          Contact Us
-        </h2>
-        <p className="text-gray-600 mt-2 max-w-xl">
-          Have a question or feedback? Reach out to us using the form below or
-          via our contact details.
-        </p>
-      </div>
+    <section className="bg-white text-black py-12 px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className="max-w-7xl mx-auto">
+        {/* Heading */}
+        <div className="mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1C1E53]">
+            Contact Us
+          </h2>
+          <p className="text-sm md:text-base text-gray-600 mt-2 max-w-xl">
+            Have a question or feedback? Reach out to us using the form below or
+            via our contact details.
+          </p>
+        </div>
 
-      <section className="min-h-screen flex items-stretch justify-center px-0 py-10">
-        {/* Like Flutter Row */}
-        <div className="flex flex-col md:flex-row w-full">
-          {/* Left: Expanded - Full height and width 50% */}
-          <div className="bg-[#1C1E53] text-white w-full md:w-1/2 p-10 flex flex-col justify-between">
+        {/* Main Layout */}
+        <div className="flex flex-col md:flex-row items-stretch w-full shadow-lg rounded-lg overflow-hidden">
+          {/* Left Panel */}
+          <div className="bg-[#1C1E53] text-white w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+                Get In Touch
+              </h2>
+              <p className="text-sm md:text-base text-gray-300 leading-relaxed">
                 We're here to answer any questions you may have. Send us a
                 message and our team will respond shortly.
               </p>
             </div>
             <div className="mt-10 space-y-2">
-              <p className="text-lg font-medium">📞 +6288 999 222 333</p>
-              <p className="text-lg font-medium">📧 info@eduzone.com</p>
-              <p className="text-gray-400 text-sm mt-4">
+              <p className="text-base md:text-lg font-medium">
+                📞 +6288 999 222 333
+              </p>
+              <p className="text-base md:text-lg font-medium">
+                📧 info@eduzone.com
+              </p>
+              <p className="text-xs md:text-sm text-gray-400 mt-4">
                 🕘 Office Hours: Mon - Fri, 9am - 5pm
               </p>
             </div>
           </div>
 
-          {/* Right: Card stays fixed max-w like Flutter Container inside Expanded */}
-          <div className="bg-white w-full md:max-w-[700px] p-6 md:p-10 shadow-2xl">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+          {/* Right Panel */}
+          <div className="bg-white w-full md:w-1/2 p-6 sm:p-8 md:p-10">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
               Send us a message
             </h3>
             <form className="space-y-6 w-full">
@@ -71,8 +78,8 @@ const ContactUs = () => {
             </form>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

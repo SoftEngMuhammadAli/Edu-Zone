@@ -15,7 +15,7 @@ import {
 
 const Home = () => {
   return (
-    <React.Fragment>
+    <>
       {/* Home Banner */}
       <HomeBanner />
 
@@ -48,7 +48,7 @@ const Home = () => {
 
       {/* Footer */}
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

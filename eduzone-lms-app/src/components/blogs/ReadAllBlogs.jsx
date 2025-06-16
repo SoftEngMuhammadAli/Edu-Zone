@@ -32,43 +32,49 @@ const blogs = [
 
 const ReadAllBlogs = () => {
   return (
-    <section className="bg-white text-[#000000] px-4 md:px-10 mt-10 mb-10 py-12">
-      <div className="flex flex-col md:flex-row md:justify-between items-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold">
-          Blog, News and Events
-        </h2>
-        <a
-          href="#"
-          className="text-[#1C1E53] font-medium flex sm:text-right   hover:underline"
-        >
-          See All <span className="ml-1">→</span>
-        </a>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8">
-        {blogs.map((blog) => (
-          <div
-            key={blog.id}
-            className="rounded-lg shadow hover:shadow-lg transition"
+    <section className="bg-white text-black py-12 px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:justify-between items-center mb-10 gap-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center md:text-left">
+            Blog, News and Events
+          </h2>
+          <a
+            href="#"
+            className="text-[#1C1E53] font-medium text-base hover:underline inline-flex items-center"
           >
-            <img
-              src={blog.image}
-              alt={blog.title}
-              className="w-full h-56 object-cover rounded-t-lg"
-            />
-            <div className="p-5">
-              <p className="text-sm text-gray-500 mb-2">{blog.date}</p>
-              <h3 className="text-lg font-semibold mb-2">{blog.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{blog.description}</p>
-              <a
-                href="#"
-                className="text-[#1C1E53] font-medium hover:underline inline-flex items-center"
-              >
-                See More<span className="ml-1">→</span>
-              </a>
+            See All <span className="ml-1">→</span>
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {blogs.map((blog) => (
+            <div
+              key={blog.id}
+              className="rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-white"
+            >
+              <img
+                src={blog.image}
+                alt={blog.title}
+                className="w-full h-56 object-cover rounded-t-lg"
+              />
+              <div className="p-5">
+                <p className="text-sm text-gray-500 mb-2">{blog.date}</p>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-800">
+                  {blog.title}
+                </h3>
+                <p className="text-sm md:text-base text-gray-600 mb-4">
+                  {blog.description}
+                </p>
+                <a
+                  href="#"
+                  className="text-[#1C1E53] font-medium hover:underline inline-flex items-center text-sm md:text-base"
+                >
+                  See More <span className="ml-1">→</span>
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
