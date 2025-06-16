@@ -27,7 +27,12 @@ const AppRoutes = () => {
 const MainLayout = () => {
   const location = useLocation();
 
-  const HIDE_NAVBAR_PATHS = ["/login", "/signup", "/coursesuccess"];
+  const HIDE_NAVBAR_PATHS = [
+    "/login",
+    "/signup",
+    "/coursesuccess",
+    "/notfound",
+  ];
 
   const hideNavbar = HIDE_NAVBAR_PATHS.includes(location.pathname);
 
