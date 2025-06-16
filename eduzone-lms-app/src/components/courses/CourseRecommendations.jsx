@@ -38,10 +38,10 @@ const CourseRecommendations = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="p-6 sm:p-10 max-w-7xl mx-auto">
+    <section className="p-6 sm:p-10 max-w-8xl mx-auto">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h2 className="text-3xl sm:text-4xl font-bold">
+        <h2 className="sm:text-3xl md:text-4xl font-bold">
           Recommended Courses For You
         </h2>
 

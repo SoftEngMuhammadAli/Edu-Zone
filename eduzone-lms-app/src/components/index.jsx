@@ -4,6 +4,7 @@ import ContactUs from "./contact/ContactUs";
 import CourseRecommendations from "./courses/CourseRecommendations";
 import CourseRegistration from "./courses/CourseRegistration";
 import CoursesFeedBack from "./courses/CoursesFeedBack";
+import CourseSuccess from "./courses/CourseSuccess";
 import Footer from "./footer/Footer";
 import AskedQuestions from "./frequently-asked-questions/AskedQuestions";
 import EduZoneBenefits from "./home/EduZoneBenefits";
@@ -24,4 +25,5 @@ export {
   HomeBanner,
   ReadAllBlogs,
   StatisticPartners,
+  CourseSuccess,
 };

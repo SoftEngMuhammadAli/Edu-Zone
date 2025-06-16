@@ -1,7 +1,12 @@
 import React from "react";
 import aboutUsImage from "../../assets/images/main/about-us-image.png";
+import ContactUs from "../contact/ContactUs";
+import Footer from "../footer/Footer";
+import { useLocation } from "react-router-dom";
 
 const AboutUs = () => {
+  const location = useLocation();
+
   return (
     <section className="relative bg-white min-h-screen">
       <div className="md:hidden absolute inset-0 z-0">
@@ -39,6 +44,13 @@ const AboutUs = () => {
           />
         </div>
       </div>
+
+      {location.pathname !== "/" && location.pathname !== "/home" && (
+        <>
+          <ContactUs />
+          <Footer />
+        </>
+      )}
     </section>
   );
 };
