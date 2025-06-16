@@ -9,59 +9,72 @@ const CourseDetail = () => {
 
   return (
     <>
-      <div className="bg-gray-50  min-h-screen py-10 px-6  sm:px-10">
-        <div className="w-full border border-gray-400  shadow-sm rounded-lg mx-auto p-6">
-          <h1 className="text-2xl font-bold mb-2">{course.title}</h1>
-          <p className="text-gray-500 mb-6">
-            Level: {course.level} | Duration: {course.duration}
+      <div className="bg-gray-50 min-h-screen px-4 sm:px-8 md:px-16 py-10">
+        <div className="w-full max-w-6xl mx-auto bg-white border border-gray-200 shadow-md rounded-lg p-6 sm:p-10">
+          {/* Title and Meta */}
+          <h1 className="text-2xl sm:text-3xl font-bold mb-3">
+            {course.title}
+          </h1>
+          <p className="text-gray-500 mb-6 text-sm sm:text-base">
+            Level: {course.level || "Beginner"} | Duration: {course.duration}
           </p>
 
+          {/* Image */}
           <div className="mb-6">
             <img
               src={course.image}
               alt={course.title}
-              className="w-full rounded-lg"
+              className="w-full h-auto rounded-lg max-h-100 object-cover"
             />
           </div>
 
+          {/* About the Course */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">About the Course</h2>
-            <p className="text-gray-700">{course.description}</p>
-          </div>
-
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Target Audience</h2>
-            <p className="text-gray-700">
-              This course is designed for beginners and intermediate learners
-              who want to master {course.title.split(" ")[0]} concepts.
+            <p className="text-gray-700 leading-relaxed">
+              {course.description}
             </p>
           </div>
 
+          {/* Target Audience */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Target Audience</h2>
+            <p className="text-gray-700 leading-relaxed">
+              This course is designed for beginners and intermediate learners
+              who want to master{" "}
+              <span className="font-medium">{course.title.split(" ")[0]}</span>{" "}
+              concepts effectively and apply them in real-world projects.
+            </p>
+          </div>
+
+          {/* Requirements */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-            <ul className="list-disc pl-6 text-gray-700">
+            <ul className="list-disc pl-6 text-gray-700 space-y-1">
               <li>Basic understanding of computers</li>
               <li>Stable internet connection</li>
               <li>Recommended: Google Chrome & VS Code</li>
             </ul>
           </div>
 
+          {/* CTA Section */}
           <div className="text-center mt-10">
-            <p className="text-lg font-bold">Don’t Miss This Opportunity!</p>
+            <p className="text-lg font-bold text-[#1C1E53]">
+              Don’t Miss This Opportunity!
+            </p>
             <p className="text-sm text-gray-500 mb-4">
               Start your learning journey today.
             </p>
             <button
-              onClick={() => {
-                navigate("/coursesuccess");
-              }}
-              className="px-6 py-2 bg-[#1C1E53] text-white rounded-md hover:bg-yellow-500 transition"
+              onClick={() => navigate("/coursesuccess")}
+              className="inline-block px-8 py-3 bg-[#1C1E53] text-white rounded-md hover:bg-[#FCD980] hover:text-[#1C1E53] transition duration-300"
             >
               Join Course
             </button>
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );
