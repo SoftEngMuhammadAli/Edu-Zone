@@ -3,143 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EduZone API Documentation</title>
+    <title>EduZone API Docs</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-100 text-gray-800">
-    <div class="w-full mx-auto bg-white p-6 md:p-8 mt-8 rounded-lg shadow-md">
-      <h1
-        class="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-6"
-      >
-        📘 EduZone API Documentation
+  <body
+    class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-6"
+  >
+    <div
+      class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center relative overflow-hidden"
+    >
+      <!-- Subtle background decoration -->
+      <div
+        class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-30"
+      ></div>
+
+      <!-- Logo -->
+      <div class="flex justify-center mb-4 relative z-10">
+        <img
+          src="./assets/eduzone-circular-logo.jpeg"
+          alt="Logo"
+          class="w-20 h-20 rounded-full border-4 border-blue-200 shadow-md"
+        />
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl font-extrabold text-gray-800 mb-2 relative z-10">
+        🚀 EduZone API Docs
       </h1>
-      <ul class="space-y-4">
-        <!-- Template Item -->
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/all</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get all users
-            </div>
-          </div>
-        </li>
 
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/role/:role</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get users by role
-            </div>
-          </div>
-        </li>
+      <!-- Description -->
+      <p class="text-gray-600 mb-6 text-sm leading-relaxed relative z-10">
+        Access the complete API documentation hosted on Postman for developers,
+        integrators, and collaborators.
+      </p>
 
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/:id</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get user by ID
-            </div>
-          </div>
-        </li>
+      <!-- CTA Button -->
+      <a
+        href="https://documenter.getpostman.com/view/32471550/2sB2x9iA7H"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-6 py-3 rounded-full shadow-lg transition duration-300 relative z-10"
+      >
+        🔗 View Live Docs on Postman
+      </a>
 
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-green-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-green-600">POST</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/create</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Create a new user
-            </div>
-          </div>
-        </li>
-
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-yellow-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-yellow-600">PUT</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/:id</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Update a user by
-              ID
-            </div>
-          </div>
-        </li>
-
-        <li
-          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-red-500"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-red-600">DELETE</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
-              <code class="bg-green-100 px-2 py-1 rounded text-sm"
-                >/api/users/:id</code
-              >
-            </div>
-            <div>
-              <span class="font-semibold">Description:</span> Delete a user by
-              ID
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="text-center text-sm text-gray-500 mt-8">
-        📍 Base URL:
-        <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:5174</code>
+      <!-- Footer -->
+      <div class="mt-8 text-xs text-gray-400 relative z-10">
+        &copy; 2025 <span class="font-medium text-gray-500">EduZone</span> • All
+        rights reserved
       </div>
     </div>
   </body>

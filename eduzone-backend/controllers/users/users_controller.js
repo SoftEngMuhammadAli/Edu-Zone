@@ -63,14 +63,12 @@ async function createUser(req, res) {
       bio,
     } = req.body;
 
-    // Basic validation (you can improve this with Joi or express-validator)
     if (!username || !email || !password || !first_name || !last_name) {
       return res
         .status(400)
         .json({ message: "Please provide all required fields." });
     }
 
-    // Check if username or email already exists
     const existingUser = await User.findOne({
       $or: [{ username }, { email }],
     });
@@ -80,18 +78,16 @@ async function createUser(req, res) {
         .json({ message: "Username or email already taken." });
     }
 
-    // Hash password
     const saltRounds = 10;
     const password_hash = await bcrypt.hash(password, saltRounds);
 
-    // Create user
     const newUser = new User({
       username,
       email,
       password_hash,
       first_name,
       last_name,
-      user_type, // optional, default is 'student'
+      user_type,
       profile_picture_url,
       bio,
     });
@@ -116,7 +112,6 @@ async function handleGetUserById(req, res) {
       return res.status(400).json({ message: "_id parameter is required" });
     }
 
-    // Optional: Validate ObjectId format
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid ObjectId format" });
     }
@@ -206,7 +201,6 @@ async function handleUpdateUserById(req, res) {
   }
 }
 
-// Exports
 module.exports = {
   handleGetAllUsers,
   handleGetAllUsersByRole,
