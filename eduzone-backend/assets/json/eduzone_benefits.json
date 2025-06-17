@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Learn Anytime, Anywhere",
+    "description": "Access courses 24/7 from any device with internet connection. Perfect for busy professionals and students who need flexible learning schedules."
+  },
+  {
+    "id": 2,
+    "title": "Expert-Led Courses",
+    "description": "Learn from industry professionals and academic experts who bring real-world experience to your virtual classroom."
+  },
+  {
+    "id": 3,
+    "title": "Cost-Effective Education",
+    "description": "Save on commuting, accommodation, and material costs while receiving high-quality education at a fraction of traditional costs."
+  },
+  {
+    "id": 4,
+    "title": "Personalized Learning Paths",
+    "description": "Customize your learning experience with courses tailored to your skill level, interests, and career goals."
+  },
+  {
+    "id": 5,
+    "title": "Interactive Learning Tools",
+    "description": "Engage with quizzes, discussion forums, and hands-on projects that enhance retention and practical application of knowledge."
+  },
+  {
+    "id": 6,
+    "title": "Recognized Certifications",
+    "description": "Earn valuable certificates upon completion that can boost your resume and professional credentials."
+  }
+]

@@ -1,5 +1,6 @@
 const User = require("../../models/users/users_model.js");
 const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 async function handleGetAllUsers(req, res) {
   try {
@@ -177,6 +178,10 @@ async function handleUpdateUserById(req, res) {
     }
 
     const updateData = req.body;
+
+    if (!updateData || Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: "Update data is required" });
+    }
 
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
