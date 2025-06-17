@@ -13,134 +13,182 @@
       >
         📘 EduZone API Documentation
       </h1>
-      <ul class="space-y-4">
-        <!-- Template Item -->
+
+      <!-- Base URL Selector -->
+      <div class="mb-6 text-center">
+        <label for="base-url" class="font-semibold text-sm">🌐 Base URL:</label>
+        <select
+          id="base-url"
+          class="bg-gray-100 text-sm p-2 rounded border border-gray-300"
+          onchange="document.getElementById('current-base-url').textContent = this.value"
+        >
+          <option value="http://localhost:5174">http://localhost:5174</option>
+          <option value="https://eduzone-jscm.onrender.com">
+            https://eduzone-jscm.onrender.com
+          </option>
+        </select>
+        <div class="text-sm text-gray-500 mt-2">
+          Currently viewing:
+          <code id="current-base-url" class="bg-gray-100 px-2 py-1 rounded">
+            http://localhost:5174
+          </code>
+        </div>
+      </div>
+
+      <!-- Users API -->
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">👥 Users API</h2>
+      <ul class="space-y-4 mb-8">
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-blue-600">GET</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/all</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get all users
-            </div>
+            <div>Get all users</div>
           </div>
         </li>
-
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-blue-600">GET</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/role/:role</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get users by role
-            </div>
+            <div>Get users by role</div>
           </div>
         </li>
-
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-blue-600">GET</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-blue-600">GET</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/:id</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Get user by ID
-            </div>
+            <div>Get user by ID</div>
           </div>
         </li>
-
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-green-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-green-600">POST</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-green-600">POST</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/create</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Create a new user
-            </div>
+            <div>Create a new user</div>
           </div>
         </li>
-
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-yellow-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-yellow-600">PUT</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-yellow-600">PUT</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/:id</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Update a user by
-              ID
-            </div>
+            <div>Update a user by ID</div>
           </div>
         </li>
-
         <li
           class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-red-500"
         >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-red-600">DELETE</strong></div>
             <div>
-              <span class="font-semibold">Method:</span>
-              <strong class="text-red-600">DELETE</strong>
-            </div>
-            <div>
-              <span class="font-semibold">Endpoint:</span>
               <code class="bg-green-100 px-2 py-1 rounded text-sm"
                 >/api/users/:id</code
               >
             </div>
-            <div>
-              <span class="font-semibold">Description:</span> Delete a user by
-              ID
-            </div>
+            <div>Delete a user by ID</div>
           </div>
         </li>
       </ul>
-      <div class="text-center text-sm text-gray-500 mt-8">
-        📍 Base URL:
-        <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:5174</code>
-      </div>
+
+      <!-- Edu Benefits API -->
+      <h2 class="text-xl font-semibold text-purple-700 mb-4">
+        🎓 Edu-Benefits API
+      </h2>
+      <ul class="space-y-4">
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-blue-600">GET</strong></div>
+            <div>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/edu-benefits/all</code
+              >
+            </div>
+            <div>Get all edu-benefits</div>
+          </div>
+        </li>
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-blue-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-blue-600">GET</strong></div>
+            <div>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/edu-benefits/:id</code
+              >
+            </div>
+            <div>Get edu-benefit by ID</div>
+          </div>
+        </li>
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-green-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-green-600">POST</strong></div>
+            <div>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/edu-benefits/create</code
+              >
+            </div>
+            <div>Create a new edu-benefit</div>
+          </div>
+        </li>
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-yellow-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-yellow-600">PUT</strong></div>
+            <div>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/edu-benefits/:id</code
+              >
+            </div>
+            <div>Update edu-benefit by ID</div>
+          </div>
+        </li>
+        <li
+          class="bg-gray-100 p-4 border-l-4 rounded-md shadow-sm border-red-500"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><strong class="text-red-600">DELETE</strong></div>
+            <div>
+              <code class="bg-green-100 px-2 py-1 rounded text-sm"
+                >/api/edu-benefits/:id</code
+              >
+            </div>
+            <div>Delete edu-benefit by ID</div>
+          </div>
+        </li>
+      </ul>
     </div>
   </body>
 </html>
