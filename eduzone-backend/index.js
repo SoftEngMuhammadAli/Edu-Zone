@@ -21,9 +21,10 @@ app.use("/api/users", userRouter);
 // Eduzone benefits Route
 app.use("/api/benefits", benefitRouter);
 
-connectToDatabase(
-  `mongodb://localhost:27017/${process.env.DEVELOPMENT_DATABASE_NAME}`
-);
+const uri =
+  process.env.DB_CONFIGURATION ||
+  `mongodb://localhost:27017/${process.env.DEVELOPMENT_DATABASE_NAME}`;
+connectToDatabase(uri);
 
 app.listen(PORT, () => {
   console.log(`Server running on PORT ${PORT}`);
