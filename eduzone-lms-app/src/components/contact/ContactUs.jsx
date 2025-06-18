@@ -30,10 +30,10 @@ const ContactUs = () => {
             </div>
             <div className="mt-10 space-y-2">
               <p className="text-base md:text-lg font-medium">
-                📞 +6288 999 222 333
+                <a href="tel:+6288 999 222 333">📞 +6288 999 222 333</a>
               </p>
               <p className="text-base md:text-lg font-medium">
-                📧 info@eduzone.com
+                <a href="mailto:info@eduzone.com">📧 info@eduzone.com</a>
               </p>
               <p className="text-xs md:text-sm text-gray-400 mt-4">
                 🕘 Office Hours: Mon - Fri, 9am - 5pm
