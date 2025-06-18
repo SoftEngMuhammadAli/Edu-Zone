@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const app = express();
+const cors = require("cors");
 const PORT = process.env.PORT || 3000;
 const connectToDatabase = require("./config/server");
 const userRouter = require("./routes/users/user_router");
@@ -9,6 +10,7 @@ const benefitRouter = require("./routes/edu-benefits/edu_benefits");
 const blogRouter = require("./routes/blog/blog_router");
 const courseRoutes = require("./routes/course/course_router");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.set("json spaces", 2);
