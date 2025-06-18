@@ -1,10 +1,13 @@
 import React from "react";
+import { Footer } from "../../components";
 
 const BlogsDetails = () => {
   return (
-    <div>
+    <>
       <h2>Show Selected Blogs Details</h2>
-    </div>
+
+      <Footer />
+    </>
   );
 };
 
