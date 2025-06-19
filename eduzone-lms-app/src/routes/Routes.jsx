@@ -11,6 +11,7 @@ import {
   Home,
   LoginPage,
   NotFound,
+  ReadAllBlogs,
   SeeAllCoursesList,
   SignUpPage,
 } from "../pages";
@@ -50,6 +51,7 @@ const MainLayout = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/help" element={<Help />} />
         <Route path="/notfound" element={<NotFound />} />
+        <Route path="/allblogs" element={<ReadAllBlogs />} />
 
         {/* Courses Paths */}
         <Route path="/course/:id" element={<CourseDetails />} />

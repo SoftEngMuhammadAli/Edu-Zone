@@ -1,5 +1,5 @@
 import AboutUs from "./about/AboutUs";
-import ReadAllBlogs from "./blogs/ReadAllBlogs";
+import ReadHomeBlogs from "./blogs/ReadHomeBlogs";
 import ContactUs from "./contact/ContactUs";
 import CourseRecommendations from "./courses/CourseRecommendations";
 import CourseRegistration from "./courses/CourseRegistration";
@@ -23,7 +23,7 @@ export {
   Footer,
   HeaderNav,
   HomeBanner,
-  ReadAllBlogs,
+  ReadHomeBlogs,
   StatisticPartners,
   CourseSuccess,
 };

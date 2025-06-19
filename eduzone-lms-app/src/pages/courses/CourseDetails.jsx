@@ -19,13 +19,9 @@ const CourseDetail = () => {
             Level: {course.level || "Beginner"} | Duration: {course.duration}
           </p>
 
-          {/* Image */}
-          <div className="mb-6">
-            <img
-              src={course.image}
-              alt={course.title}
-              className="w-full h-auto rounded-lg max-h-100 object-cover"
-            />
+          {/* Course Image */}
+          <div className="h-48 sm:h-60 md:h-96 mb-5 rounded-[10px] overflow-hidden flex items-center justify-center bg-gray-100">
+            <span className="text-gray-500">No Image Found</span>
           </div>
 
           {/* About the Course */}

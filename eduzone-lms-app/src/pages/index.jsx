@@ -4,8 +4,9 @@ import Home from "./home/Home";
 import LoginPage from "./auth/LoginPage";
 import SignUpPage from "./auth/SignUpPage";
 import Help from "./help/Help";
-import AllBlogs from "./blogs/AllBlogs";
 import NotFound from "./home/NotFound";
+import ReadAllBlogs from "./blogs/AllBlogs";
+import BlogsDetails from "./blogs/BlogsDetails";
 
 export {
   Home,
@@ -14,6 +15,7 @@ export {
   SeeAllCoursesList,
   CourseDetails,
   Help,
-  AllBlogs,
   NotFound,
+  ReadAllBlogs,
+  BlogsDetails,
 };

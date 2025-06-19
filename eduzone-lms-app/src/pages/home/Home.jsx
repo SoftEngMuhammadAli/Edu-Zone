@@ -9,7 +9,7 @@ import {
   EduZoneBenefits,
   Footer,
   HomeBanner,
-  ReadAllBlogs,
+  ReadHomeBlogs,
   StatisticPartners,
 } from "../../components";
 
@@ -41,7 +41,7 @@ const Home = () => {
       <CourseRegistration />
 
       {/* Blogs */}
-      <ReadAllBlogs />
+      <ReadHomeBlogs />
 
       {/* Contact Us */}
       <ContactUs />
