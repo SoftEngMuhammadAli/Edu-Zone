@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const eduZoneBenefitsSchema = mongoose.Schema(
   {
@@ -18,7 +18,7 @@ const eduZoneBenefitsSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model(
+export default mongoose.model(
   "EduZoneBenefitModel",
   eduZoneBenefitsSchema,
   "eduzone-benefits"

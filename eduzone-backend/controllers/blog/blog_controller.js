@@ -1,7 +1,7 @@
-const Blog = require("../../models/blog/blog_model");
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import Blog from "../../models/blog/blog_model.js";
 
-const handleGetAllBlogs = async (req, res) => {
+export const handleGetAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find({});
     if (!blogs) {
@@ -18,7 +18,7 @@ const handleGetAllBlogs = async (req, res) => {
   }
 };
 
-const handleGetBlogById = async (req, res) => {
+export const handleGetBlogById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -34,7 +34,7 @@ const handleGetBlogById = async (req, res) => {
   }
 };
 
-const handleCreateBlog = async (req, res) => {
+export const handleCreateBlog = async (req, res) => {
   const { title, content, author } = req.body;
 
   try {
@@ -48,7 +48,7 @@ const handleCreateBlog = async (req, res) => {
   }
 };
 
-const handleUpdateBlogById = async (req, res) => {
+export const handleUpdateBlogById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -66,7 +66,7 @@ const handleUpdateBlogById = async (req, res) => {
   }
 };
 
-const handleDeleteBlogById = async (req, res) => {
+export const handleDeleteBlogById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -82,7 +82,7 @@ const handleDeleteBlogById = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   handleGetAllBlogs,
   handleGetBlogById,
   handleCreateBlog,

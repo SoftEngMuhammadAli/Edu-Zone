@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   handleGetAllBlogs,
   handleGetBlogById,
   handleCreateBlog,
   handleUpdateBlogById,
   handleDeleteBlogById,
-} = require("../../controllers/blog/blog_controller");
+} from "../../controllers/blog/blog_controller.js";
 
 router.get("/all", handleGetAllBlogs);
 
@@ -18,4 +18,4 @@ router.put("/:id", handleUpdateBlogById);
 
 router.delete("/:id", handleDeleteBlogById);
 
-module.exports = router;
+export default router;

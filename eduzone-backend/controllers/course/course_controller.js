@@ -1,7 +1,7 @@
-const Course = require("../../models/course/course_model");
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import Course from "../../models/course/course_model.js";
 
-const getAllCourses = async (req, res) => {
+export const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find({});
     if (!courses) {
@@ -17,7 +17,7 @@ const getAllCourses = async (req, res) => {
   }
 };
 
-const getCourseById = async (req, res) => {
+export const getCourseById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -34,7 +34,7 @@ const getCourseById = async (req, res) => {
   }
 };
 
-const createCourse = async (req, res) => {
+export const createCourse = async (req, res) => {
   const {
     title,
     description,
@@ -71,7 +71,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-const updateCourseById = async (req, res) => {
+export const updateCourseById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -94,7 +94,7 @@ const updateCourseById = async (req, res) => {
 };
 
 // DELETE course by ID
-const deleteCourseById = async (req, res) => {
+export const deleteCourseById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -114,7 +114,7 @@ const deleteCourseById = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllCourses,
   getCourseById,
   createCourse,

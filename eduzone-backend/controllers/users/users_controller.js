@@ -1,8 +1,8 @@
-const User = require("../../models/users/users_model.js");
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+import User from "../../models/users/users_model.js";
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
-async function handleGetAllUsers(req, res) {
+export const handleGetAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
 
@@ -20,9 +20,9 @@ async function handleGetAllUsers(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleGetAllUsersByRole(req, res) {
+export const handleGetAllUsersByRole = async (req, res) => {
   try {
     const role = req.params.role;
 
@@ -48,9 +48,9 @@ async function handleGetAllUsersByRole(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function createUser(req, res) {
+export const createUser = async (req, res) => {
   try {
     const {
       username,
@@ -102,9 +102,9 @@ async function createUser(req, res) {
       .status(500)
       .json({ message: "Error creating user", error: error.message });
   }
-}
+};
 
-async function handleGetUserById(req, res) {
+export const handleGetUserById = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -132,9 +132,9 @@ async function handleGetUserById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleDeleteUserById(req, res) {
+export const handleDeleteUserById = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -162,9 +162,9 @@ async function handleDeleteUserById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleUpdateUserById(req, res) {
+export const handleUpdateUserById = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -199,9 +199,9 @@ async function handleUpdateUserById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-module.exports = {
+export default {
   handleGetAllUsers,
   handleGetAllUsersByRole,
   createUser,

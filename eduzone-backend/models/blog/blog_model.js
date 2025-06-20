@@ -1,22 +1,25 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     content: {
       type: String,
       required: true,
     },
     author: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     publish_date: {
       type: Date,
       required: true,
+      default: Date.now,
     },
     tags: {
       type: [String],
@@ -37,9 +40,12 @@ const blogSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      enum: ["tech", "lifestyle", "travel"],
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("Blog", blogSchema, "blogs");
+export default mongoose.model("Blog", blogSchema, "blogs");

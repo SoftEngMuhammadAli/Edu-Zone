@@ -1,26 +1,26 @@
 // Load environment variables
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 // Core modules
-const path = require("path");
+import path from "path";
 
 // Third-party modules
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
 // App setup
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Database
-const connectToDatabase = require("./config/server");
+import connectToDatabase from "./config/server.js";
 
 // Route imports (grouped and clearly labeled)
-const userRouter = require("./routes/users/user_router");
-const benefitRouter = require("./routes/edu-benefits/edu_benefits");
-const blogRouter = require("./routes/blog/blog_router");
-const courseRoutes = require("./routes/course/course_router");
-const aboutRouter = require("./routes/about/about_us_router");
+import userRouter from "./routes/users/user_router.js";
+import benefitRouter from "./routes/edu-benefits/edu_benefits.js";
+import blogRouter from "./routes/blog/blog_router.js";
+import courseRoutes from "./routes/course/course_router.js";
 
 // ==================
 // Middleware
@@ -34,10 +34,10 @@ app.set("json spaces", 2);
 // Static Routes
 // ==================
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "docs.html"));
+  res.sendFile(path.join(process.cwd(), "docs.html"));
 });
 app.get("/docs", (req, res) => {
-  res.sendFile(path.join(__dirname, "docs.html"));
+  res.sendFile(path.join(process.cwd(), "docs.html"));
 });
 
 // ==================
@@ -47,7 +47,6 @@ app.use("/api/users", userRouter);
 app.use("/api/benefits", benefitRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/courses", courseRoutes);
-app.use("/api/about", aboutRouter);
 
 // ==================
 // Database Connection
