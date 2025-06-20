@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   handleBenefitByGetAll,
   handleBenefitById,
   createBenefit,
   handleUpdateBenefitById,
   handleDeleteBenefitById,
-} = require("../../controllers/edu-benefits/edu_benefits_controller");
+} from "../../controllers/edu-benefits/edu_benefits_controller.js";
 
 router.get("/all", handleBenefitByGetAll);
 router.get("/:id", handleBenefitById);
@@ -17,4 +17,4 @@ router.put("/:id", handleUpdateBenefitById);
 
 router.delete("/:id", handleDeleteBenefitById);
 
-module.exports = router;
+export default router;

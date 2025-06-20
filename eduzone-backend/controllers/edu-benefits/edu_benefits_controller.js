@@ -1,7 +1,7 @@
-const EduZoneBenefit = require("../../models/edu-benefits/edu_benefits_model");
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import EduZoneBenefit from "../../models/edu-benefits/edu_benefits_model.js";
 
-async function handleBenefitByGetAll(req, res) {
+export const handleBenefitByGetAll = async (req, res) => {
   try {
     const data = await EduZoneBenefit.find({});
     if (!data || data.length === 0) {
@@ -17,9 +17,9 @@ async function handleBenefitByGetAll(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleBenefitById(req, res) {
+export const handleBenefitById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -43,9 +43,9 @@ async function handleBenefitById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function createBenefit(req, res) {
+export const createBenefit = async (req, res) => {
   try {
     const { title, description } = req.body;
 
@@ -76,9 +76,9 @@ async function createBenefit(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleUpdateBenefitById(req, res) {
+export const handleUpdateBenefitById = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
@@ -113,9 +113,9 @@ async function handleUpdateBenefitById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-async function handleDeleteBenefitById(req, res) {
+export const handleDeleteBenefitById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -139,9 +139,9 @@ async function handleDeleteBenefitById(req, res) {
       error: error.message,
     });
   }
-}
+};
 
-module.exports = {
+export default {
   handleBenefitByGetAll,
   handleBenefitById,
   createBenefit,
