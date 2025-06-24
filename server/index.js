@@ -2,9 +2,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-// Core modules
-import path from "path";
-
 // Third-party modules
 import express from "express";
 import cors from "cors";
@@ -21,6 +18,8 @@ import userRouter from "./routes/users/user_router.js";
 import benefitRouter from "./routes/edu-benefits/edu_benefits.js";
 import blogRouter from "./routes/blog/blog_router.js";
 import courseRoutes from "./routes/course/course_router.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 
 // ==================
 // Middleware
@@ -29,16 +28,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("json spaces", 2);
-
-// ==================
-// Static Routes
-// ==================
-app.get("/", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "docs.html"));
-});
-app.get("/docs", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "docs.html"));
-});
 
 // ==================
 // API Routes
@@ -57,8 +46,52 @@ const uri =
 connectToDatabase(uri);
 
 // ==================
+// Swagger definition
+// ==================
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Edu-Zone Backend API",
+      version: "1.0.0",
+      description: `
+        Welcome to the Edu-Zone Backend API documentation.  
+        This API serves as the backbone of the Edu-Zone platform, enabling features such as:
+        
+        - User registration, login, and role-based management  
+        - Course creation, listing, and updates  
+        - Educational benefit access and management  
+        - Blog publishing and viewing
+        - Many More Coming...
+    
+        All endpoints follow RESTful principles and return JSON responses.  
+        JWT authentication is required for protected routes.
+      `,
+      contact: {
+        name: "Edu-Zone Dev Team",
+        email: "support@eduzone.com",
+        url: "https://eduzone.com",
+      },
+      license: {
+        name: "MIT",
+        url: "https://opensource.org/licenses/MIT",
+      },
+    },
+    servers: [
+      {
+        url: `http://localhost:${PORT}`,
+      },
+    ],
+  },
+  apis: ["./routes/**/*.js"],
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// ==================
 // Start Server
 // ==================
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
