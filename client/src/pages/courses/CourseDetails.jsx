@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Footer } from "../../components";
+import { AppFooter } from "../../components/footer/Footer";
 
 const CourseDetail = () => {
   const { state } = useLocation();
@@ -71,7 +71,7 @@ const CourseDetail = () => {
         </div>
       </div>
 
-      <Footer />
+      <AppFooter />
     </>
   );
 };

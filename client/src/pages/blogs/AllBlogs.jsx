@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Footer } from "../../components";
+import { AppFooter } from "../../components/footer/Footer";
 
 const ReadAllBlogs = () => {
   const [getData, setData] = useState([]);
@@ -155,7 +155,7 @@ const ReadAllBlogs = () => {
           )}
         </div>
       </section>
-      <Footer />
+      <AppFooter />
     </>
   );
 };

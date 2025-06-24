@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Footer } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AppFooter } from "../../components/footer/Footer";
 
 const SeeAllCoursesList = () => {
   const [courses, setCourses] = useState([]);
@@ -90,7 +90,7 @@ const SeeAllCoursesList = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      <AppFooter />
     </>
   );
 };
