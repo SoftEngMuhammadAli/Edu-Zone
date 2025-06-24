@@ -1,8 +1,8 @@
 import React from "react";
 import aboutUsImage from "../../assets/images/main/about-us-image.png";
 import ContactUs from "../contact/ContactUs";
-import Footer from "../footer/Footer";
 import { useLocation } from "react-router-dom";
+import { AppFooter } from "../footer/Footer";
 
 const AboutUs = () => {
   const location = useLocation();
@@ -52,7 +52,7 @@ const AboutUs = () => {
       {location.pathname !== "/" && location.pathname !== "/home" && (
         <>
           <ContactUs />
-          <Footer />
+          <AppFooter />
         </>
       )}
     </section>

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  AboutUs,
   AskedQuestions,
   ContactUs,
   CourseRecommendations,
@@ -12,6 +11,7 @@ import {
   ReadHomeBlogs,
   StatisticPartners,
 } from "../../components";
+import AboutUs from "../../components/about/AboutUs";
 
 const Home = () => {
   return (
