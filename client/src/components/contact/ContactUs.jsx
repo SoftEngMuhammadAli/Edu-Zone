@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "../../components";
 import { useLocation } from "react-router-dom";
+import { AppFooter } from "../footer/Footer";
 
 const ContactUs = () => {
   const location = useLocation();
@@ -87,7 +87,7 @@ const ContactUs = () => {
 
       {location.pathname !== "/" && location.pathname !== "/home" && (
         <>
-          <Footer />
+          <AppFooter />
         </>
       )}
     </>

@@ -1,17 +1,15 @@
 import React from "react";
-import {
-  AskedQuestions,
-  ContactUs,
-  CourseRecommendations,
-  CourseRegistration,
-  CoursesFeedBack,
-  EduZoneBenefits,
-  Footer,
-  HomeBanner,
-  ReadHomeBlogs,
-  StatisticPartners,
-} from "../../components";
+import HomeBanner from "../../components/home/HomeBanner";
+import StatisticPartners from "../../components/home/StatisticPartners";
+import EduZoneBenefits from "../../components/home/EduZoneBenefits";
 import AboutUs from "../../components/about/AboutUs";
+import CourseRecommendations from "../../components/courses/CourseRecommendations";
+import CoursesFeedBack from "../../components/courses/CoursesFeedBack";
+import AskedQuestions from "../../components/frequently-asked-questions/AskedQuestions";
+import CourseRegistration from "../../components/courses/CourseRegistration";
+import ReadHomeBlogs from "../../components/blogs/ReadHomeBlogs";
+import ContactUs from "../../components/contact/ContactUs";
+import { AppFooter } from "../../components/footer/Footer";
 
 const Home = () => {
   return (
@@ -47,7 +45,7 @@ const Home = () => {
       <ContactUs />
 
       {/* Footer */}
-      <Footer />
+      <AppFooter />
     </>
   );
 };

@@ -4,7 +4,6 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { AboutUs, ContactUs, CourseSuccess, HeaderNav } from "../components";
 import {
   CourseDetails,
   Help,
@@ -16,6 +15,10 @@ import {
   SignUpPage,
 } from "../pages";
 import React from "react";
+import AboutUs from "../components/about/AboutUs";
+import ContactUs from "../components/contact/ContactUs";
+import CourseSuccess from "../components/courses/CourseSuccess";
+import HeaderNav from "../components/home/HeaderNav";
 
 const AppRoutes = () => {
   return (
