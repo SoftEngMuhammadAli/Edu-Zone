@@ -38,7 +38,7 @@ const LoginPage = () => {
             className="space-y-5"
             onSubmit={(e) => {
               e.preventDefault();
-              navigate("/");
+              navigate("/home");
             }}
           >
             <input
@@ -63,7 +63,7 @@ const LoginPage = () => {
             <button
               type="submit"
               onClick={() => {
-                navigate("/");
+                navigate("/home");
               }}
               className="w-full py-3 bg-yellow-400 text-[#000000] font-semibold rounded hover:bg-yellow-500 transition"
             >
