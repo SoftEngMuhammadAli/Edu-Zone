@@ -44,7 +44,7 @@ connectToDatabase(process.env.DB_CONFIGURATION);
 // Swagger definition
 // ==================
 const swaggerOptions = {
-  swaggerDefinition: {
+  definition: {
     openapi: "3.0.0",
     info: {
       title: "Edu-Zone Backend",
@@ -52,13 +52,13 @@ const swaggerOptions = {
       description: `
         Welcome to the Edu-Zone Backend API documentation.  
         This API serves as the backbone of the Edu-Zone platform, enabling features such as:
-        
+
         - User registration, login, and role-based management  
         - Course creation, listing, and updates  
         - Educational benefit access and management  
         - Blog publishing and viewing
         - Many More Coming...
-    
+
         All endpoints follow RESTful principles and return JSON responses.  
         JWT authentication is required for protected routes.
       `,
@@ -76,6 +76,20 @@ const swaggerOptions = {
       {
         url: "https://eduzone-jscm.onrender.com",
         description: "Production server",
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },
