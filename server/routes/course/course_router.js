@@ -8,6 +8,7 @@ import {
   updateCourseById,
   deleteCourseById,
 } from "../../controllers/course/course_controller.js";
+import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
 
 /**
  * @swagger

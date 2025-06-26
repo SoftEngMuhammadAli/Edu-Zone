@@ -8,6 +8,7 @@ import {
   handleUpdateBlogById,
   handleDeleteBlogById,
 } from "../../controllers/blog/blog_controller.js";
+import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
 
 /**
  * @swagger
