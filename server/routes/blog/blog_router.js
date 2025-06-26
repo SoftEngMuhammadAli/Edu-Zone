@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-
+import checkAuth from "../../middlewares/auth/auth_middleware.js";
 import {
   handleGetAllBlogs,
   handleGetBlogById,
@@ -56,7 +56,7 @@ import {
  *               items:
  *                 $ref: '#/components/schemas/Blog'
  */
-router.get("/all", handleGetAllBlogs);
+router.get("/all", checkAuth, handleGetAllBlogs);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ router.get("/all", handleGetAllBlogs);
  *       404:
  *         description: Blog not found
  */
-router.get("/:id", handleGetBlogById);
+router.get("/:id", checkAuth, handleGetBlogById);
 
 /**
  * @swagger
@@ -99,7 +99,12 @@ router.get("/:id", handleGetBlogById);
  *       201:
  *         description: Blog created successfully
  */
-router.post("/create", handleCreateBlog);
+router.post(
+  "/create",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  handleCreateBlog
+);
 
 /**
  * @swagger
@@ -126,7 +131,12 @@ router.post("/create", handleCreateBlog);
  *       404:
  *         description: Blog not found
  */
-router.put("/:id", handleUpdateBlogById);
+router.put(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  handleUpdateBlogById
+);
 
 /**
  * @swagger
@@ -147,6 +157,11 @@ router.put("/:id", handleUpdateBlogById);
  *       404:
  *         description: Blog not found
  */
-router.delete("/:id", handleDeleteBlogById);
+router.delete(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  handleDeleteBlogById
+);
 
 export default router;

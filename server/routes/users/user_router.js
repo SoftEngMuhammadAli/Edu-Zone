@@ -7,6 +7,8 @@ import {
   handleDeleteUserById,
   handleUpdateUserById,
 } from "../../controllers/auth/users_controller.js";
+import checkAuth from "../../middlewares/auth/auth_middleware.js";
+import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
 
 const router = express.Router();
 
@@ -47,7 +49,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get("/all", handleGetAllUsers);
+router.get("/all", checkAuth, authorizeRoles("admin"), handleGetAllUsers);
 
 /**
  * @swagger
@@ -72,7 +74,12 @@ router.get("/all", handleGetAllUsers);
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get("/role/:role", handleGetAllUsersByRole);
+router.get(
+  "/role/:role",
+  checkAuth,
+  authorizeRoles("admin"),
+  handleGetAllUsersByRole
+);
 
 /**
  * @swagger
@@ -97,7 +104,7 @@ router.get("/role/:role", handleGetAllUsersByRole);
  *       404:
  *         description: User not found
  */
-router.get("/:id", handleGetUserById);
+router.get("/:id", checkAuth, authorizeRoles("admin"), handleGetUserById);
 
 /**
  * @swagger
@@ -115,7 +122,7 @@ router.get("/:id", handleGetUserById);
  *       201:
  *         description: User created successfully
  */
-router.post("/create", createUser);
+router.post("/create", checkAuth, authorizeRoles("admin"), createUser);
 
 /**
  * @swagger
@@ -142,7 +149,7 @@ router.post("/create", createUser);
  *       404:
  *         description: User not found
  */
-router.put("/:id", handleUpdateUserById);
+router.put("/:id", checkAuth, authorizeRoles("admin"), handleUpdateUserById);
 
 /**
  * @swagger
@@ -163,6 +170,6 @@ router.put("/:id", handleUpdateUserById);
  *       404:
  *         description: User not found
  */
-router.delete("/:id", handleDeleteUserById);
+router.delete("/:id", checkAuth, authorizeRoles("admin"), handleDeleteUserById);
 
 export default router;

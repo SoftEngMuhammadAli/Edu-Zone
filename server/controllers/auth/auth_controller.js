@@ -2,8 +2,8 @@ import User from "../../models/users/users_model.js";
 import {
   compareAndSecurePassword,
   hashAuthPassword,
+  generateToken,
 } from "../../utils/helpers.js";
-import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   try {
@@ -19,21 +19,24 @@ export const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await hashAuthPassword(password);
+
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
     });
 
-    console.log(`Created User: ${newUser}`);
     await newUser.save();
 
-    // Exclude password field from response
-    const userData = newUser.toJSON();
+    const token = generateToken(newUser);
+
+    // Exclude password field
+    const userData = newUser.toObject();
     delete userData.password;
 
     return res.status(201).json({
       message: "User is Created, Successfully!",
+      token: token,
       data: userData,
     });
   } catch (error) {
@@ -41,7 +44,6 @@ export const registerUser = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -63,18 +65,16 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const token = generateToken(user);
 
     // Exclude password field from user object
-    const userResponse = { ...user.toJSON() };
-    delete userResponse.password;
+    const userData = { ...user.toJSON() };
+    delete userData.password;
 
     return res.status(200).json({
       message: "User Logged In, Successfully!",
       token: token,
-      user: userResponse,
+      user: userData,
     });
   } catch (error) {
     console.error(`Error: ${error}`);

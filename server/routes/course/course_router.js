@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-
+import checkAuth from "../../middlewares/auth/auth_middleware.js";
 import {
   getAllCourses,
   getCourseById,
@@ -55,7 +55,7 @@ import {
  *               items:
  *                 $ref: '#/components/schemas/Course'
  */
-router.get("/all", getAllCourses);
+router.get("/all", checkAuth, getAllCourses);
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ router.get("/all", getAllCourses);
  *       404:
  *         description: Course not found
  */
-router.get("/:id", getCourseById);
+router.get("/:id", checkAuth, getCourseById);
 
 /**
  * @swagger
@@ -98,7 +98,12 @@ router.get("/:id", getCourseById);
  *       201:
  *         description: Course created successfully
  */
-router.post("/create", createCourse);
+router.post(
+  "/create",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  createCourse
+);
 
 /**
  * @swagger
@@ -125,7 +130,12 @@ router.post("/create", createCourse);
  *       404:
  *         description: Course not found
  */
-router.put("/:id", updateCourseById);
+router.put(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  updateCourseById
+);
 
 /**
  * @swagger
@@ -146,6 +156,11 @@ router.put("/:id", updateCourseById);
  *       404:
  *         description: Course not found
  */
-router.delete("/:id", deleteCourseById);
+router.delete(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  deleteCourseById
+);
 
 export default router;

@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const hashAuthPassword = async (password) => {
   try {
@@ -19,4 +20,15 @@ export const compareAndSecurePassword = async (password, hashedPassword) => {
     console.error("Error while comparing passwords:", error);
     throw new Error("The process of comparing passwords failed!");
   }
+};
+
+export const generateToken = (user) => {
+  const payloadData = {
+    userId: user._id,
+    user_type: user.user_type,
+  };
+
+  return jwt.sign(payloadData, process.env.SECRET_KEY, {
+    expiresIn: "1h",
+  });
 };

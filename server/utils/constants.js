@@ -21,4 +21,6 @@ const bios = [
   "Writing code like it's poetry (but messier).",
 ];
 
-export const getRandomBio = () => bios[Math.floor(Math.random() * bios.length)];
+export const getRandomBio = () => {
+  return bios[Math.floor(Math.random() * bios.length)];
+};

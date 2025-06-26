@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
-
+import checkAuth from "../../middlewares/auth/auth_middleware.js";
+import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
 import {
   handleBenefitByGetAll,
   handleBenefitById,
@@ -46,7 +47,7 @@ import {
  *               items:
  *                 $ref: '#/components/schemas/Benefit'
  */
-router.get("/all", handleBenefitByGetAll);
+router.get("/all", checkAuth, handleBenefitByGetAll);
 
 /**
  * @swagger
@@ -71,7 +72,7 @@ router.get("/all", handleBenefitByGetAll);
  *       404:
  *         description: Benefit not found
  */
-router.get("/:id", handleBenefitById);
+router.get("/:id", checkAuth, authorizeRoles("admin"), handleBenefitById);
 
 /**
  * @swagger
@@ -89,7 +90,7 @@ router.get("/:id", handleBenefitById);
  *       201:
  *         description: Benefit created successfully
  */
-router.post("/create", createBenefit);
+router.post("/create", checkAuth, authorizeRoles("admin"), createBenefit);
 
 /**
  * @swagger
@@ -116,7 +117,7 @@ router.post("/create", createBenefit);
  *       404:
  *         description: Benefit not found
  */
-router.put("/:id", handleUpdateBenefitById);
+router.put("/:id", checkAuth, authorizeRoles("admin"), handleUpdateBenefitById);
 
 /**
  * @swagger
@@ -137,6 +138,11 @@ router.put("/:id", handleUpdateBenefitById);
  *       404:
  *         description: Benefit not found
  */
-router.delete("/:id", handleDeleteBenefitById);
+router.delete(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin"),
+  handleDeleteBenefitById
+);
 
 export default router;
