@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
+import { getRandomBio } from "../../utils/constants.js";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    name: {
       type: String,
-      unique: true,
-      required: true,
       trim: true,
     },
     email: {
@@ -15,15 +14,7 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    password_hash: {
-      type: String,
-      required: true,
-    },
-    first_name: {
-      type: String,
-      required: true,
-    },
-    last_name: {
+    password: {
       type: String,
       required: true,
     },
@@ -38,14 +29,17 @@ const userSchema = new mongoose.Schema(
     },
     profile_picture_url: {
       type: String,
-      default: null,
+      default: "https://avatar.iran.liara.run/public",
     },
     bio: {
       type: String,
-      default: null,
+      default: () => getRandomBio(),
+      maxlength: 500,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("User", userSchema, "users");
+export default mongoose.model("User", userSchema, "auth-users");

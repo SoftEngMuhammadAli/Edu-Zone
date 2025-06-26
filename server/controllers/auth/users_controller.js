@@ -1,5 +1,5 @@
 import User from "../../models/users/users_model.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
 export const handleGetAllUsers = async (req, res) => {
