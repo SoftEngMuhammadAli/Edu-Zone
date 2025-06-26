@@ -79,7 +79,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${PORT}`,
+        url: "http://localhost:8000",
+        description: "Local development server",
+      },
+      {
+        url: "https://eduzone-jscm.onrender.com",
+        description: "Production server",
       },
     ],
   },
