@@ -6,6 +6,9 @@ import { AppFooter } from "../../components/footer/Footer";
 const SeeAllCoursesList = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -13,9 +16,12 @@ const SeeAllCoursesList = () => {
         const response = await axios.get(
           "https://eduzone-jscm.onrender.com/api/courses/all"
         );
-        setCourses(response.data.data);
+        setCourses(response.data.data || []);
+        setError(null);
       } catch (error) {
         console.error("Error fetching courses:", error);
+        setError("Failed to fetch courses. Please try again.");
+        setCourses([]);
       } finally {
         setLoading(false);
       }
@@ -24,8 +30,6 @@ const SeeAllCoursesList = () => {
     fetchCourses();
   }, []);
 
-  const navigate = useNavigate();
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
@@ -33,6 +37,23 @@ const SeeAllCoursesList = () => {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600 text-lg font-semibold">
+        {error}
+      </div>
+    );
+  }
+
+  if (courses.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
+        No courses available.
+      </div>
+    );
+  }
+
   return (
     <>
       <section className="px-4 sm:px-8 md:px-16 py-10 max-w-screen-2xl mx-auto">
@@ -51,7 +72,7 @@ const SeeAllCoursesList = () => {
               onClick={() =>
                 navigate(`/course/${course.title}`, { state: course })
               }
-              className="flex flex-col h-full bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden"
+              className="flex flex-col h-full bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden cursor-pointer"
             >
               {/* Course Image */}
               <div className="h-48 sm:h-56 md:h-64 overflow-hidden flex items-center justify-center bg-gray-100">

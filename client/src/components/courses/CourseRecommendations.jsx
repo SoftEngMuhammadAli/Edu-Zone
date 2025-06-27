@@ -13,9 +13,10 @@ const CourseRecommendations = () => {
         const response = await axios.get(
           "https://eduzone-jscm.onrender.com/api/courses/all"
         );
-        setCourses(response.data.data);
+        setCourses(response.data.data || []);
       } catch (error) {
         console.error("Error fetching courses:", error);
+        setCourses([]);
       } finally {
         setLoading(false);
       }
@@ -28,6 +29,14 @@ const CourseRecommendations = () => {
     return (
       <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
         Loading courses...
+      </div>
+    );
+  }
+
+  if (!courses || courses.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
+        No courses available.
       </div>
     );
   }

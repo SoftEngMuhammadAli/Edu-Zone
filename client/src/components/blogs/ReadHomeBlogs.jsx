@@ -11,9 +11,10 @@ const ReadHomeBlogs = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(apiUrl);
-      setData(response.data.data);
+      setData(response.data.data || []);
     } catch (error) {
       console.error("Error fetching blogs:", error);
+      setData([]);
     } finally {
       setLoading(false);
     }
@@ -29,6 +30,14 @@ const ReadHomeBlogs = () => {
     return (
       <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
         Loading Blogs...
+      </div>
+    );
+  }
+
+  if (!getData || getData.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
+        No blogs available.
       </div>
     );
   }
@@ -58,7 +67,7 @@ const ReadHomeBlogs = () => {
               className="rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-white"
             >
               <div className="w-full h-56 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg text-sm font-bold">
-                {/* We have no image URLs in our blog API,we will add late for now we're replacing this "No Image Text" */}
+                {/* No image URLs available */}
                 No Image Found
               </div>
               <div className="p-5">
