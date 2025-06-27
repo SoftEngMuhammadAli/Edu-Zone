@@ -16,7 +16,7 @@ const ReadAllBlogs = () => {
     try {
       setLoading(true);
       const response = await axios.get(apiUrl);
-      setData(response.data.data);
+      setData(response.data.data || []);
       setError(null);
     } catch (err) {
       console.error("Error fetching blogs:", err);
@@ -53,6 +53,14 @@ const ReadAllBlogs = () => {
     return (
       <div className="text-center py-8 text-red-500 font-semibold text-lg">
         {error}
+      </div>
+    );
+  }
+
+  if (!getData.length) {
+    return (
+      <div className="text-center py-8 text-[#1C1E53] font-semibold text-lg">
+        No blogs found.
       </div>
     );
   }

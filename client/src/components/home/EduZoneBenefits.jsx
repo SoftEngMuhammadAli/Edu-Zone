@@ -34,7 +34,12 @@ const EduZoneBenefits = () => {
       {loading && (
         <p className="text-center text-[#1C1E53]">Loading benefits...</p>
       )}
+
       {error && <p className="text-center text-red-500">{error}</p>}
+
+      {!loading && !error && data.length === 0 && (
+        <p className="text-center text-gray-600">No benefits found.</p>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
         {data.map((benefit, idx) => (
