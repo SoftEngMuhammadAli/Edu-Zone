@@ -6,10 +6,10 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left Side - Image and Text */}
+    <div className="h-screen flex flex-col md:flex-row">
+      {/* Left Side - Image and Text (hidden on small screens) */}
       <div
-        className="w-full md:w-1/2 bg-cover bg-center flex items-center justify-center p-8 md:p-16 text-white"
+        className="hidden md:flex md:w-1/2 h-full bg-cover bg-center items-center justify-center p-8 md:p-16 text-white"
         style={{ backgroundImage: `url(${registerSideImage})` }}
       >
         <div className="bg-black bg-opacity-60 p-6 md:p-8 rounded-lg max-w-xl text-center md:text-left">
@@ -23,14 +23,14 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Register Form */}
-      <div className="w-full md:w-1/2 bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
+      {/* Right Side - Register Form (always visible) */}
+      <div className="w-full md:w-1/2 h-full bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
             Register
           </h2>
           <p className="text-sm text-white mb-8">
-            Please Register to you Account!
+            Please Register to your account!
           </p>
 
           <form
@@ -49,14 +49,14 @@ const SignUpPage = () => {
 
             <input
               type="email"
-              placeholder="Enter your Email"
+              placeholder="Enter Your Email"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
               required
             />
 
             <input
               type="password"
-              placeholder="Enter your password"
+              placeholder="Enter Your Password"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
               required
             />
@@ -70,7 +70,7 @@ const SignUpPage = () => {
           </form>
 
           <p className="text-sm text-white mt-6 text-center">
-            Already have Account?{" "}
+            Already have an account?{" "}
             <button
               onClick={() => navigate("/login")}
               className="text-yellow-400 underline hover:text-yellow-300"

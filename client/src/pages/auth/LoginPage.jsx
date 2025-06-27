@@ -6,10 +6,10 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left Side - Image and Text */}
+    <div className="h-screen flex flex-col md:flex-row">
+      {/* Left Side - Image and Text (hidden on small screens) */}
       <div
-        className="w-full md:w-1/2 bg-cover bg-center flex items-center justify-center p-8 md:p-16 text-white"
+        className="hidden md:flex md:w-1/2 h-full bg-cover bg-center items-center justify-center p-8 md:p-16 text-white"
         style={{ backgroundImage: `url(${loginSideImage})` }}
       >
         <div className="bg-black bg-opacity-60 p-6 md:p-8 rounded-lg max-w-xl text-center md:text-left">
@@ -24,8 +24,8 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
-      <div className="w-full md:w-1/2 bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
+      {/* Right Side - Login Form (always visible) */}
+      <div className="w-full md:w-1/2 h-full bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
             Login
@@ -57,7 +57,7 @@ const LoginPage = () => {
 
             <div className="flex items-center text-white text-sm">
               <input type="checkbox" id="remember" className="mr-2" />
-              <label htmlFor="remember">Remember my credientals</label>
+              <label htmlFor="remember">Remember my credentials</label>
             </div>
 
             <button
