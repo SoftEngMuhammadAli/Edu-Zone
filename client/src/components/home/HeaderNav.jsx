@@ -8,7 +8,7 @@ const HeaderNav = () => {
     <header className="bg-[#1C1E53] text-white">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Logo/Name */}
-        <Link to="/" className="text-2xl font-semibold underline">
+        <Link to="/home" className="text-2xl font-semibold underline">
           EduZone
         </Link>
 
@@ -43,7 +43,7 @@ const HeaderNav = () => {
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex gap-6 text-white text-base">
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
           <Link to="/seeAllCourses">Courses</Link>
           <Link to="/contact">Contact Us</Link>
           <Link to="/about">About Us</Link>
@@ -55,7 +55,7 @@ const HeaderNav = () => {
       {isMenuOpen && (
         <div className="md:hidden px-6 pb-4">
           <nav className="flex flex-col gap-4 text-white text-base">
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/home" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
             <Link to="/seeAllCourses" onClick={() => setIsMenuOpen(false)}>
