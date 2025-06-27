@@ -52,7 +52,6 @@ const AboutUs = () => {
       {location.pathname !== "/" && location.pathname !== "/home" && (
         <>
           <ContactUs />
-          <AppFooter />
         </>
       )}
     </section>
