@@ -19,6 +19,7 @@ import SeeAllCoursesList from "../pages/courses/AllCourses";
 import ReadAllBlogs from "../pages/blogs/AllBlogs";
 import NotFound from "../pages/home/NotFound";
 import TermsAndConditions from "../components/terms-and-conditions/TermsAndConditions";
+import PrivacyPolicy from "../components/privacy-policy/PrivacyPolicy";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +77,7 @@ const MainLayout = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/help" element={<Help />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/allblogs" element={<ReadAllBlogs />} />
 
         {/* Course Routes */}

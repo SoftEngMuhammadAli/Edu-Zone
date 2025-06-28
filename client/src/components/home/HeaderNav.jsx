@@ -73,6 +73,9 @@ const HeaderNav = () => {
             >
               Terms and Conditions
             </Link>
+            <Link to="/privacy-policy" onClick={() => setIsMenuOpen(false)}>
+              Privacy Policy
+            </Link>
             <Link to="/help" onClick={() => setIsMenuOpen(false)}>
               Need Help?
             </Link>

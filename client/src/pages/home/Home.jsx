@@ -11,6 +11,7 @@ import ReadHomeBlogs from "../../components/blogs/ReadHomeBlogs";
 import ContactUs from "../../components/contact/ContactUs";
 import { AppFooter } from "../../components/footer/Footer";
 import TermsAndConditions from "../../components/terms-and-conditions/TermsAndConditions";
+import PrivacyPolicy from "../../components/privacy-policy/PrivacyPolicy";
 
 const Home = () => {
   return (
@@ -47,6 +48,9 @@ const Home = () => {
 
       {/* Terms and Conditions */}
       <TermsAndConditions />
+
+      {/* Privacy Policy */}
+      <PrivacyPolicy />
 
       {/* Footer */}
       <AppFooter />
