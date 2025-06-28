@@ -67,6 +67,12 @@ const HeaderNav = () => {
             <Link to="/about" onClick={() => setIsMenuOpen(false)}>
               About Us
             </Link>
+            <Link
+              to="/terms-and-conditions"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Terms and Conditions
+            </Link>
             <Link to="/help" onClick={() => setIsMenuOpen(false)}>
               Need Help?
             </Link>

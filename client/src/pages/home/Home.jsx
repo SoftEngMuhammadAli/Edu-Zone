@@ -10,6 +10,7 @@ import CourseRegistration from "../../components/courses/CourseRegistration";
 import ReadHomeBlogs from "../../components/blogs/ReadHomeBlogs";
 import ContactUs from "../../components/contact/ContactUs";
 import { AppFooter } from "../../components/footer/Footer";
+import TermsAndConditions from "../../components/terms-and-conditions/TermsAndConditions";
 
 const Home = () => {
   return (
@@ -43,6 +44,9 @@ const Home = () => {
 
       {/* Contact Us */}
       <ContactUs />
+
+      {/* Terms and Conditions */}
+      <TermsAndConditions />
 
       {/* Footer */}
       <AppFooter />
