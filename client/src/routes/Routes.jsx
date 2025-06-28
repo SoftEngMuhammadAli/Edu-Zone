@@ -18,6 +18,7 @@ import SignUpPage from "../pages/auth/SignUpPage";
 import SeeAllCoursesList from "../pages/courses/AllCourses";
 import ReadAllBlogs from "../pages/blogs/AllBlogs";
 import NotFound from "../pages/home/NotFound";
+import TermsAndConditions from "../components/terms-and-conditions/TermsAndConditions";
 
 const AppRoutes = () => {
   return (
@@ -74,6 +75,7 @@ const MainLayout = () => {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/allblogs" element={<ReadAllBlogs />} />
 
         {/* Course Routes */}
