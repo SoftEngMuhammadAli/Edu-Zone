@@ -18,6 +18,7 @@ import authRouter from "./routes/auth/auth_router.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import cookieParser from "cookie-parser";
+import contactRouter from "./routes/contact-us/contact_us_router.js";
 
 // ==================
 // Middleware
@@ -36,6 +37,7 @@ app.use("/api/benefits", benefitRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/courses", courseRoutes);
 app.use("/api/auth", authRouter);
+app.use("/api/contact", contactRouter);
 
 // ==================
 // Database Connection
