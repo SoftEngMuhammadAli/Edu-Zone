@@ -9,14 +9,14 @@ const AskedQuestions = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded-xl my-10  px-4 py-8 md:px-8 lg:px-16 gap-8 max-w-7xl mx-auto">
+    <div className="flex flex-col md:flex-row bg-white rounded-xl my-10 px-4 py-8 md:px-8 lg:px-16 gap-8 max-w-7xl mx-auto">
       {/* Left Side */}
       <div className="w-full md:w-1/3">
         <h2 className="sm:text-3xl md:text-4xl font-bold mb-4">
           Frequently Asked Questions
         </h2>
         <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-          Masih bingung atau ragu? Hubungi kami di nomor:
+          Still confused or unsure? Contact us at:
           <br />
           <span className="font-semibold text-[#000000] block mt-1">
             +6288 999 222 333
@@ -29,7 +29,7 @@ const AskedQuestions = () => {
         {listOfFrequentlyAskedQuestions.map((faq) => (
           <div
             key={faq.id}
-            className="border-b pb-4 color-[red] cursor-pointer transition-all duration-300"
+            className="border-b pb-4 cursor-pointer transition-all duration-300"
             onClick={() => toggleFAQ(faq.id)}
           >
             <div className="flex items-start justify-between text-base md:text-lg font-medium text-[#000000] gap-4">

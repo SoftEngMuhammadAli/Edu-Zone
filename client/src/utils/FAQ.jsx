@@ -1,32 +1,32 @@
 const listOfFrequentlyAskedQuestions = [
   {
     id: 1,
-    question: "Apakah kursus ini benar-benar gratis?",
+    question: "Is this course really free?",
     answer:
-      "Kursus yang disediakan bisa diakses gratis untuk menunjang kebutuhan dalam bidang kependidikan.",
+      "The courses provided are free to access and support educational needs.",
   },
   {
     id: 2,
-    question: "Untuk siapa kursus ini?",
+    question: "Who is this course for?",
     answer:
-      "Kursus ini ditujukan bagi siapa saja yang ingin meningkatkan pengetahuan dan keterampilan.",
+      "This course is intended for anyone who wants to improve their knowledge and skills.",
   },
   {
     id: 3,
-    question: "Apakah kursus ini bersertifikat?",
+    question: "Is this course certified?",
     answer:
-      "Ya, setelah menyelesaikan kursus, Anda akan mendapatkan sertifikat resmi.",
+      "Yes, upon completing the course, you will receive an official certificate.",
   },
   {
     id: 4,
-    question: "Sampai kapan kursus ini berakhir?",
-    answer: "Kursus tersedia sepanjang tahun dan dapat diakses kapan saja.",
+    question: "How long will this course be available?",
+    answer: "The course is available year-round and can be accessed anytime.",
   },
   {
     id: 5,
-    question: "Apakah ada penyaluran kerja setelah lulus?",
+    question: "Is there job placement after graduation?",
     answer:
-      "Kami menyediakan informasi lowongan dan koneksi dengan mitra kerja sama.",
+      "We provide job listings and connections with partner organizations.",
   },
 ];
 
