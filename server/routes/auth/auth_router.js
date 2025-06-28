@@ -1,6 +1,7 @@
 import express from "express";
 import {
   loginUser,
+  logoutUser,
   registerUser,
 } from "../../controllers/auth/auth_controller.js";
 
@@ -95,5 +96,25 @@ router.post("/register", registerUser);
  *         description: Internal server error
  */
 router.post("/login", loginUser);
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout a user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LogOutUser'
+ *     responses:
+ *       200:
+ *         description: User logged Out successfully
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/logout", logoutUser);
 
 export default router;

@@ -17,12 +17,14 @@ import courseRoutes from "./routes/course/course_router.js";
 import authRouter from "./routes/auth/auth_router.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
+import cookieParser from "cookie-parser";
 
 // ==================
 // Middleware
 // ==================
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.set("json spaces", 2);
 
