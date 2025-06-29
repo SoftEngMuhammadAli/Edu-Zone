@@ -19,6 +19,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import cookieParser from "cookie-parser";
 import contactRouter from "./routes/contact-us/contact_us_router.js";
+import privacyPolicyRouter from "./routes/privacy-policy/privacy_policy_router.js";
 
 // ==================
 // Middleware
@@ -38,6 +39,7 @@ app.use("/api/blogs", blogRouter);
 app.use("/api/courses", courseRoutes);
 app.use("/api/auth", authRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/privacy-policy", privacyPolicyRouter);
 
 // ==================
 // Database Connection
