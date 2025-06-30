@@ -7,23 +7,11 @@ const swaggerOptions = {
     info: {
       title: "Edu-Zone Backend",
       version: "1.0.0",
-      description: `
-        Welcome to the Edu-Zone Backend API documentation.
-
-        This API enables features such as:
-        - User registration, login, and role-based management  
-        - Course creation, listing, and updates  
-        - Educational benefit access and management  
-        - Blog publishing and viewing  
-        - And more...
-
-        All endpoints follow RESTful principles and return JSON responses.
-        JWT authentication is required for protected routes.
-      `,
+      description: "Welcome to the Edu-Zone Backend API documentation.",
       contact: {
         name: "Edu-Zone Dev Team",
-        email: "support@eduzone.com",
-        url: "https://eduzone.com",
+        email: "email@gmail.com",
+        url: "https://www.website.com",
       },
       license: {
         name: "MIT",
@@ -31,13 +19,40 @@ const swaggerOptions = {
       },
     },
     tags: [
-      { name: "Authentication", description: "Authentication APIs" },
-      { name: "Users", description: "User management" },
-      { name: "Todo", description: "Todo management" },
-      { name: "Courses", description: "Course management" },
-      { name: "Blogs", description: "Blogs APIs" },
-      { name: "Contact", description: "Get in touch" },
-      { name: "Privacy Policy", description: "Privacy policy related" },
+      {
+        name: "Authentication",
+        description: "API endpoints for user authentication and authorization",
+      },
+      {
+        name: "User",
+        description:
+          "User management APIs for creating, reading, updating, and deleting users",
+      },
+      {
+        name: "Todo",
+        description:
+          "API endpoints for managing todo items, including creation, retrieval, update, and deletion",
+      },
+      {
+        name: "Courses",
+        description:
+          "Course management APIs for creating, reading, updating, and deleting courses",
+      },
+      {
+        name: "Blogs",
+        description:
+          "API endpoints for managing blog posts, including creation, retrieval, update, and deletion",
+      },
+      {
+        name: "Contact",
+        description:
+          "API endpoint for submitting contact inquiries and getting in touch with the team",
+      },
+      {
+        name: "Privacy Policy",
+        description:
+          "API endpoint for retrieving privacy policy information and related content",
+      },
     ],
     servers: [
       {

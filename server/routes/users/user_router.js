@@ -16,34 +16,65 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   - name: User
+ *     description: Manage application users
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     User:
  *       type: object
  *       required:
- *         - name
- *         - age
+ *         - email
+ *         - password
  *       properties:
+ *         _id:
+ *           type: string
  *         name:
  *           type: string
- *           description: The user's name
- *         age:
- *           type: integer
- *           description: The user's age
- *       example:
- *         name: John Doe
- *         age: 25
+ *           example: John Doe
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: johndoe@example.com
+ *         password:
+ *           type: string
+ *           example: hashedpassword123
+ *         user_type:
+ *           type: string
+ *           enum: [student, instructor, admin]
+ *           example: student
+ *         registration_date:
+ *           type: string
+ *           format: date-time
+ *         profile_picture_url:
+ *           type: string
+ *           example: https://avatar.iran.liara.run/public
+ *         bio:
+ *           type: string
+ *           example: I am a curious learner who enjoys solving problems.
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
  * @swagger
- * /api/users/all:
+ * /api/users:
  *   get:
  *     summary: Retrieve all users
- *     tags: [Users]
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of users
+ *         description: List of users
  *         content:
  *           application/json:
  *             schema:
@@ -51,30 +82,34 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get("/all", checkAuth, authorizeRoles("admin"), handleGetAllUsers);
+router.get("/", checkAuth, authorizeRoles("admin"), handleGetAllUsers);
 
 /**
  * @swagger
  * /api/users/role/{role}:
  *   get:
- *     summary: Retrieve users by role
- *     tags: [Users]
+ *     summary: Get all users by role
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: role
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: Role of the user
+ *           enum: [student, instructor, admin]
  *     responses:
  *       200:
- *         description: Users with the specified role
+ *         description: List of users with the specified role
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
+ *       404:
+ *         description: No users found for this role
  */
 router.get(
   "/role/:role",
@@ -88,17 +123,18 @@ router.get(
  * /api/users/{id}:
  *   get:
  *     summary: Get a user by ID
- *     tags: [Users]
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The user ID
  *     responses:
  *       200:
- *         description: A user object
+ *         description: User found
  *         content:
  *           application/json:
  *             schema:
@@ -110,10 +146,12 @@ router.get("/:id", checkAuth, authorizeRoles("admin"), handleGetUserById);
 
 /**
  * @swagger
- * /api/users/create:
+ * /api/users:
  *   post:
  *     summary: Create a new user
- *     tags: [Users]
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,23 +160,26 @@ router.get("/:id", checkAuth, authorizeRoles("admin"), handleGetUserById);
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       201:
- *         description: User created successfully
+ *         description: User created
+ *       400:
+ *         description: Invalid input
  */
-router.post("/create", checkAuth, authorizeRoles("admin"), createUser);
+router.post("/", checkAuth, authorizeRoles("admin"), createUser);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
  *     summary: Update a user by ID
- *     tags: [Users]
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The user ID
  *     requestBody:
  *       required: true
  *       content:
@@ -147,7 +188,7 @@ router.post("/create", checkAuth, authorizeRoles("admin"), createUser);
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: User updated successfully
+ *         description: User updated
  *       404:
  *         description: User not found
  */
@@ -158,17 +199,18 @@ router.put("/:id", checkAuth, authorizeRoles("admin"), handleUpdateUserById);
  * /api/users/{id}:
  *   delete:
  *     summary: Delete a user by ID
- *     tags: [Users]
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         required: true
- *         description: The user ID
  *     responses:
  *       200:
- *         description: User deleted successfully
+ *         description: User deleted
  *       404:
  *         description: User not found
  */

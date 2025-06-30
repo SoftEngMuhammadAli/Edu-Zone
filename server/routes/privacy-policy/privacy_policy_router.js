@@ -16,6 +16,32 @@ import {
  * tags:
  *   name: Privacy Policy
  *   description: Manage Privacy Policy content
+ *
+ * components:
+ *   schemas:
+ *     PrivacyPolicy:
+ *       type: object
+ *       required:
+ *         - title
+ *         - content
+ *       properties:
+ *         _id:
+ *           type: string
+ *         title:
+ *           type: string
+ *           example: Privacy Policy Title
+ *         content:
+ *           type: string
+ *           example: This is the privacy policy content.
+ *         lastUpdated:
+ *           type: string
+ *           format: date-time
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
@@ -34,9 +60,13 @@ import {
  *             schema:
  *               type: object
  *               properties:
- *                 policy:
+ *                 message:
  *                   type: string
- *                   example: This is the privacy policy content.
+ *                   example: Policy fetched successfully.
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PrivacyPolicy'
  *       401:
  *         description: Unauthorized
  */
@@ -55,13 +85,7 @@ router.get("/", checkAuth, getPrivacyPolicy);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - policy
- *             properties:
- *               policy:
- *                 type: string
- *                 example: This is the new privacy policy content.
+ *             $ref: '#/components/schemas/PrivacyPolicy'
  *     responses:
  *       201:
  *         description: Privacy policy created successfully
@@ -92,11 +116,7 @@ router.post("/", checkAuth, authorizeRoles("admin"), createPrivacyPolicy);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               policy:
- *                 type: string
- *                 example: Updated privacy policy content.
+ *             $ref: '#/components/schemas/PrivacyPolicy'
  *     responses:
  *       200:
  *         description: Privacy policy updated successfully

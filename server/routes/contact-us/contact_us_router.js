@@ -4,6 +4,37 @@ import { sendContactMessage } from "../../controllers/contact-us/contact_us_cont
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     ContactMessage:
+ *       type: object
+ *       required:
+ *         - fullname
+ *         - email
+ *         - subject
+ *         - message
+ *       properties:
+ *         fullname:
+ *           type: string
+ *           description: Full name of the sender
+ *           example: John Doe
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Sender's email address
+ *           example: johndoe@example.com
+ *         subject:
+ *           type: string
+ *           description: Subject of the message
+ *           example: Issue with registration
+ *         message:
+ *           type: string
+ *           description: The message content
+ *           example: I need help with my course registration.
+ */
+
+/**
+ * @swagger
  * /api/contact/send-message:
  *   post:
  *     summary: Send a contact message to the support team
@@ -14,22 +45,7 @@ import { sendContactMessage } from "../../controllers/contact-us/contact_us_cont
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *               - message
- *             properties:
- *               name:
- *                 type: string
- *                 example: John Doe
- *               email:
- *                 type: string
- *                 format: email
- *                 example: johndoe@example.com
- *               message:
- *                 type: string
- *                 example: I need help with my course registration.
+ *             $ref: '#/components/schemas/ContactMessage'
  *     responses:
  *       200:
  *         description: Message sent successfully

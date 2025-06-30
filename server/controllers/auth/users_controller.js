@@ -200,12 +200,3 @@ export const handleUpdateUserById = async (req, res) => {
     });
   }
 };
-
-export default {
-  handleGetAllUsers,
-  handleGetAllUsersByRole,
-  createUser,
-  handleGetUserById,
-  handleDeleteUserById,
-  handleUpdateUserById,
-};

@@ -30,9 +30,9 @@ const router = express.Router();
  *           format: password
  *           description: Password for the user
  *       example:
- *         name: Jane Doe
- *         email: jane@example.com
- *         password: strongPassword123
+ *         name: Your Name
+ *         email: Your Email
+ *         password: Your Password
 
  *     LoginUser:
  *       type: object
@@ -49,8 +49,8 @@ const router = express.Router();
  *           format: password
  *           description: User's password
  *       example:
- *         email: jane@example.com
- *         password: strongPassword123
+ *         email: Your Email
+ *         password: Your Password
  */
 
 /**

@@ -1,6 +1,9 @@
 import express from "express";
 const router = express.Router();
-import {checkAuth,authorizeRoles} from "../../middlewares/auth/auth_middleware.js";
+import {
+  checkAuth,
+  authorizeRoles,
+} from "../../middlewares/auth/auth_middleware.js";
 import {
   handleGetAllBlogs,
   handleGetBlogById,
@@ -19,7 +22,12 @@ import {
  *         - title
  *         - content
  *         - author
+ *         - tags
+ *         - category
  *       properties:
+ *         _id:
+ *           type: string
+ *           description: The auto-generated ID of the blog
  *         title:
  *           type: string
  *           description: The blog's title
@@ -28,16 +36,53 @@ import {
  *           description: The main content of the blog
  *         author:
  *           type: string
- *           description: The name of the blog's author
+ *           description: MongoDB ObjectId reference to the user
+ *         publish_date:
+ *           type: string
+ *           format: date-time
+ *           description: Publish date of the blog
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Tags related to the blog
+ *         views:
+ *           type: integer
+ *           default: 0
+ *           description: Number of views
+ *         likes:
+ *           type: integer
+ *           default: 0
+ *           description: Number of likes
+ *         comments:
+ *           type: integer
+ *           default: 0
+ *           description: Number of comments
+ *         category:
+ *           type: string
+ *           enum: [tech, lifestyle, travel, custom]
+ *           description: Blog category
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Creation date of the blog
+ *           description: Blog creation timestamp
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Blog update timestamp
  *       example:
- *         title: 10 Tips for Learning JavaScript
- *         content: JavaScript is a powerful language...
- *         author: John Doe
- *         createdAt: 2024-05-01T10:30:00Z
+ *         _id: "60f7c0b6c9a1c9001c8e4c9b"
+ *         title: "10 Tips for Learning JavaScript"
+ *         content: "JavaScript is a powerful language for web development..."
+ *         author: "60f7c0b6c9a1c9001c8e4c9a"
+ *         publish_date: "2024-05-01T10:30:00Z"
+ *         tags: ["javascript", "programming", "frontend"]
+ *         views: 100
+ *         likes: 25
+ *         comments: 3
+ *         category: "tech"
+ *         createdAt: "2024-05-01T10:30:00Z"
+ *         updatedAt: "2024-05-02T08:00:00Z"
  */
 
 /**
@@ -46,6 +91,8 @@ import {
  *   get:
  *     summary: Retrieve all blogs
  *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of blogs
@@ -64,6 +111,8 @@ router.get("/all", checkAuth, handleGetAllBlogs);
  *   get:
  *     summary: Get a blog by ID
  *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -89,6 +138,8 @@ router.get("/:id", checkAuth, handleGetBlogById);
  *   post:
  *     summary: Create a new blog
  *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -112,6 +163,8 @@ router.post(
  *   put:
  *     summary: Update a blog by ID
  *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -144,6 +197,8 @@ router.put(
  *   delete:
  *     summary: Delete a blog by ID
  *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

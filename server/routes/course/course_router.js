@@ -21,25 +21,61 @@ import {
  *       required:
  *         - title
  *         - description
- *         - instructor
+ *         - image
+ *         - category
+ *         - duration
+ *         - level
+ *         - user
  *       properties:
+ *         _id:
+ *           type: string
  *         title:
  *           type: string
- *           description: Title of the course
  *         description:
  *           type: string
- *           description: Brief description of the course
- *         instructor:
+ *         image:
  *           type: string
- *           description: Name of the instructor
+ *         category:
+ *           type: string
+ *           enum: ["UI/UX", "Programming", "Marketing", "Soft skill", "Network", "Data Science", "Business", "Design"]
+ *         views:
+ *           type: number
+ *           default: 0
+ *         students:
+ *           type: number
+ *           default: 0
+ *         rating:
+ *           type: number
+ *           minimum: 1
+ *           maximum: 5
+ *           default: 1
  *         duration:
  *           type: string
- *           description: Duration of the course (e.g., '4 weeks')
+ *         level:
+ *           type: string
+ *           enum: ["Beginner", "Intermediate", "Advanced"]
+ *         user:
+ *           type: string
+ *           description: User ID (instructor)
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  *       example:
  *         title: Introduction to Web Development
  *         description: Learn the basics of HTML, CSS, and JavaScript
- *         instructor: Jane Smith
- *         duration: 4 weeks
+ *         image: https://example.com/course.jpg
+ *         category: Programming
+ *         views: 120
+ *         students: 45
+ *         rating: 4.5
+ *         duration: "4 weeks"
+ *         level: Beginner
+ *         user: "64e6a5f7829b30001c9d95b2"
+ *         createdAt: "2024-05-01T10:30:00Z"
+ *         updatedAt: "2024-05-02T08:00:00Z"
  */
 
 /**
@@ -48,6 +84,8 @@ import {
  *   get:
  *     summary: Retrieve all courses
  *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of courses
@@ -66,6 +104,8 @@ router.get("/all", checkAuth, getAllCourses);
  *   get:
  *     summary: Get a course by ID
  *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -91,6 +131,8 @@ router.get("/:id", checkAuth, getCourseById);
  *   post:
  *     summary: Create a new course
  *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -114,6 +156,8 @@ router.post(
  *   put:
  *     summary: Update a course by ID
  *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -146,6 +190,8 @@ router.put(
  *   delete:
  *     summary: Delete a course by ID
  *     tags: [Courses]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

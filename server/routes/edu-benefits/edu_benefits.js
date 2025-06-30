@@ -22,15 +22,27 @@ import {
  *         - title
  *         - description
  *       properties:
+ *         id:
+ *           type: number
+ *           description: Numeric ID of the benefit (optional)
  *         title:
  *           type: string
  *           description: Title of the benefit
  *         description:
  *           type: string
  *           description: Description of the benefit
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  *       example:
+ *         id: 101
  *         title: Free Online Courses
  *         description: Access to premium educational content for free
+ *         createdAt: "2024-05-01T10:30:00Z"
+ *         updatedAt: "2024-05-01T10:45:00Z"
  */
 
 /**
@@ -39,6 +51,8 @@ import {
  *   get:
  *     summary: Retrieve all education benefits
  *     tags: [Benefits]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of all education benefits
@@ -57,6 +71,8 @@ router.get("/all", checkAuth, handleBenefitByGetAll);
  *   get:
  *     summary: Get a specific education benefit by ID
  *     tags: [Benefits]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -82,6 +98,8 @@ router.get("/:id", checkAuth, authorizeRoles("admin"), handleBenefitById);
  *   post:
  *     summary: Create a new education benefit
  *     tags: [Benefits]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -100,6 +118,8 @@ router.post("/create", checkAuth, authorizeRoles("admin"), createBenefit);
  *   put:
  *     summary: Update an existing education benefit
  *     tags: [Benefits]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,6 +147,8 @@ router.put("/:id", checkAuth, authorizeRoles("admin"), handleUpdateBenefitById);
  *   delete:
  *     summary: Delete an education benefit
  *     tags: [Benefits]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
