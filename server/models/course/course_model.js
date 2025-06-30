@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 const CourseSchema = new mongoose.Schema(
   {
@@ -51,6 +51,12 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       enum: ["Beginner", "Intermediate", "Advanced"],
       required: true,
+    },
+    //
+    user: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
   },
   { timestamps: true }

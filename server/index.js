@@ -41,7 +41,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.set("json spaces", 2);
 
-// Routes
+// //////////////////////
+// API PREFIX & ROUTES
+// //////////////////////
 app.use("/api/users", userRouter);
 app.use("/api/benefits", benefitRouter);
 app.use("/api/blogs", blogRouter);

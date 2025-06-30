@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     user_type: {
       type: String,
+      // TODO -> update & fix roles
       enum: ["student", "instructor", "admin"],
       default: "student",
     },

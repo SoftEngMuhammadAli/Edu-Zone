@@ -3,7 +3,7 @@ import Course from "../../models/course/course_model.js";
 
 export const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find({});
+    const courses = await Course.find({}).populate("user");
     if (!courses) {
       return res.status(404).json({ message: "Not Found" });
     }
@@ -23,7 +23,7 @@ export const getCourseById = async (req, res) => {
     return res.status(400).json({ error: "Invalid Course ID" });
 
   try {
-    const course = await Course.findById(id);
+    const course = await Course.findById(id).populate("user");
     if (!course) return res.status(404).json({ error: "Course not found" });
 
     return res.status(200).json(course);
@@ -47,6 +47,9 @@ export const createCourse = async (req, res) => {
     level,
   } = req.body;
 
+  let user = req.user.userId;
+  console.log(req.user);
+
   try {
     const newCourse = new Course({
       title,
@@ -58,6 +61,7 @@ export const createCourse = async (req, res) => {
       rating,
       duration,
       level,
+      user,
     });
 
     await newCourse.save();

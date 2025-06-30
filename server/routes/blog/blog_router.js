@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import checkAuth from "../../middlewares/auth/auth_middleware.js";
+import {checkAuth,authorizeRoles} from "../../middlewares/auth/auth_middleware.js";
 import {
   handleGetAllBlogs,
   handleGetBlogById,
@@ -8,7 +8,6 @@ import {
   handleUpdateBlogById,
   handleDeleteBlogById,
 } from "../../controllers/blog/blog_controller.js";
-import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
 
 /**
  * @swagger

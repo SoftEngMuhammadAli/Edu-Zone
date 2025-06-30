@@ -7,8 +7,10 @@ import {
   handleDeleteUserById,
   handleUpdateUserById,
 } from "../../controllers/auth/users_controller.js";
-import checkAuth from "../../middlewares/auth/auth_middleware.js";
-import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
+import {
+  checkAuth,
+  authorizeRoles,
+} from "../../middlewares/auth/auth_middleware.js";
 
 const router = express.Router();
 
