@@ -2,8 +2,8 @@ import PrivacyPolicy from "../../models/privacy-policy/privacy_policy_model.js";
 
 export const getPrivacyPolicy = async (req, res) => {
   try {
-    const policy = await PrivacyPolicy.find({}).sort({ updatedAt: -1 });
-    if (!policy) {
+    const policy = await PrivacyPolicy.find({});
+    if (!policy || policy.length === 0) {
       return res.status(404).json({ message: "Privacy policy not found." });
     }
     return res
@@ -17,12 +17,15 @@ export const getPrivacyPolicy = async (req, res) => {
 
 export const createPrivacyPolicy = async (req, res) => {
   try {
-    const { content } = req.body;
-    if (!content) {
-      return res.status(400).json({ message: "Content is required." });
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+      return res
+        .status(400)
+        .json({ message: "Both title and content are required." });
     }
 
-    const policy = new PrivacyPolicy({ content });
+    const policy = new PrivacyPolicy({ title, content });
     await policy.save();
 
     return res
@@ -34,19 +37,20 @@ export const createPrivacyPolicy = async (req, res) => {
   }
 };
 
-// PUT to update existing policy
 export const updatePrivacyPolicy = async (req, res) => {
   try {
     const { id } = req.params;
-    const { content } = req.body;
+    const { title, content } = req.body;
 
-    if (!content) {
-      return res.status(400).json({ message: "Content is required." });
+    if (!title || !content) {
+      return res
+        .status(400)
+        .json({ message: "Both title and content are required." });
     }
 
     const updatedPolicy = await PrivacyPolicy.findByIdAndUpdate(
       id,
-      { content, updatedAt: new Date() },
+      { title, content, updatedAt: new Date() },
       { new: true }
     );
 
@@ -65,7 +69,6 @@ export const updatePrivacyPolicy = async (req, res) => {
   }
 };
 
-// DELETE a policy
 export const deletePrivacyPolicy = async (req, res) => {
   try {
     const { id } = req.params;
