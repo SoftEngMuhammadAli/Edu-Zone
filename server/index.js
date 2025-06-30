@@ -17,7 +17,6 @@ import contactRouter from "./routes/contact-us/contact_us_router.js";
 import privacyPolicyRouter from "./routes/privacy-policy/privacy_policy_router.js";
 import todoRouter from "./routes/todo/todo_router.js";
 import termsConditionsRouter from "./routes/terms-conditions/terms_conditions_router.js";
-import { swaggerServe, swaggerSetup } from "./swagger.js";
 
 app.use(
   cors({
@@ -32,8 +31,14 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.set("json spaces", 2);
 
-// Swagger Docs Route
-app.use("/", swaggerServe, swaggerSetup);
+app.use("/", (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: "Server is up and running!",
+    data: "Hello World!",
+    timestamp: new Date().toISOString(),
+  });
+});
 
 //-//////////////////////
 // API PREFIX & ROUTES
