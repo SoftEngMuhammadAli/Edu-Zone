@@ -17,6 +17,7 @@ import contactRouter from "./routes/contact-us/contact_us_router.js";
 import privacyPolicyRouter from "./routes/privacy-policy/privacy_policy_router.js";
 import todoRouter from "./routes/todo/todo_router.js";
 import termsConditionsRouter from "./routes/terms-conditions/terms_conditions_router.js";
+import ratingRouter from "./routes/rating/rating_router.js";
 
 app.use(
   cors({
@@ -53,6 +54,7 @@ app.use("/api/contact", contactRouter);
 app.use("/api/privacy-policy", privacyPolicyRouter);
 app.use("/api/todos", todoRouter);
 app.use("/api/terms-conditions", termsConditionsRouter);
+app.use("/api/ratings", ratingRouter);
 
 // Start server
 connectToDatabase(process.env.DB_CONFIGURATION);
