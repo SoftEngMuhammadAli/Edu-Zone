@@ -12,12 +12,14 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Todo
- *   description: Manage Todo for all type of users
+ *   description: Manage Todo tasks for users
  */
+
 /**
  * @swagger
  * /api/todos:
  *   get:
+ *     tags: [Todo]
  *     summary: Get all todos
  *     responses:
  *       200:
@@ -33,6 +35,7 @@ router.get("/", getTodos);
  * @swagger
  * /api/todos:
  *   post:
+ *     tags: [Todo]
  *     summary: Create a new todo
  *     requestBody:
  *       required: true
@@ -45,6 +48,7 @@ router.get("/", getTodos);
  *             properties:
  *               text:
  *                 type: string
+ *                 example: Complete LMS dashboard
  *     responses:
  *       201:
  *         description: Todo created
@@ -59,6 +63,7 @@ router.post("/", createTodo);
  * @swagger
  * /api/todos/{id}:
  *   put:
+ *     tags: [Todo]
  *     summary: Update a todo by ID
  *     parameters:
  *       - in: path
@@ -91,6 +96,7 @@ router.put("/:id", updateTodo);
  * @swagger
  * /api/todos/{id}:
  *   delete:
+ *     tags: [Todo]
  *     summary: Delete a todo by ID
  *     parameters:
  *       - in: path

@@ -30,6 +30,15 @@ const swaggerOptions = {
         url: "https://opensource.org/licenses/MIT",
       },
     },
+    tags: [
+      { name: "Authentication", description: "Authentication APIs" },
+      { name: "Users", description: "User management" },
+      { name: "Todo", description: "Todo management" },
+      { name: "Courses", description: "Course management" },
+      { name: "Blogs", description: "Blogs APIs" },
+      { name: "Contact", description: "Get in touch" },
+      { name: "Privacy Policy", description: "Privacy policy related" },
+    ],
     servers: [
       {
         url: "http://localhost:5000",

@@ -35,7 +35,7 @@ export const createTodo = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params; // ✅ Fixed here
     const updated = await Todo.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!updated) {
@@ -52,7 +52,7 @@ export const updateTodo = async (req, res) => {
 
 export const deleteTodo = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params; // ✅ Fixed here
     const deleted = await Todo.findByIdAndDelete(id);
 
     if (!deleted) {
