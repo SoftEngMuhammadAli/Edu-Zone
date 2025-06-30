@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const privacyPolicySchema = new mongoose.Schema(
+const termsAndConditionsSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -19,7 +19,7 @@ const privacyPolicySchema = new mongoose.Schema(
 );
 
 export default mongoose.model(
-  "PrivacyPolicy",
-  privacyPolicySchema,
-  "privacy-policy"
+  "TermsConditions",
+  termsAndConditionsSchema,
+  "terms-and-conditions"
 );
