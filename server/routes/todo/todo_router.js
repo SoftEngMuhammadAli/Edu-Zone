@@ -10,6 +10,12 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Todo
+ *   description: Manage Todo for all type of users
+ */
+/**
+ * @swagger
  * /api/todos:
  *   get:
  *     summary: Get all todos
