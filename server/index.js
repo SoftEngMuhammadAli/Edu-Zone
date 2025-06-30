@@ -18,6 +18,7 @@ import courseRoutes from "./routes/course/course_router.js";
 import authRouter from "./routes/auth/auth_router.js";
 import contactRouter from "./routes/contact-us/contact_us_router.js";
 import privacyPolicyRouter from "./routes/privacy-policy/privacy_policy_router.js";
+import todoRouter from "./routes/todo/todo_router.js";
 
 // Swagger
 import { swaggerServe, swaggerSetup } from "./swagger.js";
@@ -37,6 +38,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/auth", authRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/privacy-policy", privacyPolicyRouter);
+app.use("/api/todos", todoRouter);
 
 // Swagger Docs Route
 app.use("/api-docs", swaggerServe, swaggerSetup);

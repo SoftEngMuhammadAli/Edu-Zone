@@ -1,3 +1,14 @@
+import express from "express";
+const router = express.Router();
+import {
+  getPrivacyPolicy,
+  createPrivacyPolicy,
+  updatePrivacyPolicy,
+  deletePrivacyPolicy,
+} from "../../controllers/privacy-policy/privacy_policy_controller.js";
+import checkAuth from "../../middlewares/auth/auth_middleware.js";
+import authorizeRoles from "../../middlewares/auth/authorization_middleware.js";
+
 /**
  * @swagger
  * tags:
@@ -122,3 +133,5 @@ router.put("/:id", checkAuth, authorizeRoles("admin"), updatePrivacyPolicy);
  *         description: Policy not found
  */
 router.delete("/:id", checkAuth, authorizeRoles("admin"), deletePrivacyPolicy);
+
+export default router;

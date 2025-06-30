@@ -1,3 +1,7 @@
+import express from "express";
+const router = express.Router();
+import { sendContactMessage } from "../../controllers/contact-us/contact_us_controller.js";
+
 /**
  * @swagger
  * /api/contact/send-message:
@@ -46,3 +50,5 @@
  *         description: Internal server error
  */
 router.post("/send-message", sendContactMessage);
+
+export default router;
