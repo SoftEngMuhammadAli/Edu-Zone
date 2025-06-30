@@ -5,15 +5,16 @@ import {
   updateTodo,
   deleteTodo,
 } from "../../controllers/todo/todo_controller.js";
+import { checkAuth } from "../../middlewares/auth/auth_middleware.js";
 
 const router = express.Router();
 
-router.get("/", getTodos);
+router.get("/", checkAuth, getTodos);
 
-router.post("/", createTodo);
+router.post("/", checkAuth, createTodo);
 
-router.put("/:id", updateTodo);
+router.put("/:id", checkAuth, updateTodo);
 
-router.delete("/:id", deleteTodo);
+router.delete("/:id", checkAuth, deleteTodo);
 
 export default router;

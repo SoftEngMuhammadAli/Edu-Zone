@@ -5,15 +5,16 @@ import {
   getRatingsByCourse,
   deleteRating,
 } from "../../controllers/rating/rating_controller.js";
+import { checkAuth } from "../../middlewares/auth/auth_middleware.js";
 
 const router = express.Router();
 
-router.post("/", createRating);
+router.post("/", checkAuth, createRating);
 
-router.get("/", getAllRatings);
+router.get("/", checkAuth, getAllRatings);
 
-router.get("/course/:courseId", getRatingsByCourse);
+router.get("/course/:courseId", checkAuth, getRatingsByCourse);
 
-router.delete("/:id", deleteRating);
+router.delete("/:id", checkAuth, deleteRating);
 
 export default router;
