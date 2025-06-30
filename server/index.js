@@ -24,7 +24,18 @@ import todoRouter from "./routes/todo/todo_router.js";
 import { swaggerServe, swaggerSetup } from "./swagger.js";
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local dev (Front End)
+      "https://eduzone-jscm.onrender.com", // deployed frontend (Render)
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -41,7 +52,7 @@ app.use("/api/privacy-policy", privacyPolicyRouter);
 app.use("/api/todos", todoRouter);
 
 // Swagger Docs Route
-app.use("/api-docs", swaggerServe, swaggerSetup);
+app.use("/", swaggerServe, swaggerSetup);
 
 // Start server
 connectToDatabase(process.env.DB_CONFIGURATION);

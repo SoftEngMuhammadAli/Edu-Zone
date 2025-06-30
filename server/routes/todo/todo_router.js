@@ -1,79 +1,105 @@
 import express from "express";
-import Todo from "../../models/todo/todo_model.js";
+import {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} from "../../controllers/todo/todo_controller.js";
 
 const router = express.Router();
 
-// GET all todos
-router.get("/", async (req, res) => {
-  try {
-    const todos = await Todo.find({});
-    if (!todos || todos.length === 0) {
-      return res.status(404).json({ message: "No todos found" });
-    }
-    return res.status(200).json({ data: todos });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
-  }
-});
+/**
+ * @swagger
+ * /api/todos:
+ *   get:
+ *     summary: Get all todos
+ *     responses:
+ *       200:
+ *         description: List of todos
+ *       404:
+ *         description: No todos found
+ *       500:
+ *         description: Server error
+ */
+router.get("/", getTodos);
 
-// POST create todo
-router.post("/", async (req, res) => {
-  try {
-    const { text } = req.body;
-    if (!text || typeof text !== "string") {
-      return res
-        .status(400)
-        .json({ message: "Invalid input: 'text' is required" });
-    }
+/**
+ * @swagger
+ * /api/todos:
+ *   post:
+ *     summary: Create a new todo
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - text
+ *             properties:
+ *               text:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Todo created
+ *       400:
+ *         description: Invalid input
+ *       500:
+ *         description: Server error
+ */
+router.post("/", createTodo);
 
-    const todo = new Todo({ text });
-    const saved = await todo.save();
-    return res.status(201).json({ data: saved });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
-  }
-});
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   put:
+ *     summary: Update a todo by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *               completed:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Todo updated
+ *       404:
+ *         description: Todo not found
+ *       500:
+ *         description: Server error
+ */
+router.put("/:id", updateTodo);
 
-// PUT update todo
-router.put("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updated = await Todo.findByIdAndUpdate(id, req.body, { new: true });
-
-    if (!updated) {
-      return res.status(404).json({ message: "Todo not found" });
-    }
-
-    return res.status(200).json({ data: updated });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
-  }
-});
-
-// DELETE todo
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deleted = await Todo.findByIdAndDelete(id);
-
-    if (!deleted) {
-      return res.status(404).json({ message: "Todo not found" });
-    }
-
-    return res
-      .status(200)
-      .json({ success: true, message: "Todo deleted", data: deleted });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
-  }
-});
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   delete:
+ *     summary: Delete a todo by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Todo deleted
+ *       404:
+ *         description: Todo not found
+ *       500:
+ *         description: Server error
+ */
+router.delete("/:id", deleteTodo);
 
 export default router;
