@@ -7,7 +7,7 @@ const ratingSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    productId: {
+    courseId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Course",
@@ -20,3 +20,6 @@ const ratingSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Rating", ratingSchema, "ratings");
+
+// Review
+// Rating

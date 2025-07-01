@@ -3,7 +3,10 @@ import Course from "../../models/course/course_model.js";
 
 export const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find({}).populate("user");
+    const courses = await Course.find({})
+      .populate("user", "name email")
+      .populate("lesson")
+      .populate("assignment");
     if (!courses) {
       return res.status(404).json({ message: "Not Found" });
     }
@@ -46,6 +49,10 @@ export const createCourse = async (req, res) => {
     duration,
     level,
   } = req.body;
+
+  if (!title || !description || !image || !category || !duration || !level) {
+    return res.status(400).json({ message: `All Fields Are Required!` });
+  }
 
   let user = req.user.userId;
   console.log(req.user);
@@ -97,7 +104,6 @@ export const updateCourseById = async (req, res) => {
   }
 };
 
-// DELETE course by ID
 export const deleteCourseById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -125,3 +131,41 @@ export default {
   updateCourseById,
   deleteCourseById,
 };
+
+/*
+import Course from "../../models/course/course_model.js";
+import Lesson from "../../models/lesson/lesson_model.js";
+import Assignment from "../../models/assignment/assignment_model.js";
+
+export const getAllCourses = async (req, res) => {
+  try {
+    // Get all courses and include basic user info
+    const courses = await Course.find().populate("user", "name email");
+
+    // For each course, find its lessons and assignments
+    const result = [];
+
+    for (const course of courses) {
+      const lessons = await Lesson.find({ courseId: course._id });
+      const assignments = await Assignment.find({ courseId: course._id });
+
+      result.push({
+        ...course.toObject(),
+        lessons,
+        assignments,
+      });
+    }
+
+    // Send the combined response
+    return res.status(200).json({
+      message: "Courses fetched with lessons and assignments",
+      data: result,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to fetch courses",
+      details: error.message,
+    });
+  }
+};
+*/

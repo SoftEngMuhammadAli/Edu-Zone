@@ -76,7 +76,6 @@ export const loginUser = async (req, res) => {
       httpOnly: true,
       sameSite: "Strict",
       secure: true,
-      // 1 day expiry
       maxAge: 24 * 60 * 60 * 1000,
     });
 

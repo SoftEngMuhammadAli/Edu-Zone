@@ -31,6 +31,6 @@ export const generateToken = (user) => {
   };
 
   return jwt.sign(payloadData, process.env.SECRET_KEY, {
-    expiresIn: "1h",
+    expiresIn: "170h",
   });
 };

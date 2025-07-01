@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import Blog from "../../models/blog/blog_model.js";
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-export const handleGetAllBlogs = async (req, res) => {
+// catchAsyncHandler
+export const handleGetAllBlogs = catchAsyncHandler(async (req, res) => {
   try {
     const blogs = await Blog.find({});
     if (!blogs) {
@@ -16,9 +18,9 @@ export const handleGetAllBlogs = async (req, res) => {
       .status(500)
       .json({ error: "Failed to fetch blogs", details: err.message });
   }
-};
+});
 
-export const handleGetBlogById = async (req, res) => {
+export const handleGetBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -32,7 +34,7 @@ export const handleGetBlogById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to fetch blog", details: err.message });
   }
-};
+});
 
 export const handleCreateBlog = async (req, res) => {
   const { title, content, author } = req.body;
