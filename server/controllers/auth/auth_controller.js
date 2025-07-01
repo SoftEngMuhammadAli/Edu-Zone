@@ -1,3 +1,4 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import User from "../../models/users/users_model.js";
 import {
   compareAndSecurePassword,
@@ -5,7 +6,7 @@ import {
   generateToken,
 } from "../../utils/helpers.js";
 
-export const registerUser = async (req, res) => {
+export const registerUser = catchAsyncHandler(async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -43,9 +44,9 @@ export const registerUser = async (req, res) => {
     console.error(`Error: ${error}`);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-};
+});
 
-export const loginUser = async (req, res) => {
+export const loginUser = catchAsyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -88,9 +89,9 @@ export const loginUser = async (req, res) => {
     console.error(`Error: ${error}`);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-};
+});
 
-export const logoutUser = async (_, res) => {
+export const logoutUser = catchAsyncHandler(async (_, res) => {
   try {
     res.cookie("token", "", {
       secure: true,
@@ -104,4 +105,4 @@ export const logoutUser = async (_, res) => {
     console.error(`Error: ${error}`);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-};
+});

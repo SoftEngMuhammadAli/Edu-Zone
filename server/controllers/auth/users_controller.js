@@ -1,8 +1,9 @@
 import User from "../../models/users/users_model.js";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-export const handleGetAllUsers = async (req, res) => {
+export const handleGetAllUsers = catchAsyncHandler(async (req, res) => {
   try {
     const users = await User.find({});
 
@@ -20,9 +21,9 @@ export const handleGetAllUsers = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleGetAllUsersByRole = async (req, res) => {
+export const handleGetAllUsersByRole = catchAsyncHandler(async (req, res) => {
   try {
     const role = req.params.role;
 
@@ -48,9 +49,9 @@ export const handleGetAllUsersByRole = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const createUser = async (req, res) => {
+export const createUser = catchAsyncHandler(async (req, res) => {
   try {
     const {
       username,
@@ -102,9 +103,9 @@ export const createUser = async (req, res) => {
       .status(500)
       .json({ message: "Error creating user", error: error.message });
   }
-};
+});
 
-export const handleGetUserById = async (req, res) => {
+export const handleGetUserById = catchAsyncHandler(async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -132,9 +133,9 @@ export const handleGetUserById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleDeleteUserById = async (req, res) => {
+export const handleDeleteUserById = catchAsyncHandler(async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -162,9 +163,9 @@ export const handleDeleteUserById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleUpdateUserById = async (req, res) => {
+export const handleUpdateUserById = catchAsyncHandler(async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -199,4 +200,4 @@ export const handleUpdateUserById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});

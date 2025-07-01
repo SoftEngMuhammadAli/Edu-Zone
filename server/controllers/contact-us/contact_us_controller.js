@@ -1,10 +1,11 @@
 import ContactUs from "../../models/contact-us/contact_us_model.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
 dotenv.config();
 
-export const sendContactMessage = async (req, res) => {
+export const sendContactMessage = catchAsyncHandler(async (req, res) => {
   console.log("Headers:", req.headers);
   console.log("Raw body:", req.body);
 
@@ -42,4 +43,4 @@ export const sendContactMessage = async (req, res) => {
       .status(500)
       .json({ error: "Something went wrong. Try again later." });
   }
-};
+});

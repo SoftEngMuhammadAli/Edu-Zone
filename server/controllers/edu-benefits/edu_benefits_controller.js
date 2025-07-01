@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import EduZoneBenefit from "../../models/edu-benefits/edu_benefits_model.js";
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-export const handleBenefitByGetAll = async (req, res) => {
+export const handleBenefitByGetAll = catchAsyncHandler(async (req, res) => {
   try {
     const data = await EduZoneBenefit.find({});
     if (!data || data.length === 0) {
@@ -17,9 +18,9 @@ export const handleBenefitByGetAll = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleBenefitById = async (req, res) => {
+export const handleBenefitById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -43,9 +44,9 @@ export const handleBenefitById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const createBenefit = async (req, res) => {
+export const createBenefit = catchAsyncHandler(async (req, res) => {
   try {
     const { title, description } = req.body;
 
@@ -76,9 +77,9 @@ export const createBenefit = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleUpdateBenefitById = async (req, res) => {
+export const handleUpdateBenefitById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
@@ -113,9 +114,9 @@ export const handleUpdateBenefitById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
-export const handleDeleteBenefitById = async (req, res) => {
+export const handleDeleteBenefitById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -139,7 +140,7 @@ export const handleDeleteBenefitById = async (req, res) => {
       error: error.message,
     });
   }
-};
+});
 
 export default {
   handleBenefitByGetAll,

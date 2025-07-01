@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import Course from "../../models/course/course_model.js";
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-export const getAllCourses = async (req, res) => {
+export const getAllCourses = catchAsyncHandler(async (req, res) => {
   try {
     const courses = await Course.find({})
       .populate("user", "name email")
@@ -18,9 +19,9 @@ export const getAllCourses = async (req, res) => {
       .status(500)
       .json({ error: "Failed to fetch courses", details: error.message });
   }
-};
+});
 
-export const getCourseById = async (req, res) => {
+export const getCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -35,9 +36,9 @@ export const getCourseById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to fetch course", details: error.message });
   }
-};
+});
 
-export const createCourse = async (req, res) => {
+export const createCourse = catchAsyncHandler(async (req, res) => {
   const {
     title,
     description,
@@ -80,9 +81,9 @@ export const createCourse = async (req, res) => {
       .status(500)
       .json({ error: "Failed to create course", details: error.message });
   }
-};
+});
 
-export const updateCourseById = async (req, res) => {
+export const updateCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -102,9 +103,9 @@ export const updateCourseById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to update course", details: error.message });
   }
-};
+});
 
-export const deleteCourseById = async (req, res) => {
+export const deleteCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Course ID" });
@@ -122,7 +123,7 @@ export const deleteCourseById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to delete course", details: error.message });
   }
-};
+});
 
 export default {
   getAllCourses,
@@ -131,41 +132,3 @@ export default {
   updateCourseById,
   deleteCourseById,
 };
-
-/*
-import Course from "../../models/course/course_model.js";
-import Lesson from "../../models/lesson/lesson_model.js";
-import Assignment from "../../models/assignment/assignment_model.js";
-
-export const getAllCourses = async (req, res) => {
-  try {
-    // Get all courses and include basic user info
-    const courses = await Course.find().populate("user", "name email");
-
-    // For each course, find its lessons and assignments
-    const result = [];
-
-    for (const course of courses) {
-      const lessons = await Lesson.find({ courseId: course._id });
-      const assignments = await Assignment.find({ courseId: course._id });
-
-      result.push({
-        ...course.toObject(),
-        lessons,
-        assignments,
-      });
-    }
-
-    // Send the combined response
-    return res.status(200).json({
-      message: "Courses fetched with lessons and assignments",
-      data: result,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Failed to fetch courses",
-      details: error.message,
-    });
-  }
-};
-*/

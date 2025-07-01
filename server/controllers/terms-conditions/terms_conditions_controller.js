@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import TermsConditions from "../../models/terms-conditions/terms_conditions_model.js";
 
-export const getTermsAndConditions = async (req, res) => {
+export const getTermsAndConditions = catchAsyncHandler(async (req, res) => {
   try {
     const terms = await TermsConditions.find({});
     if (!terms || terms.length === 0) {
@@ -17,9 +18,9 @@ export const getTermsAndConditions = async (req, res) => {
       .status(500)
       .json({ error: "Failed to fetch terms and conditions." });
   }
-};
+});
 
-export const createTermsAndConditions = async (req, res) => {
+export const createTermsAndConditions = catchAsyncHandler(async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -42,9 +43,9 @@ export const createTermsAndConditions = async (req, res) => {
       .status(500)
       .json({ error: "Failed to create terms and conditions." });
   }
-};
+});
 
-export const updateTermsAndConditions = async (req, res) => {
+export const updateTermsAndConditions = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
@@ -77,9 +78,9 @@ export const updateTermsAndConditions = async (req, res) => {
       .status(500)
       .json({ error: "Failed to update terms and conditions." });
   }
-};
+});
 
-export const deleteTermsAndConditions = async (req, res) => {
+export const deleteTermsAndConditions = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -99,4 +100,4 @@ export const deleteTermsAndConditions = async (req, res) => {
       .status(500)
       .json({ error: "Failed to delete terms and conditions." });
   }
-};
+});

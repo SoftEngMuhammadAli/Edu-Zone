@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import PrivacyPolicy from "../../models/privacy-policy/privacy_policy_model.js";
 
-export const getPrivacyPolicy = async (req, res) => {
+export const getPrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const policy = await PrivacyPolicy.find({});
     if (!policy || policy.length === 0) {
@@ -13,9 +14,9 @@ export const getPrivacyPolicy = async (req, res) => {
     console.error("Get policy error:", err);
     return res.status(500).json({ error: "Failed to fetch privacy policy." });
   }
-};
+});
 
-export const createPrivacyPolicy = async (req, res) => {
+export const createPrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -35,9 +36,9 @@ export const createPrivacyPolicy = async (req, res) => {
     console.error("Create policy error:", err);
     return res.status(500).json({ error: "Failed to create privacy policy." });
   }
-};
+});
 
-export const updatePrivacyPolicy = async (req, res) => {
+export const updatePrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
@@ -67,9 +68,9 @@ export const updatePrivacyPolicy = async (req, res) => {
     console.error("Update policy error:", err);
     return res.status(500).json({ error: "Failed to update privacy policy." });
   }
-};
+});
 
-export const deletePrivacyPolicy = async (req, res) => {
+export const deletePrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -85,4 +86,4 @@ export const deletePrivacyPolicy = async (req, res) => {
     console.error("Delete policy error:", err);
     return res.status(500).json({ error: "Failed to delete privacy policy." });
   }
-};
+});

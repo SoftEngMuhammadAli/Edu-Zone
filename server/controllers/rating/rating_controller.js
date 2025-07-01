@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Rating from "../../models/rating/rating_model.js";
 
-export const createRating = async (req, res) => {
+export const createRating = catchAsyncHandler(async (req, res) => {
   try {
     const { userId, courseId, rating, comment } = req.body;
 
@@ -19,9 +20,9 @@ export const createRating = async (req, res) => {
     console.error(err);
     return res.status(500).json({ error: err.message });
   }
-};
+});
 
-export const getAllRatings = async (req, res) => {
+export const getAllRatings = catchAsyncHandler(async (req, res) => {
   try {
     const ratings = await Rating.find({}).populate("userId", "name");
 
@@ -34,9 +35,9 @@ export const getAllRatings = async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: error.message });
   }
-};
+});
 
-export const getRatingsByCourse = async (req, res) => {
+export const getRatingsByCourse = catchAsyncHandler(async (req, res) => {
   try {
     const { courseId } = req.params;
 
@@ -57,9 +58,9 @@ export const getRatingsByCourse = async (req, res) => {
     console.error(err);
     return res.status(500).json({ error: err.message });
   }
-};
+});
 
-export const deleteRating = async (req, res) => {
+export const deleteRating = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -80,4 +81,4 @@ export const deleteRating = async (req, res) => {
     console.error(err);
     return res.status(500).json({ error: err.message });
   }
-};
+});

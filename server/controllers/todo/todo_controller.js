@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Todo from "../../models/todo/todo_model.js";
 
-export const getTodos = async (req, res) => {
+export const getTodos = catchAsyncHandler(async (req, res) => {
   try {
     const todos = await Todo.find({});
     if (!todos || todos.length === 0) {
@@ -12,9 +13,9 @@ export const getTodos = async (req, res) => {
       .status(500)
       .json({ message: "Server error", error: error.message });
   }
-};
+});
 
-export const createTodo = async (req, res) => {
+export const createTodo = catchAsyncHandler(async (req, res) => {
   try {
     const { text } = req.body;
     if (!text) {
@@ -31,9 +32,9 @@ export const createTodo = async (req, res) => {
       .status(500)
       .json({ message: "Server error", error: error.message });
   }
-};
+});
 
-export const updateTodo = async (req, res) => {
+export const updateTodo = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const updated = await Todo.findByIdAndUpdate(id, req.body, { new: true });
@@ -48,9 +49,9 @@ export const updateTodo = async (req, res) => {
       .status(500)
       .json({ message: "Server error", error: error.message });
   }
-};
+});
 
-export const deleteTodo = async (req, res) => {
+export const deleteTodo = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Todo.findByIdAndDelete(id);
@@ -67,4 +68,4 @@ export const deleteTodo = async (req, res) => {
       .status(500)
       .json({ message: "Server error", error: error.message });
   }
-};
+});

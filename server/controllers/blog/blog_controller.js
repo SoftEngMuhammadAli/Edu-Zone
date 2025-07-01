@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import Blog from "../../models/blog/blog_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-// catchAsyncHandler
 export const handleGetAllBlogs = catchAsyncHandler(async (req, res) => {
   try {
     const blogs = await Blog.find({});
@@ -36,7 +35,7 @@ export const handleGetBlogById = catchAsyncHandler(async (req, res) => {
   }
 });
 
-export const handleCreateBlog = async (req, res) => {
+export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
   const { title, content, author } = req.body;
 
   try {
@@ -48,9 +47,9 @@ export const handleCreateBlog = async (req, res) => {
       .status(500)
       .json({ error: "Failed to create blog", details: err.message });
   }
-};
+});
 
-export const handleUpdateBlogById = async (req, res) => {
+export const handleUpdateBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -66,9 +65,9 @@ export const handleUpdateBlogById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to update blog", details: err.message });
   }
-};
+});
 
-export const handleDeleteBlogById = async (req, res) => {
+export const handleDeleteBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "Invalid Blog ID" });
@@ -82,7 +81,7 @@ export const handleDeleteBlogById = async (req, res) => {
       .status(500)
       .json({ error: "Failed to delete blog", details: err.message });
   }
-};
+});
 
 export default {
   handleGetAllBlogs,
