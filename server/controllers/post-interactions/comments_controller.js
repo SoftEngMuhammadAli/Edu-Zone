@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Comment from "../../models/post-interactions/comments_model.js";
 
-export const createComment = async (req, res) => {
+export const createComment = catchAsyncHandler(async (req, res) => {
   try {
     const comment = new Comment(req.body);
     if (!comment) {
@@ -14,9 +15,9 @@ export const createComment = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to create comment", error });
   }
-};
+});
 
-export const getAllComments = async (req, res) => {
+export const getAllComments = catchAsyncHandler(async (req, res) => {
   try {
     const comments = await Comment.find()
       .populate("user", "name email")
@@ -33,9 +34,9 @@ export const getAllComments = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Failed to fetch comments", error });
   }
-};
+});
 
-export const getCommentById = async (req, res) => {
+export const getCommentById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const comment = await Comment.findById(id)
@@ -51,9 +52,9 @@ export const getCommentById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Invalid comment ID", error });
   }
-};
+});
 
-export const updateComment = async (req, res) => {
+export const updateComment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const updated = await Comment.findByIdAndUpdate(id, req.body, {
@@ -68,9 +69,9 @@ export const updateComment = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to update comment", error });
   }
-};
+});
 
-export const deleteComment = async (req, res) => {
+export const deleteComment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Comment.findByIdAndDelete(id);
@@ -83,4 +84,4 @@ export const deleteComment = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to delete comment", error });
   }
-};
+});

@@ -1,21 +1,18 @@
 import nodemailer from "nodemailer";
 import ejs from "ejs";
 import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 dotenv.config();
 
-// EJS + NODEMAILER
-/*
-    -> OTP GENERATION
-*/
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST, // e.g. smtp.gmail.com
-  port: 587,
-  secure: false, // true for 465, false for other ports
+  service: "gmail",
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -28,10 +25,10 @@ export const sendEmail = async (to, subject, templateName, data) => {
   const html = await ejs.renderFile(templatePath, data);
 
   const mailOptions = {
-    from: `"Your LMS" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    html,
+    from: `"EduZone" <${process.env.SMTP_USER}>`,
+    to: to,
+    subject: subject,
+    meesage: html,
   };
 
   await transporter.sendMail(mailOptions);

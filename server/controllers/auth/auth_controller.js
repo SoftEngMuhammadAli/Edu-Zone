@@ -5,6 +5,7 @@ import {
   hashAuthPassword,
   generateToken,
 } from "../../utils/helpers.js";
+import { sendEmail } from "../../utils/node_mailer.js";
 
 export const registerUser = catchAsyncHandler(async (req, res) => {
   try {
@@ -34,6 +35,9 @@ export const registerUser = catchAsyncHandler(async (req, res) => {
     // Exclude password field
     const userData = newUser.toObject();
     delete userData.password;
+
+    // TODO: User Approval Registration
+    await sendEmail("knowastrickster@gmail.com", email, "send_mail", userData);
 
     return res.status(201).json({
       message: "User is Created, Successfully!",

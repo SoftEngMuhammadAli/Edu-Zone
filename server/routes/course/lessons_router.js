@@ -6,14 +6,32 @@ import {
   updateLesson,
   deleteLesson,
 } from "../../controllers/course/lesson_controller.js";
-import { checkAuth } from "../../middlewares/auth/auth_middleware.js";
+import {
+  checkAuth,
+  authorizeRoles,
+} from "../../middlewares/auth/auth_middleware.js";
 
 const router = express.Router();
 
-router.post("/", checkAuth, createLesson);
 router.get("/", checkAuth, getAllLessons);
 router.get("/:id", checkAuth, getLessonById);
-router.put("/:id", checkAuth, updateLesson);
-router.delete("/:id", checkAuth, deleteLesson);
+router.post(
+  "/",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  createLesson
+);
+router.put(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  updateLesson
+);
+router.delete(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  deleteLesson
+);
 
 export default router;

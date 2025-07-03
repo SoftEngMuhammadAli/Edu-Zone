@@ -20,6 +20,3 @@ const ratingSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Rating", ratingSchema, "ratings");
-
-// Review
-// Rating

@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Lesson from "../../models/course/lesson_model.js";
 
-export const createLesson = async (req, res) => {
+export const createLesson = catchAsyncHandler(async (req, res) => {
   try {
     const lesson = new Lesson(req.body);
 
@@ -15,9 +16,9 @@ export const createLesson = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to create lesson", error });
   }
-};
+});
 
-export const getAllLessons = async (req, res) => {
+export const getAllLessons = catchAsyncHandler(async (req, res) => {
   try {
     const lessons = await Lesson.find().populate("courseId", "title");
 
@@ -29,9 +30,9 @@ export const getAllLessons = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Failed to fetch lessons", error });
   }
-};
+});
 
-export const getLessonById = async (req, res) => {
+export const getLessonById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const lesson = await Lesson.findById(id).populate("courseId", "title");
@@ -44,9 +45,9 @@ export const getLessonById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Invalid lesson ID", error });
   }
-};
+});
 
-export const updateLesson = async (req, res) => {
+export const updateLesson = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const updated = await Lesson.findByIdAndUpdate(id, req.body, { new: true });
@@ -59,9 +60,9 @@ export const updateLesson = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to update lesson", error });
   }
-};
+});
 
-export const deleteLesson = async (req, res) => {
+export const deleteLesson = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Lesson.findByIdAndDelete(id);
@@ -74,4 +75,4 @@ export const deleteLesson = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to delete lesson", error });
   }
-};
+});

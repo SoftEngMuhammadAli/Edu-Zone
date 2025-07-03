@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Course from "../../models/course/course_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
+// Validation based on conditions
+
 export const getAllCourses = catchAsyncHandler(async (req, res) => {
   try {
     const courses = await Course.find({})

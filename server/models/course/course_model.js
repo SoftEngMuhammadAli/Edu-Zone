@@ -16,17 +16,8 @@ const CourseSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: String,
-      enum: [
-        "UI/UX",
-        "Programming",
-        "Marketing",
-        "Soft skill",
-        "Network",
-        "Data Science",
-        "Business",
-        "Design",
-      ],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CourseCategory",
       required: true,
     },
     views: {

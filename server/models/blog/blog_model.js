@@ -38,9 +38,9 @@ const blogSchema = new mongoose.Schema(
       default: 0,
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BlogCategory",
       required: true,
-      enum: ["tech", "lifestyle", "travel", "custom"],
     },
   },
   {

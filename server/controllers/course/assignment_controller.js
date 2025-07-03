@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Assignment from "../../models/course/asssingment_model.js";
 
-export const createAssignment = async (req, res) => {
+export const createAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const assignment = new Assignment(req.body);
 
@@ -19,9 +20,9 @@ export const createAssignment = async (req, res) => {
       .status(400)
       .json({ message: "Failed to create assignment", error });
   }
-};
+});
 
-export const getAllAssignments = async (req, res) => {
+export const getAllAssignments = catchAsyncHandler(async (req, res) => {
   try {
     const assignments = await Assignment.find()
       .populate("courseId", "title")
@@ -41,9 +42,9 @@ export const getAllAssignments = async (req, res) => {
       .status(500)
       .json({ message: "Failed to fetch assignments", error });
   }
-};
+});
 
-export const getAssignmentById = async (req, res) => {
+export const getAssignmentById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const assignment = await Assignment.findById(id)
@@ -62,9 +63,9 @@ export const getAssignmentById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Invalid assignment ID", error });
   }
-};
+});
 
-export const updateAssignment = async (req, res) => {
+export const updateAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const updated = await Assignment.findByIdAndUpdate(id, req.body, {
@@ -85,9 +86,9 @@ export const updateAssignment = async (req, res) => {
       .status(400)
       .json({ message: "Failed to update assignment", error });
   }
-};
+});
 
-export const deleteAssignment = async (req, res) => {
+export const deleteAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Assignment.findByIdAndDelete(id);
@@ -106,4 +107,4 @@ export const deleteAssignment = async (req, res) => {
       .status(400)
       .json({ message: "Failed to delete assignment", error });
   }
-};
+});

@@ -1,6 +1,7 @@
+import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Like from "../../models/post-interactions/likes_model.js";
 
-export const createLike = async (req, res) => {
+export const createLike = catchAsyncHandler(async (req, res) => {
   try {
     const like = new Like(req.body);
     if (!like) {
@@ -12,9 +13,9 @@ export const createLike = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to add like", error });
   }
-};
+});
 
-export const getAllLikes = async (req, res) => {
+export const getAllLikes = catchAsyncHandler(async (req, res) => {
   try {
     const likes = await Like.find()
       .populate("user", "name email")
@@ -29,9 +30,9 @@ export const getAllLikes = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Failed to fetch likes", error });
   }
-};
+});
 
-export const getLikeById = async (req, res) => {
+export const getLikeById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const like = await Like.findById(id)
@@ -47,9 +48,9 @@ export const getLikeById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Invalid like ID", error });
   }
-};
+});
 
-export const updateLike = async (req, res) => {
+export const updateLike = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const updated = await Like.findByIdAndUpdate(id, req.body, { new: true });
@@ -62,9 +63,9 @@ export const updateLike = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to update like", error });
   }
-};
+});
 
-export const deleteLike = async (req, res) => {
+export const deleteLike = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await Like.findByIdAndDelete(id);
@@ -77,4 +78,4 @@ export const deleteLike = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Failed to delete like", error });
   }
-};
+});

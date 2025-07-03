@@ -6,14 +6,33 @@ import {
   updateAssignment,
   deleteAssignment,
 } from "../../controllers/course/assignment_controller.js";
-import { checkAuth } from "../../middlewares/auth/auth_middleware.js";
+import {
+  checkAuth,
+  authorizeRoles,
+} from "../../middlewares/auth/auth_middleware.js";
 
 const router = express.Router();
 
 router.get("/", checkAuth, getAllAssignments);
 router.get("/:id", checkAuth, getAssignmentById);
-router.post("/", checkAuth, createAssignment);
-router.put("/:id", checkAuth, updateAssignment);
-router.delete("/:id", checkAuth, deleteAssignment);
+
+router.post(
+  "/",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  createAssignment
+);
+router.put(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  updateAssignment
+);
+router.delete(
+  "/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  deleteAssignment
+);
 
 export default router;
