@@ -4,9 +4,6 @@ import { AppFooter } from "../../components/footer/Footer";
 
 const ReadAllBlogs = () => {
   const [getData, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 25;
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,17 +26,6 @@ const ReadAllBlogs = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
-
-  const totalPages = Math.ceil(getData.length / blogsPerPage);
-  const startIndex = (currentPage - 1) * blogsPerPage;
-  const currentBlogs = getData.slice(startIndex, startIndex + blogsPerPage);
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
 
   if (loading) {
     return (
@@ -76,7 +62,7 @@ const ReadAllBlogs = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {currentBlogs.map((blog) => (
+            {getData.map((blog) => (
               <div
                 key={blog._id}
                 className="rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-white"
@@ -126,41 +112,6 @@ const ReadAllBlogs = () => {
               </div>
             ))}
           </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-10">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
-              >
-                Previous
-              </button>
-
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i + 1}
-                  onClick={() => handlePageChange(i + 1)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === i + 1
-                      ? "bg-[#1C1E53] text-white"
-                      : "bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          )}
         </div>
       </section>
       <AppFooter />
