@@ -3,12 +3,28 @@ import Like from "../../models/post-interactions/likes_model.js";
 
 export const createLike = catchAsyncHandler(async (req, res) => {
   try {
-    const like = new Like(req.body);
-    if (!like) {
-      return res.status(400).json({ message: "Invalid like data", data: null });
+    const { user, lessonId, assignmentId } = req.body;
+
+    if (!user || (!lessonId && !assignmentId)) {
+      return res.status(400).json({
+        message: "User and either lessonId or assignmentId are required.",
+      });
     }
 
+    // Prevent duplicate like
+    const existingLike = await Like.findOne({
+      user,
+      ...(lessonId && { lessonId }),
+      ...(assignmentId && { assignmentId }),
+    });
+
+    if (existingLike) {
+      return res.status(409).json({ message: "Like already exists." });
+    }
+
+    const like = new Like({ user, lessonId, assignmentId });
     await like.save();
+
     return res.status(201).json({ message: "Like added", data: like });
   } catch (error) {
     return res.status(400).json({ message: "Failed to add like", error });

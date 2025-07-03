@@ -1,15 +1,17 @@
+import mongoose from "mongoose";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import PrivacyPolicy from "../../models/privacy-policy/privacy_policy_model.js";
 
 export const getPrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
-    const policy = await PrivacyPolicy.find({});
-    if (!policy || policy.length === 0) {
-      return res.status(404).json({ message: "Privacy policy not found." });
+    const policies = await PrivacyPolicy.find({});
+    if (!policies || policies.length === 0) {
+      return res.status(404).json({ message: "No privacy policies found." });
     }
-    return res
-      .status(200)
-      .json({ message: "Policy fetched successfully.", data: policy });
+    return res.status(200).json({
+      message: "Privacy policies fetched successfully.",
+      data: policies,
+    });
   } catch (err) {
     console.error("Get policy error:", err);
     return res.status(500).json({ error: "Failed to fetch privacy policy." });
@@ -26,7 +28,26 @@ export const createPrivacyPolicy = catchAsyncHandler(async (req, res) => {
         .json({ message: "Both title and content are required." });
     }
 
-    const policy = new PrivacyPolicy({ title, content });
+    const trimmedTitle = title.trim();
+    const trimmedContent = content.trim();
+
+    if (trimmedTitle.length < 5 || trimmedContent.length < 20) {
+      return res.status(400).json({
+        message: "Title must be at least 5 characters and content at least 20.",
+      });
+    }
+
+    const duplicate = await PrivacyPolicy.findOne({ title: trimmedTitle });
+    if (duplicate) {
+      return res
+        .status(409)
+        .json({ message: "A policy with this title already exists." });
+    }
+
+    const policy = new PrivacyPolicy({
+      title: trimmedTitle,
+      content: trimmedContent,
+    });
     await policy.save();
 
     return res
@@ -43,16 +64,29 @@ export const updatePrivacyPolicy = catchAsyncHandler(async (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid policy ID." });
+    }
+
     if (!title || !content) {
       return res
         .status(400)
         .json({ message: "Both title and content are required." });
     }
 
+    const trimmedTitle = title.trim();
+    const trimmedContent = content.trim();
+
+    if (trimmedTitle.length < 5 || trimmedContent.length < 20) {
+      return res.status(400).json({
+        message: "Title must be at least 5 characters and content at least 20.",
+      });
+    }
+
     const updatedPolicy = await PrivacyPolicy.findByIdAndUpdate(
       id,
-      { title, content, updatedAt: new Date() },
-      { new: true }
+      { title: trimmedTitle, content: trimmedContent, updatedAt: new Date() },
+      { new: true, runValidators: true }
     );
 
     if (!updatedPolicy) {
@@ -74,6 +108,10 @@ export const deletePrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid policy ID." });
+    }
+
     const deleted = await PrivacyPolicy.findByIdAndDelete(id);
     if (!deleted) {
       return res
@@ -81,7 +119,9 @@ export const deletePrivacyPolicy = catchAsyncHandler(async (req, res) => {
         .json({ message: "Privacy policy not found for deletion." });
     }
 
-    return res.status(200).json({ message: "Policy deleted successfully." });
+    return res
+      .status(200)
+      .json({ message: "Policy deleted successfully.", data: deleted });
   } catch (err) {
     console.error("Delete policy error:", err);
     return res.status(500).json({ error: "Failed to delete privacy policy." });

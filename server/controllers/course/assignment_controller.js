@@ -3,22 +3,66 @@ import Assignment from "../../models/course/asssingment_model.js";
 
 export const createAssignment = catchAsyncHandler(async (req, res) => {
   try {
-    const assignment = new Assignment(req.body);
+    const { title, description, dueDate, courseId, lessonId } = req.body;
 
-    if (!assignment) {
-      return res
-        .status(400)
-        .json({ message: "Invalid assignment data", data: null });
+    if (!title || typeof title !== "string" || title.trim().length < 3) {
+      return res.status(400).json({
+        message: "Title is required and must be at least 3 characters.",
+        data: null,
+      });
     }
 
+    if (
+      !description ||
+      typeof description !== "string" ||
+      description.trim().length < 10
+    ) {
+      return res.status(400).json({
+        message: "Description is required and must be at least 10 characters.",
+        data: null,
+      });
+    }
+
+    if (!dueDate || isNaN(Date.parse(dueDate))) {
+      return res.status(400).json({
+        message: "A valid due date is required.",
+        data: null,
+      });
+    }
+
+    if (!courseId || typeof courseId !== "string") {
+      return res.status(400).json({
+        message: "Valid courseId is required.",
+        data: null,
+      });
+    }
+
+    if (!lessonId || typeof lessonId !== "string") {
+      return res.status(400).json({
+        message: "Valid lessonId is required.",
+        data: null,
+      });
+    }
+
+    // ===== 📄 CREATE AND SAVE ASSIGNMENT =====
+    const assignment = new Assignment({
+      title,
+      description,
+      dueDate,
+      courseId,
+      lessonId,
+    });
+
     await assignment.save();
+
     return res
       .status(201)
       .json({ message: "Assignment created", data: assignment });
   } catch (error) {
-    return res
-      .status(400)
-      .json({ message: "Failed to create assignment", error });
+    return res.status(400).json({
+      message: "Failed to create assignment",
+      error: error.message || error,
+    });
   }
 });
 

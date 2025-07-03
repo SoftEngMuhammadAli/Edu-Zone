@@ -2,42 +2,39 @@ import mongoose from "mongoose";
 import Course from "../../models/course/course_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 
-// Validation based on conditions
-
 export const getAllCourses = catchAsyncHandler(async (req, res) => {
-  try {
-    const courses = await Course.find({})
-      .populate("user", "name email")
-      .populate("lesson")
-      .populate("assignment");
-    if (!courses) {
-      return res.status(404).json({ message: "Not Found" });
-    }
-    return res
-      .status(200)
-      .json({ message: "Courses are fetched successfully!", data: courses });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to fetch courses", details: error.message });
+  const courses = await Course.find({})
+    .populate("user", "name email")
+    .populate("lesson")
+    .populate("assignment");
+
+  if (!courses || courses.length === 0) {
+    return res.status(404).json({ message: "No courses found." });
   }
+
+  return res.status(200).json({
+    message: "Courses fetched successfully!",
+    data: courses,
+  });
 });
 
 export const getCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Course ID" });
-
-  try {
-    const course = await Course.findById(id).populate("user");
-    if (!course) return res.status(404).json({ error: "Course not found" });
-
-    return res.status(200).json(course);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to fetch course", details: error.message });
   }
+
+  const course = await Course.findById(id)
+    .populate("user", "name email")
+    .populate("lesson")
+    .populate("assignment");
+
+  if (!course) {
+    return res.status(404).json({ error: "Course not found" });
+  }
+
+  return res.status(200).json({ message: "Course found", data: course });
 });
 
 export const createCourse = catchAsyncHandler(async (req, res) => {
@@ -46,24 +43,51 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
     description,
     image,
     category,
-    views,
-    students,
-    rating,
     duration,
     level,
+    views = 0,
+    students = 0,
+    rating = 1,
+    assignment = null,
+    lesson = null,
   } = req.body;
 
-  if (!title || !description || !image || !category || !duration || !level) {
-    return res.status(400).json({ message: `All Fields Are Required!` });
+  const user = req.user?.userId;
+
+  if (!title || typeof title !== "string" || title.trim().length < 3) {
+    return res
+      .status(400)
+      .json({ message: "Title must be at least 3 characters." });
   }
 
-  let user = req.user.userId;
-  console.log(req.user);
+  if (!description || description.trim().length < 10) {
+    return res
+      .status(400)
+      .json({ message: "Description must be at least 10 characters." });
+  }
+
+  if (!image || typeof image !== "string") {
+    return res.status(400).json({ message: "Image URL is required." });
+  }
+
+  if (!category || !mongoose.Types.ObjectId.isValid(category)) {
+    return res.status(400).json({ message: "Valid category ID is required." });
+  }
+
+  if (!duration || typeof duration !== "string") {
+    return res.status(400).json({ message: "Duration is required." });
+  }
+
+  if (!level || !["Beginner", "Intermediate", "Advanced"].includes(level)) {
+    return res
+      .status(400)
+      .json({ message: "Level must be Beginner, Intermediate, or Advanced." });
+  }
 
   try {
     const newCourse = new Course({
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       image,
       category,
       views,
@@ -72,58 +96,76 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
       duration,
       level,
       user,
+      assignment,
+      lesson,
     });
 
     await newCourse.save();
-    return res
-      .status(201)
-      .json({ message: "Course created", course: newCourse });
+
+    return res.status(201).json({
+      message: "Course created successfully",
+      data: newCourse,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to create course", details: error.message });
+    return res.status(500).json({
+      error: "Failed to create course",
+      details: error.message,
+    });
   }
 });
 
 export const updateCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Course ID" });
+  }
 
   try {
     const updatedCourse = await Course.findByIdAndUpdate(id, req.body, {
       new: true,
+      runValidators: true,
     });
-    if (!updatedCourse)
-      return res.status(404).json({ error: "Course not found" });
 
-    return res
-      .status(200)
-      .json({ message: "Course updated", course: updatedCourse });
+    if (!updatedCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    return res.status(200).json({
+      message: "Course updated successfully",
+      data: updatedCourse,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to update course", details: error.message });
+    return res.status(500).json({
+      error: "Failed to update course",
+      details: error.message,
+    });
   }
 });
 
 export const deleteCourseById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Course ID" });
+  }
 
   try {
     const deletedCourse = await Course.findByIdAndDelete(id);
-    if (!deletedCourse)
-      return res.status(404).json({ error: "Course not found" });
 
-    return res
-      .status(200)
-      .json({ message: "Course deleted", course: deletedCourse });
+    if (!deletedCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    return res.status(200).json({
+      message: "Course deleted successfully",
+      data: deletedCourse,
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Failed to delete course", details: error.message });
+    return res.status(500).json({
+      error: "Failed to delete course",
+      details: error.message,
+    });
   }
 });
 

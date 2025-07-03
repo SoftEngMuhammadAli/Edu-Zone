@@ -3,15 +3,27 @@ import Comment from "../../models/post-interactions/comments_model.js";
 
 export const createComment = catchAsyncHandler(async (req, res) => {
   try {
-    const comment = new Comment(req.body);
-    if (!comment) {
-      return res
-        .status(400)
-        .json({ message: "Invalid comment data", data: null });
+    const { user, comment, lessonId, assignmentId } = req.body;
+
+    if (!user || !comment || (!lessonId && !assignmentId)) {
+      return res.status(400).json({
+        message:
+          "User, comment text, and either lessonId or assignmentId are required.",
+      });
     }
 
-    await comment.save();
-    return res.status(201).json({ message: "Comment created", data: comment });
+    const newComment = new Comment({
+      user,
+      comment: comment.trim(),
+      lessonId,
+      assignmentId,
+    });
+
+    await newComment.save();
+
+    return res
+      .status(201)
+      .json({ message: "Comment created", data: newComment });
   } catch (error) {
     return res.status(400).json({ message: "Failed to create comment", error });
   }
