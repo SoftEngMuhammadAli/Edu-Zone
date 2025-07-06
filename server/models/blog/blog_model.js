@@ -18,7 +18,6 @@ const blogSchema = new mongoose.Schema(
     },
     publish_date: {
       type: Date,
-      required: true,
       default: Date.now,
     },
     tags: {
@@ -41,6 +40,10 @@ const blogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "BlogCategory",
       required: true,
+    },
+    images: {
+      type: [String],
+      default: [],
     },
   },
   {

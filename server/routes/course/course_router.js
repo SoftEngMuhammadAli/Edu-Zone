@@ -18,6 +18,7 @@ import {
   handleUpdateCourseCategoryById,
   handleDeleteCourseCategoryById,
 } from "../../controllers/course/course_category_controller.js";
+import { upload } from "../../middlewares/multer.js";
 
 //--///////////////////////////////////////////////
 // Course Routers
@@ -28,6 +29,7 @@ router.post(
   "/",
   checkAuth,
   authorizeRoles("admin", "instructor"),
+  upload.array("images", 5),
   createCourse
 );
 router.put(

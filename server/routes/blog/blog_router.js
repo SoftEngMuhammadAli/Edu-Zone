@@ -18,6 +18,7 @@ import {
   handleUpdateBlogCategoryById,
   handleDeleteBlogCategoryById,
 } from "../../controllers/blog/blog_categories_controller.js";
+import { upload } from "../../middlewares/multer.js";
 
 //--///////////////////////////////////////////////
 // Blog Routers
@@ -28,6 +29,7 @@ router.post(
   "/",
   checkAuth,
   authorizeRoles("admin", "instructor"),
+  upload.array("images", 5),
   handleCreateBlog
 );
 router.put(

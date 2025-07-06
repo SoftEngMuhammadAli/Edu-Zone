@@ -11,9 +11,9 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
+    images: {
+      type: [String],
+      default: [],
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,

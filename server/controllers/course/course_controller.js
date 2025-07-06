@@ -41,7 +41,6 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
   const {
     title,
     description,
-    image,
     category,
     duration,
     level,
@@ -53,8 +52,9 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
   } = req.body;
 
   const user = req.user?.userId;
+  const imageFiles = req.files?.map((file) => file.filename) || [];
 
-  if (!title || typeof title !== "string" || title.trim().length < 3) {
+  if (!title || title.trim().length < 3) {
     return res
       .status(400)
       .json({ message: "Title must be at least 3 characters." });
@@ -64,10 +64,6 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
     return res
       .status(400)
       .json({ message: "Description must be at least 10 characters." });
-  }
-
-  if (!image || typeof image !== "string") {
-    return res.status(400).json({ message: "Image URL is required." });
   }
 
   if (!category || !mongoose.Types.ObjectId.isValid(category)) {
@@ -84,34 +80,27 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
       .json({ message: "Level must be Beginner, Intermediate, or Advanced." });
   }
 
-  try {
-    const newCourse = new Course({
-      title: title.trim(),
-      description: description.trim(),
-      image,
-      category,
-      views,
-      students,
-      rating,
-      duration,
-      level,
-      user,
-      assignment,
-      lesson,
-    });
+  const newCourse = new Course({
+    title: title.trim(),
+    description: description.trim(),
+    category,
+    views,
+    students,
+    rating,
+    duration,
+    level,
+    user,
+    assignment,
+    lesson,
+    images: imageFiles,
+  });
 
-    await newCourse.save();
+  await newCourse.save();
 
-    return res.status(201).json({
-      message: "Course created successfully",
-      data: newCourse,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Failed to create course",
-      details: error.message,
-    });
-  }
+  return res.status(201).json({
+    message: "Course created successfully",
+    data: newCourse,
+  });
 });
 
 export const updateCourseById = catchAsyncHandler(async (req, res) => {
@@ -121,26 +110,19 @@ export const updateCourseById = catchAsyncHandler(async (req, res) => {
     return res.status(400).json({ error: "Invalid Course ID" });
   }
 
-  try {
-    const updatedCourse = await Course.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  const updatedCourse = await Course.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    if (!updatedCourse) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-
-    return res.status(200).json({
-      message: "Course updated successfully",
-      data: updatedCourse,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Failed to update course",
-      details: error.message,
-    });
+  if (!updatedCourse) {
+    return res.status(404).json({ error: "Course not found" });
   }
+
+  return res.status(200).json({
+    message: "Course updated successfully",
+    data: updatedCourse,
+  });
 });
 
 export const deleteCourseById = catchAsyncHandler(async (req, res) => {
@@ -150,23 +132,16 @@ export const deleteCourseById = catchAsyncHandler(async (req, res) => {
     return res.status(400).json({ error: "Invalid Course ID" });
   }
 
-  try {
-    const deletedCourse = await Course.findByIdAndDelete(id);
+  const deletedCourse = await Course.findByIdAndDelete(id);
 
-    if (!deletedCourse) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-
-    return res.status(200).json({
-      message: "Course deleted successfully",
-      data: deletedCourse,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Failed to delete course",
-      details: error.message,
-    });
+  if (!deletedCourse) {
+    return res.status(404).json({ error: "Course not found" });
   }
+
+  return res.status(200).json({
+    message: "Course deleted successfully",
+    data: deletedCourse,
+  });
 });
 
 export default {
