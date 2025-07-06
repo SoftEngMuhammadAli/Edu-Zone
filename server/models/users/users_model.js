@@ -10,13 +10,14 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      required: true,
+      required: false,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
       required: true,
+      select: false,
     },
     user_type: {
       type: String,
@@ -29,7 +30,6 @@ const userSchema = new mongoose.Schema(
     },
     profile_picture_url: {
       type: String,
-      default: "https://avatar.iran.liara.run/public",
     },
     bio: {
       type: String,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("User", userSchema, "auth-users");
+export default mongoose.model("User", userSchema, "users");
 
 /*
 import mongoose from "mongoose";
@@ -63,13 +63,13 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      required: true,
+      required: false,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
     user_type: {
       type: String,

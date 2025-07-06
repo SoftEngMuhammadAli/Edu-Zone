@@ -34,3 +34,17 @@ export const generateToken = (user) => {
     expiresIn: "170h",
   });
 };
+
+export const formatUserResponse = (user) => {
+  return {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    user_type: user.user_type,
+    profile_picture_url: user.profile_picture_url,
+    bio: user.bio,
+    registration_date: user.registration_date,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+};
