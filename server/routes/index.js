@@ -45,6 +45,11 @@ import termsConditionsRouter from "../routes/terms-conditions/terms_conditions_r
 // ==========================
 import todoRouter from "../routes/todo/todo_router.js";
 
+// ==========================
+// Notifications
+// ==========================
+import notificationRouter from "../routes/notifications/notification_router.js";
+
 const registeredRouters = (app) => {
   // User
   app.use("/api/users", userRouter);
@@ -76,6 +81,9 @@ const registeredRouters = (app) => {
 
   // Utilities
   app.use("/api/todos", todoRouter);
+
+  // Notifications
+  app.use("/api/notifications", notificationRouter);
 };
 
 export default registeredRouters;
