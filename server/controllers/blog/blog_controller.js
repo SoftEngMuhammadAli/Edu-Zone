@@ -25,7 +25,7 @@ export const handleGetAllBlogs = catchAsyncHandler(async (req, res) => {
 export const handleGetBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Blog ID" });
   }
 
@@ -83,7 +83,7 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
 export const handleUpdateBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Blog ID" });
   }
 
@@ -121,7 +121,7 @@ export const handleUpdateBlogById = catchAsyncHandler(async (req, res) => {
 export const handleDeleteBlogById = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid Blog ID" });
   }
 
@@ -141,11 +141,3 @@ export const handleDeleteBlogById = catchAsyncHandler(async (req, res) => {
     });
   }
 });
-
-export default {
-  handleGetAllBlogs,
-  handleGetBlogById,
-  handleCreateBlog,
-  handleUpdateBlogById,
-  handleDeleteBlogById,
-};

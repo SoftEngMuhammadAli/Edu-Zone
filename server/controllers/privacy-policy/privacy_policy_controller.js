@@ -28,15 +28,6 @@ export const createPrivacyPolicy = catchAsyncHandler(async (req, res) => {
         .json({ message: "Both title and content are required." });
     }
 
-    const trimmedTitle = title.trim();
-    const trimmedContent = content.trim();
-
-    if (trimmedTitle.length < 5 || trimmedContent.length < 20) {
-      return res.status(400).json({
-        message: "Title must be at least 5 characters and content at least 20.",
-      });
-    }
-
     const duplicate = await PrivacyPolicy.findOne({ title: trimmedTitle });
     if (duplicate) {
       return res
@@ -48,6 +39,13 @@ export const createPrivacyPolicy = catchAsyncHandler(async (req, res) => {
       title: trimmedTitle,
       content: trimmedContent,
     });
+
+    if (!policy) {
+      return res.status(400).json({
+        message: "Failed to create privacy policy. Please try again.",
+      });
+    }
+
     await policy.save();
 
     return res
@@ -64,7 +62,7 @@ export const updatePrivacyPolicy = catchAsyncHandler(async (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid policy ID." });
     }
 
@@ -72,15 +70,6 @@ export const updatePrivacyPolicy = catchAsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json({ message: "Both title and content are required." });
-    }
-
-    const trimmedTitle = title.trim();
-    const trimmedContent = content.trim();
-
-    if (trimmedTitle.length < 5 || trimmedContent.length < 20) {
-      return res.status(400).json({
-        message: "Title must be at least 5 characters and content at least 20.",
-      });
     }
 
     const updatedPolicy = await PrivacyPolicy.findByIdAndUpdate(
@@ -108,7 +97,7 @@ export const deletePrivacyPolicy = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid policy ID." });
     }
 

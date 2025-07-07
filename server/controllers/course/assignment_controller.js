@@ -5,19 +5,13 @@ export const createAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const { title, description, dueDate, courseId, lessonId } = req.body || {};
 
-    // Early check for completely missing or empty body
-    if (
-      !req.body ||
-      typeof req.body !== "object" ||
-      Object.keys(req.body).length === 0
-    ) {
+    if (!req.body) {
       return res.status(400).json({
         message: "Request body is missing or empty.",
         data: null,
       });
     }
 
-    // Log incoming body for debugging
     console.log("Creating assignment:", {
       title,
       description,
@@ -26,43 +20,41 @@ export const createAssignment = catchAsyncHandler(async (req, res) => {
       lessonId,
     });
 
-    // Field validations
-    if (!title || title.trim().length < 3) {
+    if (!title) {
       return res.status(400).json({
         message: "Title is required and must be at least 3 characters.",
         data: null,
       });
     }
 
-    if (!description || description.trim().length < 10) {
+    if (!description) {
       return res.status(400).json({
         message: "Description is required and must be at least 10 characters.",
         data: null,
       });
     }
 
-    if (!dueDate || isNaN(Date.parse(dueDate))) {
+    if (!dueDate) {
       return res.status(400).json({
         message: "A valid due date is required.",
         data: null,
       });
     }
 
-    if (!courseId || typeof courseId !== "string") {
+    if (!courseId) {
       return res.status(400).json({
         message: "Valid courseId is required.",
         data: null,
       });
     }
 
-    if (!lessonId || typeof lessonId !== "string") {
+    if (!lessonId) {
       return res.status(400).json({
         message: "Valid lessonId is required.",
         data: null,
       });
     }
 
-    // Create and save assignment
     const assignment = new Assignment({
       title: title.trim(),
       description: description.trim(),
@@ -87,7 +79,7 @@ export const createAssignment = catchAsyncHandler(async (req, res) => {
 
 export const getAllAssignments = catchAsyncHandler(async (req, res) => {
   try {
-    const assignments = await Assignment.find()
+    const assignments = await Assignment.find({})
       .populate("courseId", "title")
       .populate("lessonId", "title");
 
@@ -110,6 +102,11 @@ export const getAllAssignments = catchAsyncHandler(async (req, res) => {
 export const getAssignmentById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Assignment ID is required" });
+    }
+
     const assignment = await Assignment.findById(id)
       .populate("courseId", "title")
       .populate("lessonId", "title");
@@ -131,6 +128,11 @@ export const getAssignmentById = catchAsyncHandler(async (req, res) => {
 export const updateAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Assignment ID is required" });
+    }
+
     const updated = await Assignment.findByIdAndUpdate(id, req.body, {
       new: true,
     });
@@ -154,6 +156,11 @@ export const updateAssignment = catchAsyncHandler(async (req, res) => {
 export const deleteAssignment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Assignment ID is required" });
+    }
+
     const deleted = await Assignment.findByIdAndDelete(id);
 
     if (!deleted) {
