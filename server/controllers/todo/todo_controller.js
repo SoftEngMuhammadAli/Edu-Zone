@@ -3,7 +3,7 @@ import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Todo from "../../models/todo/todo_model.js";
 
 export const getTodos = catchAsyncHandler(async (req, res) => {
-  const todos = await Todo.find({});
+  const todos = await Todo.find({}).populate("user", "name email");
   if (!todos || todos.length === 0) {
     return res.status(404).json({ message: "No todos found", data: [] });
   }
@@ -19,7 +19,7 @@ export const createTodo = catchAsyncHandler(async (req, res) => {
       .json({ message: "Invalid input: 'text' is required" });
   }
 
-  const todo = new Todo({ text: text.trim() });
+  const todo = new Todo({ text: text.trim(), user: req.user._id });
   const saved = await todo.save();
 
   return res

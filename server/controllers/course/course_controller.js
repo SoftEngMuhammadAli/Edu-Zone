@@ -5,8 +5,8 @@ import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 export const getAllCourses = catchAsyncHandler(async (req, res) => {
   const courses = await Course.find({})
     .populate("user", "name email")
-    .populate("lesson")
-    .populate("assignment");
+    .populate("assignment")
+    .populate("lesson");
 
   if (!courses || courses.length === 0) {
     return res.status(404).json({ message: "No courses found." });
@@ -39,20 +39,20 @@ export const getCourseById = catchAsyncHandler(async (req, res) => {
 
 export const createCourse = catchAsyncHandler(async (req, res) => {
   const {
-    title,
-    description,
-    category,
-    duration,
-    level,
-    views = 0,
-    students = 0,
-    rating = 1,
-    assignment = null,
-    lesson = null,
+    title: title,
+    description: description,
+    category: category,
+    duration: duration,
+    level: level,
+    views: views = 0,
+    students: students = 0,
+    rating: rating = 1,
+    assignment: assignment = null,
+    lesson: lesson = null,
   } = req.body;
 
   const user = req.user?.userId;
-  const imageFiles = req.files?.map((file) => file.filename) || [];
+  const imageFiles = req.files?.images || [];
 
   if (!title || title.trim().length < 3) {
     return res
@@ -83,15 +83,15 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
   const newCourse = new Course({
     title: title.trim(),
     description: description.trim(),
-    category,
-    views,
-    students,
-    rating,
-    duration,
-    level,
-    user,
-    assignment,
-    lesson,
+    category: category,
+    views: views,
+    students: students,
+    rating: rating,
+    duration: duration,
+    level: level,
+    user: user,
+    assignment: assignment,
+    lesson: lesson,
     images: imageFiles,
   });
 

@@ -5,14 +5,12 @@ const termsAndConditionsSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     content: {
       type: String,
       required: true,
-    },
-    lastUpdated: {
-      type: Date,
-      default: Date.now,
+      trim: true,
     },
   },
   { timestamps: true }

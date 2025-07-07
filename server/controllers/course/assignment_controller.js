@@ -3,20 +3,38 @@ import Assignment from "../../models/course/asssingment_model.js";
 
 export const createAssignment = catchAsyncHandler(async (req, res) => {
   try {
-    const { title, description, dueDate, courseId, lessonId } = req.body;
+    const { title, description, dueDate, courseId, lessonId } = req.body || {};
 
-    if (!title || typeof title !== "string" || title.trim().length < 3) {
+    // Early check for completely missing or empty body
+    if (
+      !req.body ||
+      typeof req.body !== "object" ||
+      Object.keys(req.body).length === 0
+    ) {
+      return res.status(400).json({
+        message: "Request body is missing or empty.",
+        data: null,
+      });
+    }
+
+    // Log incoming body for debugging
+    console.log("Creating assignment:", {
+      title,
+      description,
+      dueDate,
+      courseId,
+      lessonId,
+    });
+
+    // Field validations
+    if (!title || title.trim().length < 3) {
       return res.status(400).json({
         message: "Title is required and must be at least 3 characters.",
         data: null,
       });
     }
 
-    if (
-      !description ||
-      typeof description !== "string" ||
-      description.trim().length < 10
-    ) {
+    if (!description || description.trim().length < 10) {
       return res.status(400).json({
         message: "Description is required and must be at least 10 characters.",
         data: null,
@@ -44,22 +62,23 @@ export const createAssignment = catchAsyncHandler(async (req, res) => {
       });
     }
 
-    // ===== 📄 CREATE AND SAVE ASSIGNMENT =====
+    // Create and save assignment
     const assignment = new Assignment({
-      title,
-      description,
-      dueDate,
+      title: title.trim(),
+      description: description.trim(),
+      dueDate: new Date(dueDate),
       courseId,
       lessonId,
     });
 
     await assignment.save();
 
-    return res
-      .status(201)
-      .json({ message: "Assignment created", data: assignment });
+    return res.status(201).json({
+      message: "Assignment created successfully",
+      data: assignment,
+    });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Failed to create assignment",
       error: error.message || error,
     });

@@ -5,10 +5,12 @@ import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 export const handleBenefitByGetAll = catchAsyncHandler(async (req, res) => {
   const data = await EduZoneBenefit.find();
   if (!data.length) {
-    return res.status(404).json({ message: "No data found.", data: [] });
+    return res.status(404).json({ message: "No data found.", data: null });
   }
 
-  return res.status(200).json({ message: "Data fetched successfully.", data });
+  return res
+    .status(200)
+    .json({ message: "Data fetched successfully.", data: data });
 });
 
 export const handleBenefitById = catchAsyncHandler(async (req, res) => {
@@ -24,7 +26,9 @@ export const handleBenefitById = catchAsyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Data not found.", data: null });
   }
 
-  return res.status(200).json({ message: "Data fetched successfully.", data });
+  return res
+    .status(200)
+    .json({ message: "Data fetched successfully.", data: data });
 });
 
 export const createBenefit = catchAsyncHandler(async (req, res) => {
@@ -46,9 +50,7 @@ export const createBenefit = catchAsyncHandler(async (req, res) => {
     });
   }
 
-  const existingBenefit = await EduZoneBenefit.findOne({
-    title: { $regex: new RegExp(`^${title}$`, "i") },
-  });
+  const existingBenefit = await EduZoneBenefit.findOne({ title });
 
   if (existingBenefit) {
     return res
@@ -91,7 +93,10 @@ export const handleUpdateBenefitById = catchAsyncHandler(async (req, res) => {
 
   const updatedData = await EduZoneBenefit.findByIdAndUpdate(
     id,
-    { title, description },
+    {
+      title,
+      description,
+    },
     { new: true, runValidators: true }
   );
 

@@ -3,30 +3,31 @@ import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import TermsConditions from "../../models/terms-conditions/terms_conditions_model.js";
 
 export const getTermsAndConditions = catchAsyncHandler(async (req, res) => {
-  const terms = await TermsConditions.find({});
-  if (!terms || terms.length === 0) {
+  const terms = await TermsConditions.find().sort({ createdAt: -1 });
+
+  if (!terms.length) {
     return res.status(404).json({ message: "Terms and conditions not found." });
   }
-  return res
-    .status(200)
-    .json({ message: "Terms fetched successfully.", data: terms });
+
+  return res.status(200).json({
+    message: "Terms and conditions fetched successfully.",
+    data: terms,
+  });
 });
 
 export const createTermsAndConditions = catchAsyncHandler(async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content } = req.body || {};
 
-  if (!title?.trim() || !content?.trim()) {
+  if (!title || !content) {
     return res
       .status(400)
       .json({ message: "Both title and content are required." });
   }
 
-  const newTerms = new TermsConditions({
+  const newTerms = await TermsConditions.create({
     title: title.trim(),
     content: content.trim(),
   });
-
-  await newTerms.save();
 
   return res.status(201).json({
     message: "Terms and conditions created successfully.",
@@ -36,13 +37,13 @@ export const createTermsAndConditions = catchAsyncHandler(async (req, res) => {
 
 export const updateTermsAndConditions = catchAsyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content } = req.body || {};
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid terms ID." });
   }
 
-  if (!title?.trim() || !content?.trim()) {
+  if (!title || !content) {
     return res
       .status(400)
       .json({ message: "Both title and content are required." });
@@ -53,9 +54,8 @@ export const updateTermsAndConditions = catchAsyncHandler(async (req, res) => {
     {
       title: title.trim(),
       content: content.trim(),
-      updatedAt: new Date(),
     },
-    { new: true }
+    { new: true, runValidators: true }
   );
 
   if (!updatedTerms) {

@@ -43,7 +43,7 @@ const blogSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
-      default: [],
+      default: null,
     },
   },
   {

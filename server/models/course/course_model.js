@@ -13,7 +13,7 @@ const CourseSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
-      default: [],
+      default: null,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
