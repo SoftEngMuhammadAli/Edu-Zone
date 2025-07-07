@@ -12,7 +12,7 @@ const ratingSchema = new mongoose.Schema(
       required: true,
       ref: "Course",
     },
-    rating: { type: Number, required: true, min: 1, max: 5 },
+    rating: { type: Number, required: true, min: 1, max: 5, default: 1 },
     comment: { type: String },
     createdAt: { type: Date, default: Date.now },
   },

@@ -1,9 +1,11 @@
 import express from "express";
 const router = express.Router();
+
 import {
   checkAuth,
   authorizeRoles,
 } from "../../middlewares/auth/auth_middleware.js";
+
 import {
   getAllCourses,
   getCourseById,
@@ -11,6 +13,7 @@ import {
   updateCourseById,
   deleteCourseById,
 } from "../../controllers/course/course_controller.js";
+
 import {
   handleGetAllCourseCategories,
   handleGetCourseCategoryById,
@@ -18,10 +21,44 @@ import {
   handleUpdateCourseCategoryById,
   handleDeleteCourseCategoryById,
 } from "../../controllers/course/course_category_controller.js";
+
+import {
+  enrollInCourse,
+  unEnrollFromCourse,
+  getEnrolledCoursesByUserId,
+  getEnrolledCoursesByStudentName,
+  getAllEnrolledStudents,
+  updateCourseEnrollment,
+} from "../../controllers/course/enrollment_controller.js";
+
 import { upload } from "../../middlewares/multer.js";
 
 //--///////////////////////////////////////////////
-// Course Routers
+// Course Categories Routes
+//--///////////////////////////////////////////////
+router.get("/categories", checkAuth, handleGetAllCourseCategories);
+router.get("/categories/:id", checkAuth, handleGetCourseCategoryById);
+router.post(
+  "/categories",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  createCourseCategory
+);
+router.put(
+  "/categories/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  handleUpdateCourseCategoryById
+);
+router.delete(
+  "/categories/:id",
+  checkAuth,
+  authorizeRoles("admin", "instructor"),
+  handleDeleteCourseCategoryById
+);
+
+//--///////////////////////////////////////////////
+// Course Routes
 //--///////////////////////////////////////////////
 router.get("/", checkAuth, getAllCourses);
 router.get("/:id", checkAuth, getCourseById);
@@ -46,27 +83,17 @@ router.delete(
 );
 
 //--///////////////////////////////////////////////
-// Course Categories Routers
+// Enrollment Routes
 //--///////////////////////////////////////////////
-router.get("/categories", checkAuth, handleGetAllCourseCategories);
-router.get("/categories/:id", checkAuth, handleGetCourseCategoryById);
-router.post(
-  "/categories",
+router.post("/user/enrollments", checkAuth, enrollInCourse);
+router.get("/user/enrollments/:userId", checkAuth, getEnrolledCoursesByUserId);
+router.get(
+  "/user/enrollments/search/:name",
   checkAuth,
-  authorizeRoles("admin", "instructor"),
-  createCourseCategory
+  getEnrolledCoursesByStudentName
 );
-router.put(
-  "/categories/:id",
-  checkAuth,
-  authorizeRoles("admin", "instructor"),
-  handleUpdateCourseCategoryById
-);
-router.delete(
-  "/categories/:id",
-  checkAuth,
-  authorizeRoles("admin", "instructor"),
-  handleDeleteCourseCategoryById
-);
+router.get("/user/enrollments", checkAuth, getAllEnrolledStudents);
+router.put("/user/enrollments/:id", checkAuth, updateCourseEnrollment);
+router.delete("/user/enrollments/:id", checkAuth, unEnrollFromCourse);
 
 export default router;
