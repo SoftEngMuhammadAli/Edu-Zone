@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import useFetchData from "../../hooks/useCustomHooks";
 
 const CourseRecommendations = () => {
-  const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get(
-          "https://eduzone-jscm.onrender.com/api/courses/all"
-        );
-        setCourses(response.data.data || []);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-        setCourses([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+  const { data: courses, loading, error } = useFetchData("/api/courses/");
 
   if (loading) {
     return (
@@ -33,17 +14,17 @@ const CourseRecommendations = () => {
     );
   }
 
-  if (!courses || courses.length === 0) {
+  if (error || !courses?.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
-        No courses available.
+      <div className="min-h-screen flex items-center justify-center text-red-600 text-lg font-semibold">
+        {error || "No courses available."}
       </div>
     );
   }
 
   return (
     <section className="px-4 sm:px-8 md:px-16 py-10 max-w-screen-2xl mx-auto">
-      {/* Header Section */}
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
           Recommended Courses For You
@@ -79,12 +60,10 @@ const CourseRecommendations = () => {
             key={course._id}
             className="flex flex-col h-full bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden"
           >
-            {/* Course Image */}
             <div className="h-48 sm:h-56 md:h-64 overflow-hidden flex items-center justify-center bg-gray-100">
               <span className="text-gray-500">No Image Found</span>
             </div>
 
-            {/* Course Content */}
             <div className="p-6 flex flex-col flex-grow">
               <span className="inline-block px-3 py-1 text-xs font-semibold text-[#2405F2] bg-[#2405F2]/10 rounded-full mb-2">
                 {course.category}

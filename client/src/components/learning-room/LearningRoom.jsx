@@ -5,65 +5,67 @@ const LearningRoom = () => {
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
       <aside className="w-64 bg-[#1e2344] text-white p-6 hidden md:block">
-        <h1 className="text-2xl font-bold mb-8">[EDUFREE]</h1>
+        <h1 className="text-2xl font-bold mb-8">EDU-ZONE</h1>
 
-        <div className="mb-4">
-          <h3 className="text-sm font-semibold mb-1">Statistik</h3>
+        {/* Progress */}
+        <div className="mb-6">
+          <h3 className="text-sm font-semibold mb-1">Progress</h3>
           <div className="w-full bg-gray-300 h-2 rounded-full">
             <div
               className="bg-yellow-400 h-2 rounded-full"
               style={{ width: "20%" }}
-            ></div>
+            />
           </div>
-          <p className="text-xs mt-1">4 dari 20 modul berhasil diselesaikan</p>
+          <p className="text-xs mt-1">4 of 20 modules completed</p>
         </div>
 
+        {/* Course Modules */}
         <nav className="space-y-6 text-sm">
           <div>
-            <h4 className="text-purple-300 mb-1">Intro</h4>
-            <ul className="space-y-1 ml-3">
+            <h4 className="text-purple-300 mb-1 uppercase">Introduction</h4>
+            <ul className="ml-3 space-y-1">
               <li className="cursor-pointer hover:text-yellow-400">
-                Perkenalan Instruktur
+                Meet Your Instructor
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-purple-300 mb-1">Instalasi</h4>
-            <ul className="space-y-1 ml-3">
+            <h4 className="text-purple-300 mb-1 uppercase">Installation</h4>
+            <ul className="ml-3 space-y-1">
               <li className="cursor-pointer hover:text-yellow-400">
                 Download Tools
               </li>
               <li className="text-yellow-400 font-semibold cursor-pointer">
-                Installasi Tools
+                Install the Tools
               </li>
               <li className="cursor-pointer hover:text-yellow-400">
-                Basic Penggunaan Tools
+                Basic Usage
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-purple-300 mb-1">Dasar HTML</h4>
-            <ul className="space-y-1 ml-3">
+            <h4 className="text-purple-300 mb-1 uppercase">HTML Basics</h4>
+            <ul className="ml-3 space-y-1">
               <li className="cursor-pointer hover:text-yellow-400">
-                Tentang HTML
+                What is HTML?
               </li>
               <li className="cursor-pointer hover:text-yellow-400">
-                Menjalankan Kode
+                Running HTML Code
               </li>
-              <li className="cursor-pointer hover:text-yellow-400">Tag</li>
+              <li className="cursor-pointer hover:text-yellow-400">Tags</li>
               <li className="cursor-pointer hover:text-yellow-400">
-                Header dan Paragraf
+                Headings & Paragraphs
               </li>
-              <li className="cursor-pointer hover:text-yellow-400">Link</li>
-              <li className="cursor-pointer hover:text-yellow-400">Tabel</li>
+              <li className="cursor-pointer hover:text-yellow-400">Links</li>
+              <li className="cursor-pointer hover:text-yellow-400">Tables</li>
             </ul>
           </div>
         </nav>
       </aside>
 
-      {/* Main content */}
+      {/* Main Content */}
       <main className="flex-1 p-4 md:p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -75,38 +77,39 @@ const LearningRoom = () => {
             </div>
             <img
               src="https://via.placeholder.com/40"
-              alt="profile"
+              alt="Profile"
               className="w-10 h-10 rounded-full"
             />
           </div>
         </div>
 
-        {/* Video player section */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold">Dasar Pemrogramman Web</h2>
-          <h1 className="text-2xl font-bold mb-4">Installasi Tools</h1>
+        {/* Video Player Section */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-600">
+            Web Development Fundamentals
+          </h2>
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">
+            Tool Installation
+          </h1>
 
-          <div className="aspect-w-16 aspect-h-9 bg-gray-300 rounded-xl overflow-hidden relative">
-            <img
-              src="https://via.placeholder.com/800x450"
-              alt="Video Thumbnail"
-              className="object-cover w-full h-full"
+          <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-xl overflow-hidden shadow">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="EDU-ZONE Course Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full min-h-screen"
             />
-            <button className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center">
-                <div className="text-black text-2xl">▶</div>
-              </div>
-            </button>
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* Action Buttons */}
         <div className="flex justify-between">
-          <button className="bg-yellow-300 px-4 py-2 rounded font-semibold">
-            Kembali
+          <button className="bg-gray-200 hover:bg-gray-300 px-5 py-2 rounded font-semibold text-sm">
+            ← Back
           </button>
-          <button className="bg-yellow-400 px-4 py-2 rounded font-semibold">
-            Selesai & Lanjut
+          <button className="bg-yellow-400 hover:bg-yellow-300 px-5 py-2 rounded font-semibold text-sm">
+            Mark as Complete → Next
           </button>
         </div>
       </main>

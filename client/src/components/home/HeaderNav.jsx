@@ -1,18 +1,36 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
+import { MoreVertical } from "lucide-react";
 
 const HeaderNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  const isAdmin = user?.user_type === "admin";
+  // const isStudent = user?.user_type === "student";
+  // const isInstructor = user?.user_type === "instructor";
+
+  const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
   return (
-    <header className="bg-[#1C1E53] text-white">
+    <header className="bg-[#1C1E53] text-white relative z-50">
       <div className="flex items-center justify-between px-6 py-4">
-        {/* Logo/Name */}
+        {/* Logo */}
         <Link to="/home" className="text-2xl font-semibold underline">
           EduZone
         </Link>
 
-        {/* Hamburger Icon */}
+        {/* Hamburger */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden focus:outline-none"
@@ -41,13 +59,57 @@ const HeaderNav = () => {
           </svg>
         </button>
 
-        {/* Desktop Menu */}
-        <nav className="hidden md:flex gap-6 text-white text-base">
-          <Link to="/home">Home</Link>
-          <Link to="/seeAllCourses">Courses</Link>
-          <Link to="/contact">Contact Us</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/help">Need Help?</Link>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex gap-6 text-white text-base items-center">
+          {isAdmin ? (
+            <>
+              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/admin/students">Manage Students</Link>
+              <Link to="/admin/instructors">Manage Instructors</Link>
+              <Link to="/admin/settings">Settings</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/home">Home</Link>
+              <Link to="/seeAllCourses">Courses</Link>
+              <Link to="/learning-room">Learning Room</Link>
+              <Link to="/contact">Contact Us</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/help">Help</Link>
+            </>
+          )}
+
+          {/* Dropdown Trigger */}
+          <div className="relative">
+            <button
+              onClick={toggleDropdown}
+              className="text-white hover:text-yellow-400"
+            >
+              <MoreVertical />
+            </button>
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/settings"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Settings
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </nav>
       </div>
 
@@ -55,30 +117,61 @@ const HeaderNav = () => {
       {isMenuOpen && (
         <div className="md:hidden px-6 pb-4">
           <nav className="flex flex-col gap-4 text-white text-base">
-            <Link to="/home" onClick={() => setIsMenuOpen(false)}>
-              Home
+            {isAdmin ? (
+              <>
+                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                  Dashboard
+                </Link>
+                <Link to="/admin/students" onClick={() => setIsMenuOpen(false)}>
+                  Manage Students
+                </Link>
+                <Link
+                  to="/admin/instructors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Manage Instructors
+                </Link>
+                <Link to="/admin/settings" onClick={() => setIsMenuOpen(false)}>
+                  Settings
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/home" onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </Link>
+                <Link to="/seeAllCourses" onClick={() => setIsMenuOpen(false)}>
+                  Courses
+                </Link>
+                <Link to="/learning-room" onClick={() => setIsMenuOpen(false)}>
+                  Learning Room
+                </Link>
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Contact Us
+                </Link>
+                <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+                  About Us
+                </Link>
+                <Link to="/help" onClick={() => setIsMenuOpen(false)}>
+                  Help
+                </Link>
+              </>
+            )}
+            <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+              Profile
             </Link>
-            <Link to="/seeAllCourses" onClick={() => setIsMenuOpen(false)}>
-              Courses
+            <Link to="/settings" onClick={() => setIsMenuOpen(false)}>
+              Settings
             </Link>
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-              Contact Us
-            </Link>
-            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
-              About Us
-            </Link>
-            <Link
-              to="/terms-and-conditions"
-              onClick={() => setIsMenuOpen(false)}
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+              className="text-left w-full px-4 py-1 bg-white hover:bg-blue-600 text-black rounded"
             >
-              Terms and Conditions
-            </Link>
-            <Link to="/privacy-policy" onClick={() => setIsMenuOpen(false)}>
-              Privacy Policy
-            </Link>
-            <Link to="/help" onClick={() => setIsMenuOpen(false)}>
-              Need Help?
-            </Link>
+              Logout
+            </button>
           </nav>
         </div>
       )}

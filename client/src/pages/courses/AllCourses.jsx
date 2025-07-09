@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../services/axios";
 import { useNavigate } from "react-router-dom";
 import { AppFooter } from "../../components/footer/Footer";
 
@@ -13,10 +13,8 @@ const SeeAllCoursesList = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(
-          "https://eduzone-jscm.onrender.com/api/courses/all"
-        );
-        setCourses(response.data.data || []);
+        const response = await axiosInstance.get("/api/courses/");
+        setCourses(response.data?.data || []);
         setError(null);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -30,30 +28,6 @@ const SeeAllCoursesList = () => {
     fetchCourses();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
-        Loading courses...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-red-600 text-lg font-semibold">
-        {error}
-      </div>
-    );
-  }
-
-  if (courses.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
-        No courses available.
-      </div>
-    );
-  }
-
   return (
     <>
       <section className="px-4 sm:px-8 md:px-16 py-10 max-w-screen-2xl mx-auto">
@@ -62,7 +36,34 @@ const SeeAllCoursesList = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
             All Courses For You
           </h2>
+          <button
+            onClick={() => navigate("/home")}
+            className="px-5 py-2 text-sm font-semibold rounded-md bg-[#F4F6FC] text-gray-800 hover:bg-[#2405F2] hover:text-white transition"
+          >
+            ← Back to Home
+          </button>
         </div>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center text-[#1C1E53] text-lg font-semibold py-10">
+            Loading courses...
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="flex justify-center text-red-600 text-lg font-semibold py-10">
+            {error}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && courses.length === 0 && (
+          <div className="flex justify-center text-[#1C1E53] text-lg font-semibold py-10">
+            No courses available.
+          </div>
+        )}
 
         {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
@@ -111,6 +112,7 @@ const SeeAllCoursesList = () => {
           ))}
         </div>
       </section>
+
       <AppFooter />
     </>
   );

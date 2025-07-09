@@ -1,31 +1,13 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AppFooter } from "../../components/footer/Footer";
+import useFetchData from "../../hooks/useCustomHooks";
 
 const ReadAllBlogs = () => {
-  const [getData, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const apiUrl = "https://eduzone-jscm.onrender.com/api/blogs/all";
-
-  const fetchBlogs = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(apiUrl);
-      setData(response.data.data || []);
-      setError(null);
-    } catch (err) {
-      console.error("Error fetching blogs:", err);
-      setError("Failed to fetch blogs. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
+  const {
+    data: getData,
+    loading,
+    error,
+  } = useFetchData("https://eduzone-jscm.onrender.com/api/blogs/");
 
   if (loading) {
     return (
@@ -88,7 +70,7 @@ const ReadAllBlogs = () => {
 
           {/* Grid Layout for Blogs */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* First Featured Blog */}
+            {/* Featured Blog */}
             {getData[0] && (
               <div className="md:col-span-2 flex flex-col md:flex-row gap-4 bg-white">
                 <img

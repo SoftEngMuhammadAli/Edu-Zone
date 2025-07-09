@@ -1,13 +1,31 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import registerSideImage from "../../assets/images/auth/signup-side-image.png";
 
 const SignUpPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const userData = {
+      name: form.name.value,
+      email: form.email.value,
+      password: form.password.value,
+    };
+
+    const res = await dispatch(register(userData));
+    if (res.meta.requestStatus === "fulfilled" && res.payload?.user) {
+      navigate("/home");
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
-      {/* Left Side - Image and Text (hidden on small screens) */}
       <div
         className="hidden md:flex md:w-1/2 h-full bg-cover bg-center items-center justify-center p-8 md:p-16 text-white"
         style={{ backgroundImage: `url(${registerSideImage})` }}
@@ -23,7 +41,6 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Register Form (always visible) */}
       <div className="w-full md:w-1/2 h-full bg-[#1C1E53] flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
@@ -33,14 +50,11 @@ const SignUpPage = () => {
             Please Register to your account!
           </p>
 
-          <form
-            className="space-y-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              navigate("/");
-            }}
-          >
+          {error && <p className="text-red-400 mb-4">{error}</p>}
+
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <input
+              name="name"
               type="text"
               placeholder="Enter Your Name"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
@@ -48,6 +62,7 @@ const SignUpPage = () => {
             />
 
             <input
+              name="email"
               type="email"
               placeholder="Enter Your Email"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
@@ -55,6 +70,7 @@ const SignUpPage = () => {
             />
 
             <input
+              name="password"
               type="password"
               placeholder="Enter Your Password"
               className="w-full p-3 rounded bg-[#2D2F6B] text-white placeholder-gray-300 focus:outline-none"
@@ -63,9 +79,10 @@ const SignUpPage = () => {
 
             <button
               type="submit"
-              className="w-full py-3 bg-yellow-400 text-[#000000] font-semibold rounded hover:bg-yellow-500 transition"
+              disabled={loading}
+              className="w-full py-3 bg-yellow-400 text-[#000000] font-semibold rounded hover:bg-yellow-500 transition disabled:opacity-50"
             >
-              SIGN UP
+              {loading ? "Registering..." : "SIGN UP"}
             </button>
           </form>
 

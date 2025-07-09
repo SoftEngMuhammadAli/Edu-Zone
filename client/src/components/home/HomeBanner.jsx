@@ -27,7 +27,10 @@ const HomeBanner = () => {
             View Courses
           </button>
 
-          <button className="text-[#FCD980] hover:underline font-medium flex items-center gap-2 justify-center">
+          <button
+            onClick={() => navigate("/learning-room")}
+            className="text-[#FCD980] hover:underline font-medium flex items-center gap-2 justify-center"
+          >
             View Learning Path →
           </button>
         </div>
@@ -55,7 +58,10 @@ const HomeBanner = () => {
               View Courses
             </button>
 
-            <button className="text-[#FCD980] hover:underline font-medium flex items-center gap-2">
+            <button
+              onClick={() => navigate("/learning-room")}
+              className="text-[#FCD980] hover:underline font-medium flex items-center gap-2"
+            >
               View Learning Path →
             </button>
           </div>

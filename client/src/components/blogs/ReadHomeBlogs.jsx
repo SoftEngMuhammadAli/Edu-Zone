@@ -1,30 +1,14 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import useFetchData from "../../hooks/useCustomHooks";
 
 const ReadHomeBlogs = () => {
-  const [getData, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const apiUrl = "https://eduzone-jscm.onrender.com/api/blogs/all";
-
-  const fetchBlogs = async () => {
-    try {
-      const response = await axios.get(apiUrl);
-      setData(response.data.data || []);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-      setData([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
   const navigate = useNavigate();
+  const {
+    data: blogs,
+    loading,
+    error,
+  } = useFetchData("https://eduzone-jscm.onrender.com/api/blogs/");
 
   if (loading) {
     return (
@@ -34,10 +18,10 @@ const ReadHomeBlogs = () => {
     );
   }
 
-  if (!getData || getData.length === 0) {
+  if (error || blogs.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center text-[#1C1E53] text-lg font-semibold">
-        No blogs available.
+        {error || "No blogs available."}
       </div>
     );
   }
@@ -50,9 +34,7 @@ const ReadHomeBlogs = () => {
             Blog, News and Events
           </h2>
           <a
-            onClick={() => {
-              navigate("/allblogs");
-            }}
+            onClick={() => navigate("/allblogs")}
             href="#"
             className="text-[#1C1E53] font-medium text-base hover:underline inline-flex items-center"
           >
@@ -61,13 +43,12 @@ const ReadHomeBlogs = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {getData.slice(0, 3).map((blog) => (
+          {blogs.slice(0, 3).map((blog) => (
             <div
               key={blog._id}
               className="rounded-lg shadow-md hover:shadow-lg transition duration-300 bg-white"
             >
               <div className="w-full h-56 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg text-sm font-bold">
-                {/* No image URLs available */}
                 No Image Found
               </div>
               <div className="p-5">
@@ -86,7 +67,7 @@ const ReadHomeBlogs = () => {
                 </p>
                 <a
                   href="#"
-                  className="text-[#FFFFFF] px-3 py-2  rounded-[5px] font-medium hover:underline inline-flex items-center text-sm md:text-base bg-[#1C1E53]"
+                  className="text-[#FFFFFF] px-3 py-2 rounded-[5px] font-medium hover:underline inline-flex items-center text-sm md:text-base bg-[#1C1E53]"
                 >
                   See More <span className="ml-1">→</span>
                 </a>

@@ -3,24 +3,24 @@ import React from "react";
 const Dashboard = () => {
   const courses = [
     {
-      title: "Dasar Pemrogramman Web",
-      desc: "Materi pemrogramman web untuk pemula",
+      title: "Web Development Basics",
+      desc: "Introductory materials for beginner web developers",
       progress: 20,
     },
     {
       title: "Digital Marketing 101",
-      desc: "Dasar-dasar strategi marketing pemula",
+      desc: "Fundamentals of marketing strategy for beginners",
       progress: 10,
-      status: "sertifikat",
+      status: "Certificate",
     },
     {
-      title: "Data Science Dasar",
-      desc: "Materi pemula tentang pengolahan data",
+      title: "Introduction to Data Science",
+      desc: "Basic materials about data processing and analysis",
       progress: 50,
     },
     {
-      title: "UI/UX Pemula",
-      desc: "Dasar-dasar teori dan praktik tentang UI dan UX design",
+      title: "Beginner UI/UX Design",
+      desc: "Fundamentals of UI and UX theory and practice",
       progress: 75,
     },
   ];
@@ -31,17 +31,13 @@ const Dashboard = () => {
       <aside className="w-64 bg-[#1e2344] text-white p-6 hidden md:block">
         <h1 className="text-2xl font-bold mb-8">[EduZone]</h1>
         <nav className="space-y-6">
-          {[
-            "Dashboard",
-            "Kursus Saya",
-            "Event Saya",
-            "Pengaturan",
-            "Bantuan",
-          ].map((item) => (
-            <div key={item} className="hover:text-yellow-400 cursor-pointer">
-              {item}
-            </div>
-          ))}
+          {["Dashboard", "My Courses", "My Events", "Settings", "Support"].map(
+            (item) => (
+              <div key={item} className="hover:text-yellow-400 cursor-pointer">
+                {item}
+              </div>
+            )
+          )}
         </nav>
       </aside>
 
@@ -64,7 +60,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Overview Chart */}
           <div className="lg:col-span-2 bg-white p-4 rounded-xl shadow">
-            <h2 className="font-semibold mb-4">Overview</h2>
+            <h2 className="font-semibold mb-4">Activity Overview</h2>
             <div className="flex items-end justify-between h-40">
               {[8, 5, 6, 3, 9, 4, 7, 3, 5, 6].map((val, i) => (
                 <div key={i} className="flex flex-col items-center">
@@ -80,9 +76,9 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Statistik */}
+          {/* Statistics */}
           <div className="bg-white p-4 rounded-xl shadow text-center">
-            <h2 className="font-semibold mb-4">Statistik</h2>
+            <h2 className="font-semibold mb-4">Statistics</h2>
             <div className="relative w-24 h-24 mx-auto">
               <svg viewBox="0 0 36 36" className="w-full h-full">
                 <path
@@ -105,21 +101,21 @@ const Dashboard = () => {
                 65%
               </span>
             </div>
-            <p className="text-sm mt-2">Video ditonton</p>
+            <p className="text-sm mt-2">Videos Watched</p>
           </div>
         </div>
 
-        {/* Aktivitas Belajar */}
+        {/* Learning Activity */}
         <div className="mt-8">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="font-semibold text-lg">Aktivitas Belajar</h2>
+            <h2 className="font-semibold text-lg">Learning Activity</h2>
             <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="Search..."
                 className="border rounded px-3 py-1"
               />
-              <button className="border rounded px-4 py-1">Kategori</button>
+              <button className="border rounded px-4 py-1">Category</button>
             </div>
           </div>
 
@@ -153,7 +149,7 @@ const Dashboard = () => {
                             {item.status}
                           </span>
                         )}
-                        <span className="text-sm">Lanjutkan</span>
+                        <span className="text-sm">Continue</span>
                         <span>{">"}</span>
                       </div>
                     </div>
