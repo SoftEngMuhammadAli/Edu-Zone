@@ -24,6 +24,9 @@ import {
 
 import { upload } from "../../middlewares/multer.js";
 
+//--///////////////////////////////////////////////
+// Blog Categories Routes
+//--///////////////////////////////////////////////
 router.get("/categories", checkAuth, handleGetAllBlogCategories);
 router.get("/categories/:id", checkAuth, handleGetBlogCategoryById);
 router.post(
@@ -45,6 +48,9 @@ router.delete(
   handleDeleteBlogCategoryById
 );
 
+//--///////////////////////////////////////////////
+// Blog Routes
+//--///////////////////////////////////////////////
 router.get("/", checkAuth, handleGetAllBlogs);
 router.post(
   "/",
