@@ -20,6 +20,8 @@ import ReadAllBlogs from "../pages/blogs/AllBlogs";
 import NotFound from "../pages/home/NotFound";
 import TermsAndConditions from "../components/terms-and-conditions/TermsAndConditions";
 import PrivacyPolicy from "../components/privacy-policy/PrivacyPolicy";
+import Dashboard from "../components/dashboard/Dashboard";
+import LearningRoom from "../components/learning-room/LearningRoom";
 
 const AppRoutes = () => {
   return (
@@ -77,6 +79,8 @@ const MainLayout = () => {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/allblogs" element={<ReadAllBlogs />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/learning-room" element={<LearningRoom />} />
 
         {/* Course Routes */}
         <Route path="/course/:id" element={<CourseDetail />} />
