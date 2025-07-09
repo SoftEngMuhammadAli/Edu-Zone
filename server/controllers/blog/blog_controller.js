@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Blog from "../../models/blog/blog_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
+import Notification from "../../models/notifications/notification_model.js";
 
 export const handleGetAllBlogs = catchAsyncHandler(async (req, res) => {
   try {
@@ -68,6 +69,13 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
 
     await newBlog.save();
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `New blog "${newBlog.title}" has been published.`,
+      type: "custom",
+      link: `/blogs/${newBlog._id}`,
+    });
+
     return res.status(201).json({
       message: "Blog created successfully",
       data: newBlog,
@@ -106,6 +114,13 @@ export const handleUpdateBlogById = catchAsyncHandler(async (req, res) => {
       return res.status(404).json({ error: "Blog not found" });
     }
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Blog "${updatedBlog.title}" has been updated.`,
+      type: "custom",
+      link: `/blogs/${updatedBlog._id}`,
+    });
+
     return res.status(200).json({
       message: "Blog updated successfully",
       data: updatedBlog,
@@ -130,6 +145,14 @@ export const handleDeleteBlogById = catchAsyncHandler(async (req, res) => {
     if (!deletedBlog) {
       return res.status(404).json({ error: "Blog not found" });
     }
+
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Blog "${deletedBlog.title}" has been deleted.`,
+      type: "custom",
+      link: `/blogs`,
+    });
+
     return res.status(200).json({
       message: "Blog deleted successfully",
       data: deletedBlog,

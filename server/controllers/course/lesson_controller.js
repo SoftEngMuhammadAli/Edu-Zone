@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Lesson from "../../models/course/lesson_model.js";
+import Notification from "../../models/notifications/notification_model.js";
 
 export const createLesson = catchAsyncHandler(async (req, res) => {
   try {
     const { title, content, imageUrl, courseId } = req.body;
 
     if (!title) {
-      return res.status(400).json({
-        message: "Title is required.",
-      });
+      return res.status(400).json({ message: "Title is required." });
     }
 
     if (!content) {
@@ -20,15 +19,11 @@ export const createLesson = catchAsyncHandler(async (req, res) => {
     }
 
     if (!imageUrl) {
-      return res.status(400).json({
-        message: "Valid image URL is required.",
-      });
+      return res.status(400).json({ message: "Valid image URL is required." });
     }
 
     if (!courseId || !mongoose.Types.ObjectId.isValid(courseId)) {
-      return res.status(400).json({
-        message: "Valid course ID is required.",
-      });
+      return res.status(400).json({ message: "Valid course ID is required." });
     }
 
     const lesson = new Lesson({
@@ -40,14 +35,22 @@ export const createLesson = catchAsyncHandler(async (req, res) => {
 
     await lesson.save();
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `New lesson "${lesson.title}" has been created.`,
+      type: "custom", // Or add "lesson" to your schema enum
+      link: `/lessons/${lesson._id}`,
+    });
+
     return res.status(201).json({
       message: "Lesson created successfully",
       data: lesson,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 });
 
@@ -64,9 +67,10 @@ export const getAllLessons = catchAsyncHandler(async (req, res) => {
       data: lessons,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 });
 
@@ -86,9 +90,10 @@ export const getLessonById = catchAsyncHandler(async (req, res) => {
 
     return res.status(200).json({ message: "Lesson fetched", data: lesson });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 });
 
@@ -117,14 +122,22 @@ export const updateLesson = catchAsyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Lesson not found", data: null });
     }
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Lesson "${updated.title}" has been updated.`,
+      type: "custom",
+      link: `/lessons/${updated._id}`,
+    });
+
     return res.status(200).json({
       message: "Lesson updated successfully",
       data: updated,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 });
 
@@ -142,13 +155,21 @@ export const deleteLesson = catchAsyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Lesson not found", data: null });
     }
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Lesson "${deleted.title}" has been deleted.`,
+      type: "custom",
+      link: `/lessons`,
+    });
+
     return res.status(200).json({
       message: "Lesson deleted successfully",
       data: deleted,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 });

@@ -11,7 +11,16 @@ export const createNotification = catchAsyncHandler(async (req, res) => {
         .json({ error: "User ID and message are required" });
     }
 
-    const notify = new Notification({ userId, message, type, link });
+    const notify = new Notification({
+      user: userId,
+      message: message,
+      type: type,
+      link: link,
+    });
+
+    if (!notify) {
+      return res.status(500).json({ error: "Failed to create notification" });
+    }
 
     await notify.save();
 
@@ -32,9 +41,11 @@ export const getNotificationsByUser = catchAsyncHandler(async (req, res) => {
       return res.status(400).json({ error: "User ID is required" });
     }
 
-    const notifications = await Notification.find({ userId }).sort({
-      createdAt: -1,
-    });
+    const notifications = await Notification.find({ userId })
+      .sort({
+        createdAt: -1,
+      })
+      .populate("userId", "name email user_type");
 
     if (!notifications || notifications.length === 0) {
       return res

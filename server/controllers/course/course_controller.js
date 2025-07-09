@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Course from "../../models/course/course_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
+import Notification from "../../models/notifications/notification_model.js";
 
 export const getAllCourses = catchAsyncHandler(async (req, res) => {
   try {
@@ -52,16 +53,16 @@ export const getCourseById = catchAsyncHandler(async (req, res) => {
 export const createCourse = catchAsyncHandler(async (req, res) => {
   try {
     const {
-      title: title,
-      description: description,
-      category: category,
-      duration: duration,
-      level: level,
-      views: views = 0,
-      students: students = 0,
-      rating: rating = 1,
-      assignment: assignment = null,
-      lesson: lesson = null,
+      title,
+      description,
+      category,
+      duration,
+      level,
+      views = 0,
+      students = 0,
+      rating = 1,
+      assignment = null,
+      lesson = null,
     } = req.body;
 
     const user = req.user?.userId;
@@ -98,19 +99,26 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
     const newCourse = new Course({
       title: title.trim(),
       description: description.trim(),
-      category: category,
-      views: views,
-      students: students,
-      rating: rating,
-      duration: duration,
-      level: level,
-      user: user,
-      assignment: assignment,
-      lesson: lesson,
+      category,
+      views,
+      students,
+      rating,
+      duration,
+      level,
+      user,
+      assignment,
+      lesson,
       images: imageFiles,
     });
 
     await newCourse.save();
+
+    await Notification.create({
+      userId: user,
+      message: `New course "${newCourse.title}" has been published.`,
+      type: "course",
+      link: `/courses/${newCourse._id}`,
+    });
 
     return res.status(201).json({
       message: "Course created successfully",
@@ -126,6 +134,11 @@ export const createCourse = catchAsyncHandler(async (req, res) => {
 export const updateCourseById = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user?.userId;
+
+    if (!user) {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid Course ID" });
@@ -139,6 +152,14 @@ export const updateCourseById = catchAsyncHandler(async (req, res) => {
     if (!updatedCourse) {
       return res.status(404).json({ error: "Course not found" });
     }
+
+    // ✅ Create notification BEFORE sending response
+    await Notification.create({
+      userId: user,
+      message: `Course "${updatedCourse.title}" has been updated.`,
+      type: "course",
+      link: `/courses/${updatedCourse._id}`,
+    });
 
     return res.status(200).json({
       message: "Course updated successfully",
@@ -164,6 +185,13 @@ export const deleteCourseById = catchAsyncHandler(async (req, res) => {
     if (!deletedCourse) {
       return res.status(404).json({ error: "Course not found" });
     }
+
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Course "${deletedCourse.title}" has been deleted.`,
+      type: "course",
+      link: `/courses/${deletedCourse._id}`,
+    });
 
     return res.status(200).json({
       message: "Course deleted successfully",

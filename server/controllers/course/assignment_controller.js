@@ -1,5 +1,6 @@
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 import Assignment from "../../models/course/asssingment_model.js";
+import Notification from "../../models/notifications/notification_model.js";
 
 export const createAssignment = catchAsyncHandler(async (req, res) => {
   try {
@@ -64,6 +65,13 @@ export const createAssignment = catchAsyncHandler(async (req, res) => {
     });
 
     await assignment.save();
+
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `New assignment "${assignment.title}" has been created.`,
+      type: "assignment",
+      link: `/assignments/${assignment._id}`,
+    });
 
     return res.status(201).json({
       message: "Assignment created successfully",
@@ -143,6 +151,13 @@ export const updateAssignment = catchAsyncHandler(async (req, res) => {
         .json({ message: "Assignment not found", data: null });
     }
 
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Assignment "${updated.title}" has been updated.`,
+      type: "assignment",
+      link: `/assignments/${updated._id}`,
+    });
+
     return res
       .status(200)
       .json({ message: "Assignment updated", data: updated });
@@ -168,6 +183,13 @@ export const deleteAssignment = catchAsyncHandler(async (req, res) => {
         .status(404)
         .json({ message: "Assignment not found", data: null });
     }
+
+    await Notification.create({
+      userId: req.user?.userId,
+      message: `Assignment "${deleted.title}" has been deleted.`,
+      type: "assignment",
+      link: `/assignments`,
+    });
 
     return res
       .status(200)

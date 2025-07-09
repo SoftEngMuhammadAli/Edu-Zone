@@ -1,4 +1,5 @@
 import ContactUs from "../../models/contact-us/contact_us_model.js";
+import Notification from "../../models/notifications/notification_model.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
@@ -6,9 +7,6 @@ import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
 dotenv.config();
 
 export const sendContactMessage = catchAsyncHandler(async (req, res) => {
-  console.log("Headers:", req.headers);
-  console.log("Raw body:", req.body);
-
   try {
     const { fullname, email, subject, message } = req.body;
 
@@ -17,9 +15,9 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
       typeof fullname !== "string" ||
       fullname.trim().length < 2
     ) {
-      return res.status(400).json({
-        error: "Full name is required and must be at least 2 characters.",
-      });
+      return res
+        .status(400)
+        .json({ error: "Full name must be at least 2 characters." });
     }
 
     if (!email || typeof email !== "string") {
@@ -31,16 +29,16 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
       return res.status(400).json({ error: "Invalid email format." });
     }
 
-    if (!subject || typeof subject !== "string" || subject.trim().length < 3) {
-      return res.status(400).json({
-        error: "Subject is required and must be at least 3 characters.",
-      });
+    if (!subject || subject.trim().length < 3) {
+      return res
+        .status(400)
+        .json({ error: "Subject must be at least 3 characters." });
     }
 
-    if (!message || typeof message !== "string" || message.trim().length < 10) {
-      return res.status(400).json({
-        error: "Message is required and must be at least 10 characters.",
-      });
+    if (!message || message.trim().length < 10) {
+      return res
+        .status(400)
+        .json({ error: "Message must be at least 10 characters." });
     }
 
     const newContact = new ContactUs({ fullname, email, subject, message });
@@ -55,23 +53,29 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
     });
 
     const mailOptions = {
-      from: `"Mail From ${fullname}" <${process.env.GMAIL_USER}>`,
+      from: `"${fullname}" <${process.env.GMAIL_USER}>`,
       to: process.env.GMAIL_USER,
-      subject: `Subject: ${subject}`,
+      subject: `📬 Contact Form: ${subject}`,
       text: `Name: ${fullname}\nEmail: ${email}\n\nMessage:\n${message}`,
       replyTo: email,
     };
 
     await transporter.sendMail(mailOptions);
 
+    await Notification.create({
+      userId: null,
+      message: `📬 New contact form from ${fullname}`,
+      type: "custom",
+      link: `/admin/contact-us`,
+    });
+
     return res.status(200).json({
-      message: "Message received and email sent!",
-      data: mailOptions,
+      message: "Message received and email sent successfully!",
     });
   } catch (error) {
-    console.error("Contact error:", error);
-    return res
-      .status(500)
-      .json({ error: "Something went wrong. Try again later." });
+    console.error("❌ Contact error:", error);
+    return res.status(500).json({
+      error: "Server error: Unable to send message. Try again later.",
+    });
   }
 });

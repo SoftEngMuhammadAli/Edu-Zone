@@ -25,10 +25,10 @@ export const sendEmail = async (to, subject, templateName, data) => {
   const html = await ejs.renderFile(templatePath, data);
 
   const mailOptions = {
-    from: `"EduZone" <${process.env.SMTP_USER}>`,
-    to: to,
-    subject: subject,
-    meesage: html,
+    from: `"EduZone" <${process.env.GMAIL_USER}>`,
+    to,
+    subject,
+    html,
   };
 
   await transporter.sendMail(mailOptions);

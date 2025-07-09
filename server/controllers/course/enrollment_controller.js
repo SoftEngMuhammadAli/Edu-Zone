@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import EnrollmentCourse from "../../models/course/enrollment_model.js";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
+import Notification from "../../models/notifications/notification_model.js";
 
-// Enroll in course
 export const enrollInCourse = catchAsyncHandler(async (req, res) => {
   try {
     const { userId, courseId } = req.body;
@@ -27,6 +27,14 @@ export const enrollInCourse = catchAsyncHandler(async (req, res) => {
       .populate("courseId", "title description")
       .populate("userId", "name email");
 
+    // Notification for successful enrollment
+    await Notification.create({
+      userId,
+      message: `You have enrolled in "${populatedEnrollment.courseId.title}".`,
+      type: "enrollment",
+      link: `/courses/${courseId}`,
+    });
+
     return res.status(201).json({
       message: `Enrollment successful in course: ${populatedEnrollment.courseId.title}`,
       data: populatedEnrollment,
@@ -39,7 +47,6 @@ export const enrollInCourse = catchAsyncHandler(async (req, res) => {
   }
 });
 
-// Get all courses enrolled by a specific user
 export const getEnrolledCoursesByUserId = catchAsyncHandler(
   async (req, res) => {
     try {
@@ -70,7 +77,6 @@ export const getEnrolledCoursesByUserId = catchAsyncHandler(
   }
 );
 
-// Search enrolled students by student name
 export const getEnrolledCoursesByStudentName = catchAsyncHandler(
   async (req, res) => {
     try {
@@ -105,7 +111,6 @@ export const getEnrolledCoursesByStudentName = catchAsyncHandler(
   }
 );
 
-// Get all enrolled students
 export const getAllEnrolledStudents = catchAsyncHandler(async (req, res) => {
   try {
     const enrollments = await EnrollmentCourse.find()
@@ -128,7 +133,6 @@ export const getAllEnrolledStudents = catchAsyncHandler(async (req, res) => {
   }
 });
 
-// Update enrollment (progress/completed)
 export const updateCourseEnrollment = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -138,11 +142,21 @@ export const updateCourseEnrollment = catchAsyncHandler(async (req, res) => {
       id,
       { progress, completed },
       { new: true }
-    );
+    )
+      .populate("courseId", "title")
+      .populate("userId", "_id");
 
     if (!enrollment) {
       return res.status(404).json({ error: "Enrollment not found" });
     }
+
+    // Notify student of progress update
+    await Notification.create({
+      userId: enrollment.userId._id,
+      message: `Your progress for "${enrollment.courseId.title}" has been updated.`,
+      type: "enrollment",
+      link: `/courses/${enrollment.courseId._id}`,
+    });
 
     return res.status(200).json({
       message: "Enrollment updated successfully",
@@ -156,16 +170,24 @@ export const updateCourseEnrollment = catchAsyncHandler(async (req, res) => {
   }
 });
 
-// Unenroll
 export const unEnrollFromCourse = catchAsyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
-    const enrollment = await EnrollmentCourse.findByIdAndDelete(id);
+    const enrollment = await EnrollmentCourse.findByIdAndDelete(id)
+      .populate("courseId", "title")
+      .populate("userId", "_id");
 
     if (!enrollment) {
       return res.status(404).json({ error: "Enrollment not found" });
     }
+
+    await Notification.create({
+      userId: enrollment.userId._id,
+      message: `You have unenrolled from "${enrollment.courseId.title}".`,
+      type: "enrollment",
+      link: `/courses/${enrollment.courseId._id}`,
+    });
 
     return res.status(200).json({ message: "Unenrollment successful" });
   } catch (error) {
