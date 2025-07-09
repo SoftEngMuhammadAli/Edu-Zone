@@ -1,5 +1,1 @@
-const isProd = import.meta.env.MODE === "production";
-
-export const BASE_URL = isProd
-  ? "https://eduzone-jscm.onrender.com"
-  : "http://localhost:5174";
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
