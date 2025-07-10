@@ -6,68 +6,107 @@
     <title>Welcome to EduZone</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
         padding: 20px;
-      }
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      .header {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px;
-        border-bottom: 1px solid #0069d9;
-      }
-      .header h1 {
         margin: 0;
       }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 1px solid #e1e1e1;
+      }
+
+      .header {
+        background-color: #1c1e53;
+        color: #ffffff;
+        padding: 24px;
+        text-align: center;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
       .content {
-        padding: 20px;
+        padding: 30px 24px;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
       }
+
+      .content p {
+        margin-bottom: 20px;
+      }
+
       .button {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #fcd980;
+        color: #1c1e53;
         text-decoration: none;
-        margin: 5px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background 0.3s ease;
       }
+
       .button:hover {
-        background-color: #0069d9;
+        background-color: #f7c843;
       }
+
       .footer {
-        padding: 10px;
-        border-top: 1px solid #ddd;
-        font-size: 12px;
-        color: #666;
+        background-color: #f9f9f9;
+        padding: 20px;
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        border-top: 1px solid #eaeaea;
+      }
+
+      @media (max-width: 600px) {
+        .content,
+        .header,
+        .footer {
+          padding: 20px;
+        }
+
+        .button {
+          width: 100%;
+          text-align: center;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h1>Hello <%= name %>!</h1>
+        <h1>Welcome to EduZone, <%= name %> 🎉</h1>
       </div>
+
       <div class="content">
         <p>
-          Welcome to our Learning Management System! We're excited to have you
-          on board.
+          Thank you for joining <strong>EduZone</strong> — your platform for
+          smart learning!
         </p>
-        <p>To verify your email address, please click the button below:</p>
+        <p>
+          To get started, please verify your email address by clicking the
+          button below:
+        </p>
+
         <a href="" class="button">Verify Email</a>
-        <p>If you have any questions or need help, feel free to contact us.</p>
+
+        <p>If you didn’t request this, please ignore this email.</p>
+        <p>If you have any questions, feel free to contact our support team.</p>
       </div>
+
       <div class="footer">
-        <p>Thank you for choosing Eduzone!</p>
+        &copy; <%= new Date().getFullYear() %> EduZone. All rights reserved.
       </div>
     </div>
   </body>

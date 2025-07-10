@@ -3,8 +3,14 @@ import Notification from "../../models/notifications/notification_model.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { catchAsyncHandler } from "../../middlewares/error_middleware.js";
+import ejs from "ejs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const sendContactMessage = catchAsyncHandler(async (req, res) => {
   try {
@@ -22,11 +28,6 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
 
     if (!email || typeof email !== "string") {
       return res.status(400).json({ error: "Email is required." });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid email format." });
     }
 
     if (!subject || subject.trim().length < 3) {
@@ -52,18 +53,23 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
       },
     });
 
+    const htmlContent = await ejs.renderFile(
+      path.join(__dirname, "../../template/emails/contact_message.ejs"),
+      { fullname, email, subject, message }
+    );
+
     const mailOptions = {
       from: `"${fullname}" <${process.env.GMAIL_USER}>`,
       to: process.env.GMAIL_USER,
       subject: `📬 Contact Form: ${subject}`,
-      text: `Name: ${fullname}\nEmail: ${email}\n\nMessage:\n${message}`,
+      html: htmlContent,
       replyTo: email,
     };
 
     await transporter.sendMail(mailOptions);
 
     await Notification.create({
-      userId: null,
+      title: "New Contact Form Submission",
       message: `📬 New contact form from ${fullname}`,
       type: "custom",
       link: `/admin/contact-us`,
