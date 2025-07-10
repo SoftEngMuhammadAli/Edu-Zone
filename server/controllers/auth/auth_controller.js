@@ -97,7 +97,7 @@ export const loginUser = catchAsyncHandler(async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "Strict",
+    sameSite: "None",
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
@@ -111,9 +111,9 @@ export const loginUser = catchAsyncHandler(async (req, res) => {
 
 export const logoutUser = catchAsyncHandler(async (_, res) => {
   res.cookie("token", "", {
-    secure: true,
     httpOnly: true,
-    sameSite: "Strict",
+    sameSite: "None",
+    secure: true,
     maxAge: 0,
   });
 
