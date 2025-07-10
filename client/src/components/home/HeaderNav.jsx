@@ -64,8 +64,8 @@ const HeaderNav = () => {
           {isAdmin ? (
             <>
               <Link to="/dashboard">Dashboard</Link>
-              <Link to="/admin/students">Manage Students</Link>
-              <Link to="/admin/instructors">Manage Instructors</Link>
+              <Link to="/admin/get-all-students">Manage Students</Link>
+              <Link to="/admin/get-all-instructors">Manage Instructors</Link>
               <Link to="/admin/settings">Settings</Link>
             </>
           ) : (
@@ -122,11 +122,14 @@ const HeaderNav = () => {
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
                   Dashboard
                 </Link>
-                <Link to="/admin/students" onClick={() => setIsMenuOpen(false)}>
+                <Link
+                  to="/admin/get-all-students"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   Manage Students
                 </Link>
                 <Link
-                  to="/admin/instructors"
+                  to="/admin/get-all-instructors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Manage Instructors

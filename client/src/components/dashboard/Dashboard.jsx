@@ -31,13 +31,11 @@ const Dashboard = () => {
       <aside className="w-64 bg-[#1e2344] text-white p-6 hidden md:block">
         <h1 className="text-2xl font-bold mb-8">[EduZone]</h1>
         <nav className="space-y-6">
-          {["Dashboard", "My Courses", "My Events", "Settings", "Support"].map(
-            (item) => (
-              <div key={item} className="hover:text-yellow-400 cursor-pointer">
-                {item}
-              </div>
-            )
-          )}
+          {["Dashboard", "My Courses", "My Events", "Support"].map((item) => (
+            <div key={item} className="hover:text-yellow-400 cursor-pointer">
+              {item}
+            </div>
+          ))}
         </nav>
       </aside>
 

@@ -28,6 +28,9 @@ import SeeAllEduZoneBenefits from "../components/home/AllBenefits";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import RoleProtectedRoute from "../routes/RoleProtectedRoutes";
 import useAuth from "../hooks/useAuth";
+import StudentsListPage from "../pages/admin/StudentsList";
+import TeachersListPage from "../pages/admin/TeachersList";
+import AdminSettingsPage from "../pages/admin/Settings";
 
 const AppRoutes = () => {
   return (
@@ -105,6 +108,15 @@ const MainLayout = () => {
           {/* Admin Only */}
           <Route element={<RoleProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/admin/get-all-students"
+              element={<StudentsListPage />}
+            />
+            <Route
+              path="/admin/get-all-instructors"
+              element={<TeachersListPage />}
+            />
+            <Route path="/admin/settings" element={<AdminSettingsPage />} />
           </Route>
 
           {/* Student + Instructor Only */}
