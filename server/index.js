@@ -4,28 +4,27 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-const app = express();
-const PORT = process.env.PORT || 3000;
 import connectToDatabase from "./config/server.js";
 import registeredRouters from "./routes/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
+
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://edu-zone-eight.vercel.app",
-      "https://eduzone-jscm.onrender.com",
-    ],
+    origin: ["http://localhost:5173", "https://edu-zone-eight.vercel.app"],
+
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -42,13 +41,9 @@ app.get("/", (req, res) => {
   });
 });
 
-//-////////////////////////////////
-// API ROUTES FROM ROUTES/INDEX.js|
-//-////////////////////////////////
 registeredRouters(app);
 
-// Start server
 connectToDatabase(process.env.DB_CONFIGURATION);
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`✅ Server running on port: ${PORT}`);
 });

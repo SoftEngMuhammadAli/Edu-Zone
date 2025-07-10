@@ -24,13 +24,12 @@ export const login = createAsyncThunk(
       const response = await axiosInstance.post("/api/auth/login", credentials);
       const { token, user } = response.data;
 
-      // Save to localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
       return { user };
     } catch (error) {
-      console.error("Login error:", error); // Debug log
+      console.error("Login error:", error);
       return thunkAPI.rejectWithValue(
         error?.response?.data?.message || "Login failed"
       );
