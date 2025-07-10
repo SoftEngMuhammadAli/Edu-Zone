@@ -29,7 +29,18 @@ const LoginPage = () => {
       password: form.password.value,
     };
 
+    if (!credentials) {
+      console.error("Form data is empty");
+      return;
+    }
+
+    if (!credentials.email || !credentials.password) {
+      console.error("All fields are required");
+      return;
+    }
+
     await dispatch(login(credentials));
+    form.reset();
   };
 
   return (

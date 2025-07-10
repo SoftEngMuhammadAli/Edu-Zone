@@ -1,9 +1,40 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { AppFooter } from "../footer/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { contactUs } from "../../features/contact-us/contactUsSlice";
 
 const ContactUs = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
+
+  const { loading, error, data } = useSelector((state) => state.contactUs);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const contactUsData = {
+      fullname: form.fullname.value,
+      email: form.email.value,
+      subject: form.subject.value,
+      message: form.message.value,
+    };
+
+    if (
+      !contactUsData.fullname ||
+      !contactUsData.email ||
+      !contactUsData.subject ||
+      !contactUsData.message
+    ) {
+      console.error("All fields are required");
+      return;
+    }
+
+    dispatch(contactUs(contactUsData));
+    form.reset();
+  };
+
   return (
     <>
       <section className="bg-white text-black py-12 px-4 sm:px-6 md:px-8 lg:px-16">
@@ -34,7 +65,7 @@ const ContactUs = () => {
               </div>
               <div className="mt-10 space-y-2">
                 <p className="text-base md:text-lg font-medium">
-                  <a href="tel:+6288 999 222 333">📞 +6288 999 222 333</a>
+                  <a href="tel:+6288999222333">📞 +6288 999 222 333</a>
                 </p>
                 <p className="text-base md:text-lg font-medium">
                   <a href="mailto:info@eduzone.com">📧 info@eduzone.com</a>
@@ -50,29 +81,47 @@ const ContactUs = () => {
               <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
                 Send us a message
               </h3>
-              <form className="space-y-6 w-full">
+              <form className="space-y-6 w-full" onSubmit={handleFormSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <input
+                    name="fullname"
                     type="text"
                     placeholder="Full Name"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FCD980] transition"
                   />
                   <input
+                    name="email"
                     type="email"
                     placeholder="Email Address"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FCD980] transition"
                   />
                 </div>
                 <input
+                  name="subject"
                   type="text"
                   placeholder="Subject"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FCD980] transition"
                 />
                 <textarea
+                  name="message"
                   rows="5"
                   placeholder="Your Message"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FCD980] transition resize-none"
                 ></textarea>
+
+                {/* Feedback messages */}
+                {loading && (
+                  <p className="text-sm text-blue-600">Sending message...</p>
+                )}
+                {error && (
+                  <p className="text-sm text-red-500">Error: {error}</p>
+                )}
+                {data && (
+                  <p className="text-sm text-green-600">
+                    Message sent successfully!
+                  </p>
+                )}
+
                 <button
                   type="submit"
                   className="bg-[#FCD980] hover:bg-[#f4c44f] text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 w-full md:w-fit"
@@ -86,9 +135,7 @@ const ContactUs = () => {
       </section>
 
       {location.pathname !== "/" && location.pathname !== "/home" && (
-        <>
-          <AppFooter />
-        </>
+        <AppFooter />
       )}
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -18,10 +18,21 @@ const SignUpPage = () => {
       password: form.password.value,
     };
 
+    if (!userData) {
+      console.error("Form data is empty");
+      return;
+    }
+
+    if (!userData.name || !userData.email || !userData.password) {
+      console.error("All fields are required");
+      return;
+    }
+
     const res = await dispatch(register(userData));
     if (res.meta.requestStatus === "fulfilled" && res.payload?.user) {
       navigate("/home");
     }
+    form.reset();
   };
 
   return (
