@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
     },
     profile_picture_url: {
       type: String,
+      default: null,
     },
     bio: {
       type: String,
