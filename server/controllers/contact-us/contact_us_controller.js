@@ -69,8 +69,8 @@ export const sendContactMessage = catchAsyncHandler(async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     await Notification.create({
-      title: "New Contact Form Submission",
-      message: `📬 New contact form from ${fullname}`,
+      title: "Contact Form Submission",
+      message: `From: ${fullname}`,
       type: "custom",
       link: `/admin/contact-us`,
     });
