@@ -9,7 +9,7 @@ const CreateBlogPage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
-  const [category, setCategory] = useState(""); // assuming manual category ID
+  const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
 
   const handleSubmit = (e) => {
