@@ -44,15 +44,20 @@ const UpdateBlogPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const blogData = {
-      title: formData.title,
-      content: formData.content,
-      tags: formData.tags.split(",").map((tag) => tag.trim()),
-      category: formData.category,
-      image: formData.images,
-    };
+    const form = new FormData();
+    form.append("title", formData.title);
+    form.append("content", formData.content);
+    form.append("category", formData.category);
+    form.append(
+      "tags",
+      JSON.stringify(formData.tags.split(",").map((tag) => tag.trim()))
+    );
 
-    dispatch(updateBlog({ id, blogData })).then((res) => {
+    if (formData.images) {
+      form.append("image", formData.images);
+    }
+
+    dispatch(updateBlog({ id, blogData: form })).then((res) => {
       if (!res.error) navigate("/admin/blogs");
     });
   };
@@ -64,7 +69,7 @@ const UpdateBlogPage = () => {
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <p className="text-red-600">Error: {error}</p>
       ) : (
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>

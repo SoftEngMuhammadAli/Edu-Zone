@@ -50,13 +50,13 @@ const AdminDashboard = () => {
               ➕ Create Blog
             </div>
             <div
-              onClick={() => navigate("/admin/blog/update-blog")}
+              onClick={() => navigate("/admin/blog/update-blog/:id")}
               className="hover:text-yellow-400 cursor-pointer"
             >
               ✏️ Update Blog
             </div>
             <div
-              onClick={() => navigate("/admin/blog/delete-blog")}
+              onClick={() => navigate("/admin/blog/delete-blog/:id")}
               className="hover:text-yellow-400 cursor-pointer"
             >
               🗑️ Delete Blog

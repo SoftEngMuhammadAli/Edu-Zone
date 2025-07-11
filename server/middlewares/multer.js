@@ -22,6 +22,24 @@ const storage = multer.diskStorage({
 
 export let upload = multer({
   storage: storage,
-  // 5mbs file size limit
   limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: function (req, file, cb) {
+    if (file.fieldname === "images" && file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE", file.fieldname));
+    }
+  },
 });
+
+export const uploadSingle = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: function (req, file, cb) {
+    if (file.fieldname === "image" && file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE", file.fieldname));
+    }
+  },
+}).single("image");

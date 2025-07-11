@@ -126,11 +126,11 @@ const MainLayout = () => {
             <Route path="/admin/settings" element={<AdminSettingsPage />} />
             <Route path="/admin/blog/add-blog" element={<CreateBlogPage />} />
             <Route
-              path="/admin/blog/update-blog"
+              path="/admin/blog/update-blog/:id"
               element={<UpdateBlogPage />}
             />
             <Route
-              path="/admin/blog/delete-blog"
+              path="/admin/blog/delete-blog/:id"
               element={<DeleteBlogPage />}
             />
           </Route>

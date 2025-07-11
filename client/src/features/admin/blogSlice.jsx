@@ -3,21 +3,23 @@ import axiosInstance from "../../services/axios";
 
 // THUNKS
 export const createBlogThunk = createAsyncThunk(
-  "admin/blogs/create-blog",
+  "blogs/create-blog",
   async (blogData, thunkAPI) => {
     try {
-      const response = await axiosInstance.post("/api/blogs/", blogData);
-      return response.data;
+      const res = await axiosInstance.post("/api/blogs", blogData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error?.response?.data?.message || "Creation failed"
+        error?.response?.data?.error || "Creation failed"
       );
     }
   }
 );
 
 export const fetchBlogs = createAsyncThunk(
-  "admin/blogs/fetch-blogs",
+  "blogs/fetch-blogs",
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.get("/api/blogs");
@@ -29,7 +31,7 @@ export const fetchBlogs = createAsyncThunk(
 );
 
 export const getBlogById = createAsyncThunk(
-  "admin/blogs/get-blog-by-id",
+  "blogs/get-blog-by-id",
   async (id, thunkAPI) => {
     try {
       const response = await axiosInstance.get(`/api/blogs/${id}`);
@@ -41,19 +43,21 @@ export const getBlogById = createAsyncThunk(
 );
 
 export const updateBlog = createAsyncThunk(
-  "admin/blogs/update-blog",
+  "blog/updateBlog",
   async ({ id, blogData }, thunkAPI) => {
     try {
       const response = await axiosInstance.put(`/api/blogs/${id}`, blogData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || "Failed to update blog"
+      );
     }
   }
 );
 
 export const deleteBlog = createAsyncThunk(
-  "admin/blogs/delete-blog",
+  "blog/deleteBlog",
   async (id, thunkAPI) => {
     try {
       await axiosInstance.delete(`/api/blogs/${id}`);
@@ -75,9 +79,11 @@ const blogSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder;
     builder
       .addCase(createBlogThunk.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(createBlogThunk.fulfilled, (state, action) => {
         state.loading = false;

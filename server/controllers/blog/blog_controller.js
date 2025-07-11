@@ -47,13 +47,7 @@ export const handleGetBlogById = catchAsyncHandler(async (req, res) => {
 });
 
 export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
-  const { title, content, author, category, tags } = req.body;
-
-  if (!title || !content || !author || !category || !tags) {
-    return res.status(400).json({
-      error: "Title, content, author, category, and tags are required",
-    });
-  }
+  const { title, content, category, tags } = req.body;
 
   try {
     const imageFiles = req.files?.map((file) => file.filename) || [];
@@ -61,9 +55,9 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
     const newBlog = new Blog({
       title,
       content,
-      author,
+      author: req.user?.userId, // ✅ FIXED
       category,
-      tags: Array.isArray(tags) ? tags : [tags],
+      tags: Array.isArray(tags) ? tags : JSON.parse(tags),
       images: imageFiles,
     });
 
@@ -81,6 +75,7 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
       data: newBlog,
     });
   } catch (err) {
+    console.error("CREATE BLOG ERROR:", err);
     return res.status(500).json({
       error: "Failed to create blog",
       details: err.message,

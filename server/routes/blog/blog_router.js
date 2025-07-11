@@ -52,13 +52,20 @@ router.delete(
 // Blog Routes
 //--///////////////////////////////////////////////
 router.get("/", checkAuth, handleGetAllBlogs);
+
 router.post(
   "/",
   checkAuth,
   authorizeRoles("admin", "instructor"),
   upload.array("images", 5),
+  (req, res, next) => {
+    console.log("REQ BODY:", req.body);
+    console.log("REQ FILES:", req.files);
+    next();
+  },
   handleCreateBlog
 );
+
 router.get("/:id", checkAuth, handleGetBlogById);
 router.put(
   "/:id",
