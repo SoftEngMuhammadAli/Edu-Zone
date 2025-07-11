@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   const courses = [
     {
       title: "Web Development Basics",
@@ -31,11 +34,57 @@ const Dashboard = () => {
       <aside className="w-64 bg-[#1e2344] text-white p-6 hidden md:block">
         <h1 className="text-2xl font-bold mb-8">[EduZone]</h1>
         <nav className="space-y-6">
-          {["Dashboard", "My Courses", "My Events", "Support"].map((item) => (
+          {["Dashboard", "All Courses", "All Users"].map((item) => (
             <div key={item} className="hover:text-yellow-400 cursor-pointer">
               {item}
             </div>
           ))}
+
+          {/* Blogs Management */}
+          <div className="mt-8 border-t border-white pt-4 space-y-2">
+            <p className="text-sm uppercase text-gray-300">Blog Management</p>
+            <div
+              onClick={() => navigate("/admin/blog/add-blog")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              ➕ Create Blog
+            </div>
+            <div
+              onClick={() => navigate("/admin/blog/update-blog")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              ✏️ Update Blog
+            </div>
+            <div
+              onClick={() => navigate("/admin/blog/delete-blog")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              🗑️ Delete Blog
+            </div>
+          </div>
+
+          {/* Course Management */}
+          <div className="mt-8 border-t border-white pt-4 space-y-2">
+            <p className="text-sm uppercase text-gray-300">Course Management</p>
+            <div
+              onClick={() => navigate("/courses-management/create-course")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              ➕ Create Course
+            </div>
+            <div
+              onClick={() => navigate("/courses-management/update-course")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              ✏️ Update Course
+            </div>
+            <div
+              onClick={() => navigate("/courses-management/delete-course")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              🗑️ Delete Course
+            </div>
+          </div>
         </nav>
       </aside>
 
@@ -162,4 +211,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

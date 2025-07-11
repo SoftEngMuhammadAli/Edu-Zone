@@ -21,16 +21,21 @@ import ReadAllBlogs from "../pages/blogs/AllBlogs";
 import NotFound from "../pages/home/NotFound";
 import TermsAndConditions from "../components/terms-and-conditions/TermsAndConditions";
 import PrivacyPolicy from "../components/privacy-policy/PrivacyPolicy";
-import Dashboard from "../components/dashboard/Dashboard";
+import AdminDashboard from "../admin/dashboard/Dashboard";
 import LearningRoom from "../components/learning-room/LearningRoom";
 import SeeAllEduZoneBenefits from "../components/home/AllBenefits";
-
-import ProtectedRoutes from "../routes/ProtectedRoutes";
-import RoleProtectedRoute from "../routes/RoleProtectedRoutes";
+import ProtectedRouteWrapper from "../routes/ProtectedRoutes";
+import RoleProtectedRouteWrapper from "../routes/RoleProtectedRoutes";
 import useAuth from "../hooks/useAuth";
-import StudentsListPage from "../pages/admin/StudentsList";
-import TeachersListPage from "../pages/admin/TeachersList";
-import AdminSettingsPage from "../pages/admin/Settings";
+import StudentsListPage from "../admin/pages/students/StudentsList";
+import TeachersListPage from "../admin/pages/instructors/Instructors";
+import AdminSettingsPage from "../admin/pages/profile/Settings";
+import CreateBlogPage from "../admin/pages/blog/CreateBlog";
+import UpdateBlogPage from "../admin/pages/blog/UpdateBlog";
+import DeleteBlogPage from "../admin/pages/blog/DeleteBlog";
+import CreateCoursePage from "../admin/pages/courses/CreateCourse";
+import UpdateCoursePage from "../admin/pages/courses/UpdateCourse";
+import DeleteCoursePage from "../admin/pages/courses/DeleteCourse";
 
 const AppRoutes = () => {
   return (
@@ -67,7 +72,7 @@ const MainLayout = () => {
           element={
             isAuthenticated ? (
               user_type === "admin" ? (
-                <Navigate to="/dashboard" />
+                <Navigate to="/admin/dashboard-page" />
               ) : (
                 <Navigate to="/learning-room" />
               )
@@ -81,7 +86,7 @@ const MainLayout = () => {
           element={
             isAuthenticated ? (
               user_type === "admin" ? (
-                <Navigate to="/dashboard" />
+                <Navigate to="/admin/dashboard-page" />
               ) : (
                 <Navigate to="/learning-room" />
               )
@@ -101,13 +106,15 @@ const MainLayout = () => {
         <Route path="/coursesuccess" element={<CourseSuccess />} />
 
         {/* Protected Routes */}
-        <Route element={<ProtectedRoutes />}>
+        <Route element={<ProtectedRouteWrapper />}>
           {/* General authenticated routes */}
           <Route path="/contact" element={<ContactUs />} />
 
           {/* Admin Only */}
-          <Route element={<RoleProtectedRoute allowedRoles={["admin"]} />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            element={<RoleProtectedRouteWrapper allowedRoles={["admin"]} />}
+          >
+            <Route path="/admin/dashboard-page" element={<AdminDashboard />} />
             <Route
               path="/admin/get-all-students"
               element={<StudentsListPage />}
@@ -117,12 +124,45 @@ const MainLayout = () => {
               element={<TeachersListPage />}
             />
             <Route path="/admin/settings" element={<AdminSettingsPage />} />
+            <Route path="/admin/blog/add-blog" element={<CreateBlogPage />} />
+            <Route
+              path="/admin/blog/update-blog"
+              element={<UpdateBlogPage />}
+            />
+            <Route
+              path="/admin/blog/delete-blog"
+              element={<DeleteBlogPage />}
+            />
+          </Route>
+
+          {/* Admin + Instructor Only */}
+          <Route
+            element={
+              <RoleProtectedRouteWrapper
+                allowedRoles={["admin", "instructor"]}
+              />
+            }
+          >
+            <Route
+              path="/courses-management/create-course"
+              element={<CreateCoursePage />}
+            />
+            <Route
+              path="/courses-management/update-course"
+              element={<UpdateCoursePage />}
+            />{" "}
+            <Route
+              path="/courses-management/delete-course"
+              element={<DeleteCoursePage />}
+            />
           </Route>
 
           {/* Student + Instructor Only */}
           <Route
             element={
-              <RoleProtectedRoute allowedRoles={["student", "instructor"]} />
+              <RoleProtectedRouteWrapper
+                allowedRoles={["student", "instructor"]}
+              />
             }
           >
             <Route path="/learning-room" element={<LearningRoom />} />

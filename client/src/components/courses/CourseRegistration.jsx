@@ -56,6 +56,9 @@ const CourseRegistration = () => {
             />
 
             <button
+              onClick={() => {
+                alert("This feature is not implemented yet!");
+              }}
               type="submit"
               className="w-full py-3 bg-yellow-400 text-[#000000] font-semibold rounded hover:bg-yellow-500 transition"
             >

@@ -63,7 +63,7 @@ const HeaderNav = () => {
         <nav className="hidden md:flex gap-6 text-white text-base items-center">
           {isAdmin ? (
             <>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/admin/dashboard-page">Dashboard</Link>
               <Link to="/admin/get-all-students">Manage Students</Link>
               <Link to="/admin/get-all-instructors">Manage Instructors</Link>
               <Link to="/admin/settings">Settings</Link>
@@ -119,7 +119,10 @@ const HeaderNav = () => {
           <nav className="flex flex-col gap-4 text-white text-base">
             {isAdmin ? (
               <>
-                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                <Link
+                  to="/admin/dashboard-page"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   Dashboard
                 </Link>
                 <Link
