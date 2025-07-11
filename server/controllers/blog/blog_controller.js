@@ -51,13 +51,10 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
     const { title, content, category, tags } = req.body;
 
     let parsedTags = [];
-    try {
-      parsedTags = Array.isArray(tags) ? tags : JSON.parse(tags);
-    } catch (parseErr) {
-      console.error("❌ TAG PARSE ERROR:", parseErr);
-      return res
-        .status(400)
-        .json({ message: "Invalid tags format", details: parseErr.message });
+    if (typeof tags === "string") {
+      parsedTags = JSON.parse(tags);
+    } else if (Array.isArray(tags)) {
+      parsedTags = tags;
     }
 
     const imageFiles = req.files?.map((file) => file.filename) || [];
@@ -71,11 +68,14 @@ export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
       images: imageFiles,
     });
 
+    console.log("🚀 New blog to be saved:", newBlog);
     await newBlog.save();
+    console.log("✅ Blog saved to MongoDB");
 
-    return res
-      .status(201)
-      .json({ message: "Blog created successfully", data: newBlog });
+    return res.status(201).json({
+      message: "Blog created successfully",
+      data: newBlog,
+    });
   } catch (err) {
     console.error("❌ CREATE BLOG ERROR:", err);
     return res.status(500).json({

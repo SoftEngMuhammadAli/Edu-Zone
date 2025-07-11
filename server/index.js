@@ -43,13 +43,7 @@ app.get("/", (req, res) => {
 
 registeredRouters(app);
 
-connectToDatabase(process.env.DB_CONFIGURATION)
-  .then(() => {
-    console.log("✅ Database connection established successfully!");
-  })
-  .catch((error) => {
-    console.error("❌ Failed to connect to the database:", error.message);
-  });
+connectToDatabase(process.env.DB_CONFIGURATION);
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
