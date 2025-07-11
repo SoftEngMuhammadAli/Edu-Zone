@@ -1,38 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "../../features/admin/courseSlice";
 import AdminProfileCard from "../components/AdminProfileCard";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { courses, loading, error } = useSelector((state) => state.course);
 
-  const courses = [
-    {
-      title: "Web Development Basics",
-      desc: "Introductory materials for beginner web developers",
-      progress: 20,
-    },
-    {
-      title: "Digital Marketing 101",
-      desc: "Fundamentals of marketing strategy for beginners",
-      progress: 10,
-      status: "Certificate",
-    },
-    {
-      title: "Introduction to Data Science",
-      desc: "Basic materials about data processing and analysis",
-      progress: 50,
-    },
-    {
-      title: "Beginner UI/UX Design",
-      desc: "Fundamentals of UI and UX theory and practice",
-      progress: 75,
-    },
-  ];
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#1e2344] text-white p-6 hidden md:block">
+      <aside className="w-full md:w-64 bg-[#1e2344] text-white p-6">
         <h1 className="text-2xl font-bold mb-8">[EduZone]</h1>
         <nav className="space-y-6">
           {["Dashboard", "All Courses", "All Users"].map((item) => (
@@ -41,10 +25,8 @@ const AdminDashboard = () => {
             </div>
           ))}
 
-          {/* Blogs Management */}
           <div className="mt-8 border-t border-white pt-4 space-y-2">
             <p className="text-sm uppercase text-gray-300">Blog Management</p>
-
             <div
               onClick={() => navigate("/admin/blog/get-all-blogs")}
               className="hover:text-yellow-400 cursor-pointer"
@@ -71,10 +53,8 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Course Management */}
           <div className="mt-8 border-t border-white pt-4 space-y-2">
             <p className="text-sm uppercase text-gray-300">Course Management</p>
-
             <div
               onClick={() => navigate("/courses-management/get-all-courses")}
               className="hover:text-yellow-400 cursor-pointer"
@@ -103,14 +83,12 @@ const AdminDashboard = () => {
         </nav>
       </aside>
 
-      {/* Main Content */}
+      {/* Main */}
       <main className="flex-1 p-4 md:p-8">
-        {/* Admin Profile Card */}
         <AdminProfileCard />
 
         {/* Overview + Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Overview Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           <div className="lg:col-span-2 bg-white p-4 rounded-xl shadow">
             <h2 className="font-semibold mb-4">Activity Overview</h2>
             <div className="flex items-end justify-between h-40">
@@ -128,7 +106,6 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Statistics */}
           <div className="bg-white p-4 rounded-xl shadow text-center">
             <h2 className="font-semibold mb-4">Statistics</h2>
             <div className="relative w-24 h-24 mx-auto">
@@ -157,11 +134,11 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Learning Activity */}
+        {/* Learning Activity Section */}
         <div className="mt-8">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
             <h2 className="font-semibold text-lg">Learning Activity</h2>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <input
                 type="text"
                 placeholder="Search..."
@@ -171,45 +148,63 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
-            {courses.map((item, index) => (
-              <div key={index} className="bg-white p-4 rounded-xl shadow">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-16 bg-gray-300 rounded" />
-                    <div>
-                      <h3 className="font-semibold text-sm md:text-base">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-gray-500">{item.desc}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end gap-2 w-full md:w-1/3">
-                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-blue-500 rounded-full"
-                        style={{ width: `${item.progress}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between items-center w-full">
-                      <span className="text-sm text-gray-500">
-                        {item.progress}%
-                      </span>
-                      <div className="flex items-center gap-1 text-blue-500 cursor-pointer">
-                        {item.status && (
-                          <span className="text-yellow-500 font-semibold text-xs uppercase">
-                            {item.status}
-                          </span>
+          {loading ? (
+            <p>Loading courses...</p>
+          ) : error ? (
+            <p className="text-red-600">{error}</p>
+          ) : courses?.length === 0 ? (
+            <p className="text-gray-500">No courses available.</p>
+          ) : (
+            <div className="space-y-4">
+              {courses.map((course) => (
+                <div
+                  key={course._id}
+                  className="bg-white p-4 rounded-xl shadow"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-20 h-16 bg-gray-300 rounded overflow-hidden">
+                        {course.images?.[0] && (
+                          <img
+                            src={`${import.meta.env.VITE_BASE_URL}/${
+                              course.images[0]
+                            }`}
+                            alt={course.title}
+                            className="w-full h-full object-cover"
+                          />
                         )}
-                        <span className="text-sm">Continue</span>
-                        <span>{">"}</span>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-sm md:text-base">
+                          {course.title}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {course.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-2 w-full md:w-1/3">
+                      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-blue-500 rounded-full"
+                          style={{
+                            width: `${Math.floor(Math.random() * 80) + 10}%`,
+                          }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between items-center w-full">
+                        <span className="text-sm text-gray-500">Active</span>
+                        <button className="text-blue-600 text-sm">
+                          Continue &gt;
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>
