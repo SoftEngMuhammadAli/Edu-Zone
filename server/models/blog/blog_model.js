@@ -39,7 +39,7 @@ const blogSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "BlogCategory",
-      required: true,
+      required: false,
     },
     images: {
       type: [String],

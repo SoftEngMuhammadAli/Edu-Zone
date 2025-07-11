@@ -1,59 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createBlogThunk } from "../../../features/admin/blogSlice";
-import axiosInstance from "../../../services/axios";
 
 const CreateBlogPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.blogs || {});
-  const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axiosInstance.get("/api/blogs/categories");
-        setCategories(res.data);
-      } catch (err) {
-        console.error("Failed to fetch categories", err);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [category, setCategory] = useState(""); // assuming manual category ID
+  const [images, setImages] = useState([]);
 
-  // Handle blog creation
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const form = new FormData(e.target);
-    const blogData = new FormData();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    formData.append(
+      "tags",
+      JSON.stringify(tags.split(",").map((t) => t.trim()))
+    );
 
-    const title = form.get("title");
-    const content = form.get("content");
-    const category = form.get("category");
-    const tagsArray =
-      form
-        .get("tags")
-        ?.split(",")
-        .map((tag) => tag.trim()) || [];
-    const imageFiles = form.getAll("images");
-
-    blogData.append("title", title);
-    blogData.append("content", content);
-    blogData.append("category", category);
-    blogData.append("tags", JSON.stringify(tagsArray));
-    imageFiles.forEach((file) => {
-      blogData.append("images", file);
+    images.forEach((file) => {
+      formData.append("images", file);
     });
 
-    dispatch(createBlogThunk(blogData))
-      .unwrap()
-      .then(() => {
-        console.log("✅ Blog created!");
-        e.target.reset();
-      })
-      .catch((err) => {
-        console.error("❌ Blog creation failed:", err);
-      });
+    dispatch(createBlogThunk(formData));
   };
 
   return (
@@ -67,9 +42,9 @@ const CreateBlogPage = () => {
           </label>
           <input
             type="text"
-            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
-            placeholder="Enter blog title"
             className="mt-1 block w-full px-4 py-2 border rounded-md"
           />
         </div>
@@ -79,42 +54,40 @@ const CreateBlogPage = () => {
             Content
           </label>
           <textarea
-            name="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             rows="6"
             required
-            placeholder="Write your blog content here..."
             className="mt-1 block w-full px-4 py-2 border rounded-md"
           ></textarea>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Tags
+            Category ID
           </label>
           <input
             type="text"
-            name="tags"
-            placeholder="e.g. react, nodejs"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            placeholder="Enter Category ObjectId"
             className="mt-1 block w-full px-4 py-2 border rounded-md"
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Category
+            Tags (comma-separated)
           </label>
-          <select
-            name="category"
+          <input
+            type="text"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
             required
+            placeholder="e.g. react,nodejs,express"
             className="mt-1 block w-full px-4 py-2 border rounded-md"
-          >
-            <option value="">Select category</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <div>
@@ -126,6 +99,7 @@ const CreateBlogPage = () => {
             name="images"
             accept="image/*"
             multiple
+            onChange={(e) => setImages(Array.from(e.target.files))}
             className="mt-1 block w-full"
           />
         </div>

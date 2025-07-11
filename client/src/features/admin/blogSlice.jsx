@@ -3,18 +3,22 @@ import axiosInstance from "../../services/axios";
 
 // THUNKS
 export const createBlogThunk = createAsyncThunk(
-  "blogs/create-blog",
-  async (blogData, thunkAPI) => {
+  "blogs/createBlog",
+  async (formData, thunkAPI) => {
     try {
-      console.log("Sending blogData to server...");
-      const res = await axiosInstance.post("/api/blogs", blogData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await axios.post("/api/blogs", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      return res.data.data;
+      return response.data;
     } catch (error) {
-      console.error("createBlogThunk error:", error.response);
+      console.error(
+        "CREATE BLOG ERROR:",
+        error.response?.data || error.message
+      );
       return thunkAPI.rejectWithValue(
-        error?.response?.data?.error || "Creation failed"
+        error.response?.data?.message || "Error creating blog"
       );
     }
   }

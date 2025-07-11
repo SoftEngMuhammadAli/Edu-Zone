@@ -47,35 +47,37 @@ export const handleGetBlogById = catchAsyncHandler(async (req, res) => {
 });
 
 export const handleCreateBlog = catchAsyncHandler(async (req, res) => {
-  const { title, content, category, tags } = req.body;
-
   try {
+    const { title, content, category, tags } = req.body;
+
+    let parsedTags = [];
+    try {
+      parsedTags = Array.isArray(tags) ? tags : JSON.parse(tags);
+    } catch (parseErr) {
+      console.error("❌ TAG PARSE ERROR:", parseErr);
+      return res
+        .status(400)
+        .json({ message: "Invalid tags format", details: parseErr.message });
+    }
+
     const imageFiles = req.files?.map((file) => file.filename) || [];
 
     const newBlog = new Blog({
       title,
       content,
-      author: req.user?.userId, // ✅ FIXED
+      author: req.user?.userId,
       category,
-      tags: Array.isArray(tags) ? tags : JSON.parse(tags),
+      tags: parsedTags,
       images: imageFiles,
     });
 
     await newBlog.save();
 
-    await Notification.create({
-      userId: req.user?.userId,
-      message: `New blog "${newBlog.title}" has been published.`,
-      type: "custom",
-      link: `/blogs/${newBlog._id}`,
-    });
-
-    return res.status(201).json({
-      message: "Blog created successfully",
-      data: newBlog,
-    });
+    return res
+      .status(201)
+      .json({ message: "Blog created successfully", data: newBlog });
   } catch (err) {
-    console.error("CREATE BLOG ERROR:", err);
+    console.error("❌ CREATE BLOG ERROR:", err);
     return res.status(500).json({
       error: "Failed to create blog",
       details: err.message,
