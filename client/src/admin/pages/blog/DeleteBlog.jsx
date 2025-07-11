@@ -1,63 +1,65 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs, deleteBlog } from "../../../features/admin/blogSlice";
 
 const DeleteBlogPage = () => {
-  // Static mock data for now
-  const blogs = [
-    {
-      _id: "1",
-      title: "Understanding React Hooks",
-      author: "Ali Khan",
-      category: "Technology",
-      publish_date: "2025-07-09",
-    },
-    {
-      _id: "2",
-      title: "Top 10 Study Tips",
-      author: "Sarah Ahmed",
-      category: "Education",
-      publish_date: "2025-07-08",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { blogs, loading, error } = useSelector((state) => state.blog);
+
+  useEffect(() => {
+    dispatch(fetchBlogs());
+  }, [dispatch]);
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      dispatch(deleteBlog(id));
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Manage & Delete Blogs</h1>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border rounded-md shadow">
-          <thead>
-            <tr className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
-              <th className="px-4 py-3">Title</th>
-              <th className="px-4 py-3">Author</th>
-              <th className="px-4 py-3">Category</th>
-              <th className="px-4 py-3">Published</th>
-              <th className="px-4 py-3 text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {blogs.map((blog) => (
-              <tr key={blog._id} className="border-t text-sm">
-                <td className="px-4 py-3">{blog.title}</td>
-                <td className="px-4 py-3">{blog.author}</td>
-                <td className="px-4 py-3">{blog.category}</td>
-                <td className="px-4 py-3">{blog.publish_date}</td>
-                <td className="px-4 py-3 text-center">
-                  <button className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">
-                    Delete
-                  </button>
-                </td>
+      {loading ? (
+        <p>Loading blogs...</p>
+      ) : error ? (
+        <p className="text-red-600">{error}</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border rounded-md shadow">
+            <thead>
+              <tr className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+                <th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Category</th>
+                <th className="px-4 py-3">Action</th>
               </tr>
-            ))}
-            {blogs.length === 0 && (
-              <tr>
-                <td colSpan="5" className="text-center py-6 text-gray-500">
-                  No blogs available to delete.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {blogs.map((blog) => (
+                <tr key={blog._id} className="border-t text-sm">
+                  <td className="px-4 py-3">{blog.title}</td>
+                  <td className="px-4 py-3">{blog.category}</td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => handleDelete(blog._id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {blogs.length === 0 && (
+                <tr>
+                  <td colSpan="3" className="text-center py-6 text-gray-500">
+                    No blogs found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

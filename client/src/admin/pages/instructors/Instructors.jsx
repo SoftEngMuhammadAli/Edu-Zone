@@ -6,11 +6,13 @@ import { BASE_URL } from "../../../utils/constants";
 const InstructorsListPage = () => {
   const navigate = useNavigate();
 
+  const instructor = "instructor";
+
   const {
     data: allUsers,
     loading,
     error,
-  } = useFetchData(`${BASE_URL}/api/users/role/instructor`);
+  } = useFetchData(`${BASE_URL}/api/users/role/${instructor}`, "GET");
 
   const instructors = allUsers?.filter(
     (user) => user.user_type === "instructor"
