@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AdminProfileCard from "../components/AdminProfileCard";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -104,18 +105,8 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-4 md:p-8">
-        {/* Header */}
-        <div className="flex justify-end items-center gap-4 mb-6">
-          <div className="text-right">
-            <p className="text-sm text-gray-500">Hi, Dimas</p>
-            <p className="font-semibold">Frontend Developer</p>
-          </div>
-          <img
-            src="https://via.placeholder.com/40"
-            alt="profile"
-            className="w-10 h-10 rounded-full"
-          />
-        </div>
+        {/* Admin Profile Card */}
+        <AdminProfileCard />
 
         {/* Overview + Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

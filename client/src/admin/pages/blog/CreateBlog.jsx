@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createBlogThunk } from "../../../features/admin/blogSlice";
+import axiosInstance from "../../../services/axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlogPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.blogs || {});
 
   const [title, setTitle] = useState("");
@@ -11,6 +14,14 @@ const CreateBlogPage = () => {
   const [tags, setTags] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get("/api/blogs/categories")
+      .then((res) => setCategoryList(res.data.data))
+      .catch((err) => console.error("Category fetch error:", err));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +34,13 @@ const CreateBlogPage = () => {
       "tags",
       JSON.stringify(tags.split(",").map((t) => t.trim()))
     );
-
     images.forEach((file) => {
       formData.append("images", file);
     });
 
-    dispatch(createBlogThunk(formData));
+    dispatch(createBlogThunk(formData)).then((res) => {
+      if (!res.error) navigate("/admin/dashboard-page");
+    });
   };
 
   return (
@@ -64,16 +76,21 @@ const CreateBlogPage = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Category ID
+            Category
           </label>
-          <input
-            type="text"
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
-            placeholder="Enter Category ObjectId"
             className="mt-1 block w-full px-4 py-2 border rounded-md"
-          />
+          >
+            <option value="">Select a category</option>
+            {categoryList.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

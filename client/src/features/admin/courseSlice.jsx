@@ -2,12 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axios";
 
 // Thunks
-
 export const fetchCourses = createAsyncThunk(
   "course/fetchCourses",
   async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get("/api/courses/all");
+      const response = await axiosInstance.get("/api/courses/");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -95,7 +94,7 @@ const courseSlice = createSlice({
       })
       .addCase(fetchCourses.fulfilled, (state, action) => {
         state.loading = false;
-        state.courses = action.payload;
+        state.courses = action.payload.data;
         state.error = null;
       })
       .addCase(fetchCourses.rejected, (state, action) => {

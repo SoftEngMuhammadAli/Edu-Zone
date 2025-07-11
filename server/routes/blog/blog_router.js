@@ -6,6 +6,8 @@ import {
   authorizeRoles,
 } from "../../middlewares/auth/auth_middleware.js";
 
+import { upload } from "../../middlewares/multer.js";
+
 import {
   handleGetAllBlogs,
   handleGetBlogById,
@@ -22,25 +24,30 @@ import {
   handleDeleteBlogCategoryById,
 } from "../../controllers/blog/blog_categories_controller.js";
 
-import { upload } from "../../middlewares/multer.js";
-
-//--///////////////////////////////////////////////
-// Blog Categories Routes
-//--///////////////////////////////////////////////
+// ========== BLOG CATEGORY ROUTES ==========
+// GET all categories
 router.get("/categories", checkAuth, handleGetAllBlogCategories);
+
+// GET single category by ID
 router.get("/categories/:id", checkAuth, handleGetBlogCategoryById);
+
+// CREATE new category
 router.post(
   "/categories",
   checkAuth,
   authorizeRoles("admin", "instructor"),
   createBlogCategory
 );
+
+// UPDATE category by ID
 router.put(
   "/categories/:id",
   checkAuth,
   authorizeRoles("admin", "instructor"),
   handleUpdateBlogCategoryById
 );
+
+// DELETE category by ID
 router.delete(
   "/categories/:id",
   checkAuth,
@@ -48,37 +55,32 @@ router.delete(
   handleDeleteBlogCategoryById
 );
 
-//--///////////////////////////////////////////////
-// Blog Routes
-//--///////////////////////////////////////////////
+// ========== BLOG ROUTES ==========
+// GET all blogs
 router.get("/", checkAuth, handleGetAllBlogs);
 
+// GET blog by ID
+router.get("/:id", checkAuth, handleGetBlogById);
+
+// CREATE blog
 router.post(
   "/",
   checkAuth,
   authorizeRoles("admin", "instructor"),
   upload.array("images", 5),
-  (req, res, next) => {
-    console.log("REQ BODY:", req.body);
-    console.log("REQ FILES:", req.files);
-    next();
-  },
   handleCreateBlog
 );
 
-router.get("/:id", checkAuth, handleGetBlogById);
+// UPDATE blog by ID
 router.put(
   "/:id",
   checkAuth,
   authorizeRoles("admin", "instructor"),
   upload.array("images", 5),
-  (req, res, next) => {
-    console.log("REQ BODY:", req.body);
-    console.log("REQ FILES:", req.files);
-    next();
-  },
   handleUpdateBlogById
 );
+
+// DELETE blog by ID
 router.delete(
   "/:id",
   checkAuth,

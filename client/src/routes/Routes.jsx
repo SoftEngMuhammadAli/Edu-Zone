@@ -37,6 +37,7 @@ import CreateCoursePage from "../admin/pages/courses/CreateCourse";
 import UpdateCoursePage from "../admin/pages/courses/UpdateCourse";
 import DeleteCoursePage from "../admin/pages/courses/DeleteCourse";
 import BlogListPage from "../admin/pages/blog/BlogsList";
+import CoursesListPage from "../admin/pages/courses/CoursesList";
 
 const AppRoutes = () => {
   return (
@@ -148,6 +149,10 @@ const MainLayout = () => {
               />
             }
           >
+            <Route
+              path="/courses-management/get-all-courses"
+              element={<CoursesListPage />}
+            />
             <Route
               path="/courses-management/create-course"
               element={<CreateCoursePage />}

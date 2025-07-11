@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlogs, updateBlog } from "../../../features/admin/blogSlice";
 import { useParams, useNavigate } from "react-router-dom";
+import axiosInstance from "../../../services/axios";
 
 const UpdateBlogPage = () => {
   const { id } = useParams();
@@ -14,9 +15,16 @@ const UpdateBlogPage = () => {
   const [tags, setTags] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [blogLoaded, setBlogLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(fetchBlogs());
+
+    axiosInstance
+      .get("/api/blogs/categories")
+      .then((res) => setCategoryList(res.data.data))
+      .catch((err) => console.error("Category fetch error:", err));
   }, [dispatch]);
 
   useEffect(() => {
@@ -25,7 +33,10 @@ const UpdateBlogPage = () => {
       setTitle(blog.title);
       setContent(blog.content);
       setTags((blog.tags || []).join(", "));
-      setCategory(blog.category);
+      setCategory(blog.category?._id || "");
+      setBlogLoaded(true);
+    } else {
+      setBlogLoaded(false);
     }
   }, [blogs, id]);
 
@@ -61,6 +72,8 @@ const UpdateBlogPage = () => {
         <p>Loading...</p>
       ) : error ? (
         <p className="text-red-600">Error: {error}</p>
+      ) : !blogLoaded ? (
+        <p className="text-gray-600">No blog found with the given ID.</p>
       ) : (
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
@@ -104,15 +117,21 @@ const UpdateBlogPage = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Category ID
+              Category
             </label>
-            <input
-              type="text"
+            <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               required
               className="mt-1 block w-full px-4 py-2 border rounded-md"
-            />
+            >
+              <option value="">Select a category</option>
+              {categoryList.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -136,10 +155,6 @@ const UpdateBlogPage = () => {
           >
             {loading ? "Updating..." : "Update Blog"}
           </button>
-
-          {error && (
-            <div className="text-red-600 text-sm pt-2">❌ Error: {error}</div>
-          )}
         </form>
       )}
     </div>

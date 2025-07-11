@@ -4,7 +4,7 @@ import { fetchBlogs, deleteBlog } from "../../../features/admin/blogSlice";
 
 const DeleteBlogPage = () => {
   const dispatch = useDispatch();
-  const { blogs, loading, error } = useSelector((state) => state.blog);
+  const { blogs, loading, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
     dispatch(fetchBlogs());
@@ -23,7 +23,9 @@ const DeleteBlogPage = () => {
       {loading ? (
         <p>Loading blogs...</p>
       ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <p className="text-red-600">Error: {error}</p>
+      ) : !blogs || blogs.length === 0 ? (
+        <p className="text-gray-600">No blogs found to delete.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border rounded-md shadow">
@@ -38,7 +40,9 @@ const DeleteBlogPage = () => {
               {blogs.map((blog) => (
                 <tr key={blog._id} className="border-t text-sm">
                   <td className="px-4 py-3">{blog.title}</td>
-                  <td className="px-4 py-3">{blog.category}</td>
+                  <td className="px-4 py-3">
+                    {blog.category?.name || "No category"}
+                  </td>
                   <td className="px-4 py-3">
                     <button
                       onClick={() => handleDelete(blog._id)}
@@ -49,13 +53,6 @@ const DeleteBlogPage = () => {
                   </td>
                 </tr>
               ))}
-              {blogs.length === 0 && (
-                <tr>
-                  <td colSpan="3" className="text-center py-6 text-gray-500">
-                    No blogs found.
-                  </td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>
