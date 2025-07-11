@@ -6,11 +6,13 @@ export const createBlogThunk = createAsyncThunk(
   "blogs/create-blog",
   async (blogData, thunkAPI) => {
     try {
+      console.log("Sending blogData to server...");
       const res = await axiosInstance.post("/api/blogs", blogData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       return res.data.data;
     } catch (error) {
+      console.error("createBlogThunk error:", error.response);
       return thunkAPI.rejectWithValue(
         error?.response?.data?.error || "Creation failed"
       );
@@ -68,12 +70,25 @@ export const deleteBlog = createAsyncThunk(
   }
 );
 
+export const fetchBlogCategories = createAsyncThunk(
+  "blogCategories/fetch",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axiosInstance.get("/api/blog-categories");
+      return res.data.data; // must be an array
+    } catch (err) {
+      return thunkAPI.rejectWithValue("Failed to fetch categories");
+    }
+  }
+);
+
 // SLICE
 const blogSlice = createSlice({
   name: "blogs",
   initialState: {
     blogs: [],
     selectedBlog: null,
+    createdBlog: null,
     loading: false,
     error: null,
   },
@@ -87,7 +102,8 @@ const blogSlice = createSlice({
       })
       .addCase(createBlogThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.blogs.push(action.payload);
+        // state.createdBlog = action.payload;
+        state.blogs = [...state.blogs, action.payload];
       })
       .addCase(createBlogThunk.rejected, (state, action) => {
         state.loading = false;
@@ -151,4 +167,30 @@ const blogSlice = createSlice({
   },
 });
 
-export default blogSlice.reducer;
+const blogCategorySlice = createSlice({
+  name: "blogCategories",
+  initialState: {
+    categories: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBlogCategories.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBlogCategories.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories = action.payload;
+      })
+      .addCase(fetchBlogCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+export const blogReducer = blogSlice.reducer;
+export const blogCategoryReducer = blogCategorySlice.reducer;
