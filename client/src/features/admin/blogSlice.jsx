@@ -36,14 +36,28 @@ export const fetchBlogs = createAsyncThunk(
   }
 );
 
-export const getBlogById = createAsyncThunk(
+export const getAllBlogs = createAsyncThunk(
   "blogs/get-blog-by-id",
   async (id, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`/api/blogs/${id}`);
+      const response = await axiosInstance.get(`/api/blogs/`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getBlogById = createAsyncThunk(
+  "blogs/getBlogById",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axiosInstance.get(`/api/blogs/${id}`);
+      return res.data.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err?.response?.data?.message || "Failed to fetch blog"
+      );
     }
   }
 );
@@ -52,7 +66,11 @@ export const updateBlog = createAsyncThunk(
   "blog/updateBlog",
   async ({ id, blogData }, thunkAPI) => {
     try {
-      const response = await axiosInstance.put(`/api/blogs/${id}`, blogData);
+      const response = await axiosInstance.put(`/api/blogs/${id}`, blogData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -79,7 +97,7 @@ export const fetchBlogCategories = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await axiosInstance.get("/api/blog-categories");
-      return res.data.data; // must be an array
+      return res.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue("Failed to fetch categories");
     }
@@ -122,6 +140,18 @@ const blogSlice = createSlice({
         state.blogs = action.payload.data;
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllBlogs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllBlogs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedBlog = action.payload;
+      })
+      .addCase(getAllBlogs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

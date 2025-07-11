@@ -94,8 +94,21 @@ export const handleUpdateBlogById = catchAsyncHandler(async (req, res) => {
 
   try {
     const imageFiles = req.files?.map((file) => file.filename) || [];
+
+    let parsedTags = [];
+    if (req.body.tags) {
+      try {
+        parsedTags = JSON.parse(req.body.tags);
+      } catch (err) {
+        return res.status(400).json({ error: "Invalid tags format" });
+      }
+    }
+
     const updateData = {
-      ...req.body,
+      title: req.body.title,
+      content: req.body.content,
+      category: req.body.category,
+      tags: parsedTags,
     };
 
     if (imageFiles.length > 0) {

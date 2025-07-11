@@ -71,6 +71,12 @@ router.put(
   "/:id",
   checkAuth,
   authorizeRoles("admin", "instructor"),
+  upload.array("images", 5),
+  (req, res, next) => {
+    console.log("REQ BODY:", req.body);
+    console.log("REQ FILES:", req.files);
+    next();
+  },
   handleUpdateBlogById
 );
 router.delete(

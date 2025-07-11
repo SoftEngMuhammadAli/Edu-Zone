@@ -43,6 +43,13 @@ const AdminDashboard = () => {
           {/* Blogs Management */}
           <div className="mt-8 border-t border-white pt-4 space-y-2">
             <p className="text-sm uppercase text-gray-300">Blog Management</p>
+
+            <div
+              onClick={() => navigate("/admin/blog/get-all-blogs")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              📄 Get All Blogs
+            </div>
             <div
               onClick={() => navigate("/admin/blog/add-blog")}
               className="hover:text-yellow-400 cursor-pointer"
@@ -66,6 +73,13 @@ const AdminDashboard = () => {
           {/* Course Management */}
           <div className="mt-8 border-t border-white pt-4 space-y-2">
             <p className="text-sm uppercase text-gray-300">Course Management</p>
+
+            <div
+              onClick={() => navigate("/courses-management/get-all-courses")}
+              className="hover:text-yellow-400 cursor-pointer"
+            >
+              📄 Get All Course
+            </div>
             <div
               onClick={() => navigate("/courses-management/create-course")}
               className="hover:text-yellow-400 cursor-pointer"

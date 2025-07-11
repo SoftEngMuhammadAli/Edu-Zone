@@ -1,64 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBlogById, updateBlog } from "../../../features/admin/blogSlice";
+import { fetchBlogs, updateBlog } from "../../../features/admin/blogSlice";
 import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateBlogPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { selectedBlog, loading, error } = useSelector((state) => state.blog);
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    tags: "",
-    category: "",
-    images: null,
-  });
-
-  useEffect(() => {
-    dispatch(getBlogById(id));
-  }, [dispatch, id]);
+  const { blogs, loading, error } = useSelector((state) => state.blogs || {});
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [category, setCategory] = useState("");
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    if (selectedBlog) {
-      setFormData({
-        title: selectedBlog.title,
-        content: selectedBlog.content,
-        tags: selectedBlog.tags.join(", "),
-        category: selectedBlog.category,
-        images: null,
-      });
+    dispatch(fetchBlogs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const blog = blogs.find((b) => b._id === id);
+    if (blog) {
+      setTitle(blog.title);
+      setContent(blog.content);
+      setTags((blog.tags || []).join(", "));
+      setCategory(blog.category);
     }
-  }, [selectedBlog]);
+  }, [blogs, id]);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+  const handleImageChange = (e) => {
+    setImages(Array.from(e.target.files));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const form = new FormData();
-    form.append("title", formData.title);
-    form.append("content", formData.content);
-    form.append("category", formData.category);
-    form.append(
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    formData.append(
       "tags",
-      JSON.stringify(formData.tags.split(",").map((tag) => tag.trim()))
+      JSON.stringify(tags.split(",").map((tag) => tag.trim()))
     );
+    images.forEach((file) => {
+      formData.append("images", file);
+    });
 
-    if (formData.images) {
-      form.append("image", formData.images);
-    }
-
-    dispatch(updateBlog({ id, blogData: form })).then((res) => {
-      if (!res.error) navigate("/admin/blogs");
+    dispatch(updateBlog({ id, blogData: formData })).then((res) => {
+      if (!res.error) navigate("/admin/dashboard-page");
     });
   };
 
@@ -78,9 +69,9 @@ const UpdateBlogPage = () => {
             </label>
             <input
               type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
               className="mt-1 block w-full px-4 py-2 border rounded-md"
             />
           </div>
@@ -90,54 +81,51 @@ const UpdateBlogPage = () => {
               Content
             </label>
             <textarea
-              name="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               rows="6"
-              value={formData.content}
-              onChange={handleChange}
+              required
               className="mt-1 block w-full px-4 py-2 border rounded-md"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Tags
+              Tags (comma-separated)
             </label>
             <input
               type="text"
-              name="tags"
-              value={formData.tags}
-              onChange={handleChange}
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              required
               className="mt-1 block w-full px-4 py-2 border rounded-md"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Category
+              Category ID
             </label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
+            <input
+              type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
               className="mt-1 block w-full px-4 py-2 border rounded-md"
-            >
-              <option value="">Select category</option>
-              <option value="tech">Technology</option>
-              <option value="lifestyle">Lifestyle</option>
-              <option value="education">Education</option>
-            </select>
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Upload Image
+              Upload Images
             </label>
             <input
               type="file"
               name="images"
               accept="image/*"
-              onChange={handleChange}
-              className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:bg-blue-600 file:text-white file:rounded-md"
+              multiple
+              onChange={handleImageChange}
+              className="mt-1 block w-full"
             />
           </div>
 
@@ -148,6 +136,10 @@ const UpdateBlogPage = () => {
           >
             {loading ? "Updating..." : "Update Blog"}
           </button>
+
+          {error && (
+            <div className="text-red-600 text-sm pt-2">❌ Error: {error}</div>
+          )}
         </form>
       )}
     </div>

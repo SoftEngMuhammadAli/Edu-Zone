@@ -36,6 +36,7 @@ import DeleteBlogPage from "../admin/pages/blog/DeleteBlog";
 import CreateCoursePage from "../admin/pages/courses/CreateCourse";
 import UpdateCoursePage from "../admin/pages/courses/UpdateCourse";
 import DeleteCoursePage from "../admin/pages/courses/DeleteCourse";
+import BlogListPage from "../admin/pages/blog/BlogsList";
 
 const AppRoutes = () => {
   return (
@@ -124,6 +125,10 @@ const MainLayout = () => {
               element={<TeachersListPage />}
             />
             <Route path="/admin/settings" element={<AdminSettingsPage />} />
+            <Route
+              path="/admin/blog/get-all-blogs"
+              element={<BlogListPage />}
+            />
             <Route path="/admin/blog/add-blog" element={<CreateBlogPage />} />
             <Route
               path="/admin/blog/update-blog/:id"
